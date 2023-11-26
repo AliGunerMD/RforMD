@@ -15,6 +15,8 @@
 #'
 #' @param None
 #'
+#' @import dplyr
+#'
 #' @return None
 #'
 #' @examples
