@@ -2,3 +2,5 @@
 
 export(ag_create_project_folders)
 import(dplyr)
+import(magrittr)
+importFrom(ggplot2,theme)

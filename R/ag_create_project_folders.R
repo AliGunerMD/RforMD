@@ -16,6 +16,8 @@
 #' @param None
 #'
 #' @import dplyr
+#' @import magrittr
+#' @importFrom ggplot2 theme
 #'
 #' @return None
 #'
