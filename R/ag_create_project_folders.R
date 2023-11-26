@@ -50,7 +50,7 @@ ag_create_project_folders <- function() {
         # Check and create subfolders within "_Codes"
         codes_folder <- file.path("_Codes")
         functions_subfolder <- file.path(codes_folder, "_Functions")
-        readme_file <- file.path(codes_folder, "README.md")
+        readme_file <- file.path(codes_folder, "00 README.md")
 
         if (!dir.exists(functions_subfolder)) {
                 dir.create(functions_subfolder, recursive = TRUE)
@@ -68,7 +68,7 @@ ag_create_project_folders <- function() {
         qmd_files <- list.files(pattern = "\\.qmd$")
         if (length(qmd_files) == 1) {
                 qmd_file <- qmd_files[1]
-                new_qmd_file <- file.path(codes_folder, "00 initial.qmd")
+                new_qmd_file <- file.path(codes_folder, "01 initial.qmd")
 
                 file.rename(qmd_file, new_qmd_file)
                 cat(sprintf("Moved and renamed file: %s\n", new_qmd_file))
