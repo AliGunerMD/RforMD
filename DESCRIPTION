@@ -1,0 +1,15 @@
+Package: MyR
+Type: Package
+Title: Use in my MD Projects
+Version: 0.1.0
+Authors@R: 
+    person(
+    "Ali", "Guner", 
+    email = "draliguner@yahoo.com", 
+    role = c("aut", "cre"))
+Maintainer: The package maintainer <draliguner@yahoo.com>
+Description: I want to use this package in all my projects, because I use copy/paste functions.
+License: MIT + file LICENSE 
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.3
