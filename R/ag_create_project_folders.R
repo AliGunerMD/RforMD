@@ -12,8 +12,8 @@
 #' 4. Sets up subfolders within "_Outputs," including "_Figures" and "_Tables."
 #' 5. Sets up subfolders within "_Data," including "_Raw" and "_Processed."
 #' 6. Checks for and deletes a single .qmd file in the main directory with user confirmation.
-#' 7. Inserts a new .qmd template file named "01 initial.qmd" into the "_Codes" folder.
-#'
+#' 7. Inserts a new .qmd template file using ag_generate_template_quarto() and moves it to the "_Codes" folder as "01 initial.qmd."
+#' #'
 #' This function is designed to be used right after creating a new R project via "New Project" or any other project creation method.
 #'
 #' @examples
@@ -103,8 +103,14 @@ ag_create_project_folders <- function() {
                 cat("No .qmd file found in the main directory.\n")
         }
 
-
         # Insert a new .qmd template into "_Codes"
-        ag_generate_template_quarto(name = file.path(codes_folder, "01 initial.qmd"))
+        new_qmd_template <- ag_generate_template_quarto()
+
+        # Move the newly created file to the "_Codes" folder
+        if (!is.null(new_qmd_template) && file.exists(new_qmd_template)) {
+                new_qmd_file <- file.path(codes_folder, "01 initial.qmd")
+                file.rename(new_qmd_template, new_qmd_file)
+                cat(sprintf("Moved and renamed file: %s\n", new_qmd_file))
+        }
 }
 

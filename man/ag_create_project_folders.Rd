@@ -18,8 +18,8 @@ The function performs the following steps:
 4. Sets up subfolders within "_Outputs," including "_Figures" and "_Tables."
 5. Sets up subfolders within "_Data," including "_Raw" and "_Processed."
 6. Checks for and deletes a single .qmd file in the main directory with user confirmation.
-7. Inserts a new .qmd template file named "01 initial.qmd" into the "_Codes" folder.
-
+7. Inserts a new .qmd template file using ag_generate_template_quarto() and moves it to the "_Codes" folder as "01 initial.qmd."
+#'
 This function is designed to be used right after creating a new R project via "New Project" or any other project creation method.
 }
 \examples{
