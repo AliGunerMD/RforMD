@@ -34,9 +34,17 @@ ag_generate_template_quarto <- function(name = "01 initial.qmd",
         # Construct the path to the template file in "inst/templates" directory
         template_path <- system.file("templates", "ag_template_quarto.qmd", package = "MyR")
 
+        # Check if the template file exists
+        if (!file.exists(template_path)) {
+                stop("Could not find template 'ag_template_quarto.qmd' in package 'MyR'.")
+        }
+
         # Use the template
-        use_template("ag_template_quarto.qmd",
+        new_qmd_file <- use_template("ag_template_quarto.qmd",
                      save_as = name,
                      package = "MyR", ...,
                      open = open)
+
+        # Return the path of the created file
+        return(new_qmd_file)
 }
