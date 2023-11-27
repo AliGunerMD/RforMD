@@ -109,8 +109,12 @@ ag_create_project_folders <- function() {
         # Move the newly created file to the "_Codes" folder
         if (!is.null(new_qmd_template)) {
                 new_qmd_file <- file.path(codes_folder, "01 initial.qmd")
-                file.rename(new_qmd_template, new_qmd_file)
-                cat(sprintf("Moved and renamed file: %s\n", new_qmd_file))
+                file.copy(from = new_qmd_template, to = new_qmd_file)
+
+                # Optionally, remove the original file
+                file.remove(new_qmd_template)
+
+                cat(sprintf("Copied to %s\n", new_qmd_file))
         }
 }
 
