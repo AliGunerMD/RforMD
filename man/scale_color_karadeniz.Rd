@@ -14,13 +14,20 @@ scale_color_karadeniz(palette = "Faroz", discrete = TRUE, reverse = FALSE, ...)
 \item{reverse}{TRUE/FALSE}
 }
 \description{
-to COLOR function
+To define my color pallette to standardize color use in projects
 }
 \examples{
 \dontrun{
-ggplot(data=iris,mapping=aes(x=Petal.Length, y=Petal.Width, color=Species))+
-geom_point() + scale_color_karadeniz()
+iris \%>\%
+ggplot(aes(Petal.Length, Petal.Width, color = Species))+
+geom_point() +
+scale_color_karadeniz()
 }
+
+iris \%>\%
+ggplot(aes(Sepal.Length, Sepal.Width, color = Petal.Length)) +
+       geom_point() +
+       scale_color_karadeniz(palette = "Vazil", discrete = FALSE)
 }
 \author{
 Ali Guner

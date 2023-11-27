@@ -82,19 +82,29 @@ karadeniz <- function(palette = "main", reverse = FALSE, ...) {
 }
 
 #' @title scale_color_karadeniz
-#' @description to COLOR function
+#' @description To define my color pallette to standardize color use in projects
 #' @param palette hoose your favourite palette: "Hidirnebi", "Kadirga", "Kayabasi",  "Cal", "Pokut", "Samistal", "Elevit", "Gito" , "Ovit", "Palovit", "Faroz", "Vazil"
 #' @param discrete TRUE/FALSE
 #' @param reverse TRUE/FALSE
 #' @author Ali Guner
 #' @examples
 #' \dontrun{
-#' ggplot(data=iris,mapping=aes(x=Petal.Length, y=Petal.Width, color=Species))+
-#' geom_point() + scale_color_karadeniz()
+#' iris %>%
+#' ggplot(aes(Petal.Length, Petal.Width, color = Species))+
+#' geom_point() +
+#' scale_color_karadeniz()
 #'}
+#'
+#'iris %>%
+#'ggplot(aes(Sepal.Length, Sepal.Width, color = Petal.Length)) +
+#'        geom_point() +
+#'        scale_color_karadeniz(palette = "Vazil", discrete = FALSE)
 #'@export
 #'
-scale_color_karadeniz <- function(palette = "Faroz", discrete = TRUE, reverse = FALSE, ...) {
+scale_color_karadeniz <- function(palette = "Faroz",
+                                  discrete = TRUE,
+                                  reverse = FALSE,
+                                  ...) {
         pal <- karadeniz(palette = palette, reverse = reverse)
 
         if (discrete) {
@@ -105,20 +115,29 @@ scale_color_karadeniz <- function(palette = "Faroz", discrete = TRUE, reverse = 
 }
 
 #' @title scale_fill_karadeniz
-#' @description to FILL function
+#' @description To define my color pallette to standardize color use in projects
 #' @param palette hoose your favourite palette: "Hidirnebi", "Kadirga", "Kayabasi",  "Cal", "Pokut", "Samistal", "Elevit", "Gito" , "Ovit", "Palovit", "Faroz", "Vazil"
 #' @param discrete TRUE/FALSE
 #' @param reverse TRUE/FALSE
 #' @author Ali Guner
 #' @examples
 #' \dontrun{
-#' ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width, color=Species))+
-#' geom_point() + scale_fill_karadeniz()
+#' #' iris %>%
+#' ggplot(aes(Petal.Length, Petal.Width, fill = Species))+
+#' geom_point() +
+#' scale_fill_karadeniz()
 #'}
 #'
+#'iris %>%
+#'ggplot(aes(Sepal.Length, Sepal.Width, fill = Petal.Length)) +
+#'        geom_point() +
+#'        scale_fill_karadeniz(palette = "Vazil", discrete = FALSE)
 #'@export
 #'
-scale_fill_karadeniz <- function(palette = "Faroz", discrete = TRUE, reverse = FALSE, ...) {
+scale_fill_karadeniz <- function(palette = "Faroz",
+                                 discrete = TRUE,
+                                 reverse = FALSE,
+                                 ...) {
         pal <- karadeniz(palette = palette, reverse = reverse)
 
         if (discrete) {
