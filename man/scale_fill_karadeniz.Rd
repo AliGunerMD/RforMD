@@ -4,15 +4,10 @@
 \alias{scale_fill_karadeniz}
 \title{scale_fill_karadeniz}
 \usage{
-scale_fill_karadeniz(
-  palette = "Hidirnebi",
-  discrete = TRUE,
-  reverse = FALSE,
-  ...
-)
+scale_fill_karadeniz(palette = "Faroz", discrete = TRUE, reverse = FALSE, ...)
 }
 \arguments{
-\item{palette}{hoose your favourite palette: "Hidirnebi", "Kadirga", "Kayabasi",  "Cal", "Pokut", "Samistal", "Elevit", "Gito" , "Ovit", "Vazil"  or "Palovit"}
+\item{palette}{hoose your favourite palette: "Hidirnebi", "Kadirga", "Kayabasi",  "Cal", "Pokut", "Samistal", "Elevit", "Gito" , "Ovit", "Palovit", "Faroz", "Vazil"}
 
 \item{discrete}{TRUE/FALSE}
 

@@ -33,7 +33,9 @@ to_select_colors <- function(...) {
                 # "beige" = "#f5f5dc",
                 # "milk" = "#fdfff5",
                 # "white" = "#ffffff",
-                "black" = "#000000"
+                "black" = "#000000",
+                "TS red" = "#a41d34",
+                "TS blue" = "#14c0f1"
                 )
         cols <- c(...)
 
@@ -69,6 +71,7 @@ karadeniz <- function(palette = "main", reverse = FALSE, ...) {
     "Gito" = to_select_colors("dark red", "dark blue", "light grey", "teal green"),
     "Ovit" = to_select_colors("dodger blue", "light blue", "light blue", "light grey", "teal green"),
     "Palovit" = to_select_colors("light blue", "dark red", "teal green", "orange"),
+    "Faroz" = to_select_colors("TS red", "TS blue"),
     "Vazil" = to_select_colors("green", "turquoise", "ferrari", "light blue")
   )
   pal <- mypalettes[[palette]]
@@ -80,7 +83,7 @@ karadeniz <- function(palette = "main", reverse = FALSE, ...) {
 
 #' @title scale_color_karadeniz
 #' @description to COLOR function
-#' @param palette hoose your favourite palette: "Hidirnebi", "Kadirga", "Kayabasi",  "Cal", "Pokut", "Samistal", "Elevit", "Gito" , "Ovit", "Vazil"  or "Palovit"
+#' @param palette hoose your favourite palette: "Hidirnebi", "Kadirga", "Kayabasi",  "Cal", "Pokut", "Samistal", "Elevit", "Gito" , "Ovit", "Palovit", "Faroz", "Vazil"
 #' @param discrete TRUE/FALSE
 #' @param reverse TRUE/FALSE
 #' @author Ali Guner
@@ -91,7 +94,7 @@ karadeniz <- function(palette = "main", reverse = FALSE, ...) {
 #'}
 #'@export
 #'
-scale_color_karadeniz <- function(palette = "Hidirnebi", discrete = TRUE, reverse = FALSE, ...) {
+scale_color_karadeniz <- function(palette = "Faroz", discrete = TRUE, reverse = FALSE, ...) {
         pal <- karadeniz(palette = palette, reverse = reverse)
 
         if (discrete) {
@@ -103,7 +106,7 @@ scale_color_karadeniz <- function(palette = "Hidirnebi", discrete = TRUE, revers
 
 #' @title scale_fill_karadeniz
 #' @description to FILL function
-#' @param palette hoose your favourite palette: "Hidirnebi", "Kadirga", "Kayabasi",  "Cal", "Pokut", "Samistal", "Elevit", "Gito" , "Ovit", "Vazil"  or "Palovit"
+#' @param palette hoose your favourite palette: "Hidirnebi", "Kadirga", "Kayabasi",  "Cal", "Pokut", "Samistal", "Elevit", "Gito" , "Ovit", "Palovit", "Faroz", "Vazil"
 #' @param discrete TRUE/FALSE
 #' @param reverse TRUE/FALSE
 #' @author Ali Guner
@@ -115,7 +118,7 @@ scale_color_karadeniz <- function(palette = "Hidirnebi", discrete = TRUE, revers
 #'
 #'@export
 #'
-scale_fill_karadeniz <- function(palette = "Hidirnebi", discrete = TRUE, reverse = FALSE, ...) {
+scale_fill_karadeniz <- function(palette = "Faroz", discrete = TRUE, reverse = FALSE, ...) {
         pal <- karadeniz(palette = palette, reverse = reverse)
 
         if (discrete) {
