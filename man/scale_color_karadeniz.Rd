@@ -7,7 +7,7 @@
 scale_color_karadeniz(palette = "Faroz", discrete = TRUE, reverse = FALSE, ...)
 }
 \arguments{
-\item{palette}{hoose your favourite palette: "Hidirnebi", "Kadirga", "Kayabasi",  "Cal", "Pokut", "Samistal", "Elevit", "Gito" , "Ovit", "Palovit", "Faroz", "Vazil"}
+\item{palette}{Choose your favorite palette: "Hidirnebi", "Kadirga", "Kayabasi",  "Cal", "Pokut", "Samistal", "Elevit", "Gito" , "Ovit", "Palovit", "Faroz", "Vazil"}
 
 \item{discrete}{TRUE/FALSE}
 
