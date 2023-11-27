@@ -83,7 +83,7 @@ karadeniz <- function(palette = "main", reverse = FALSE, ...) {
 
 #' @title scale_color_karadeniz
 #' @description To define my color pallette to standardize color use in projects
-#' @param palette Choose your favorite palette: "Hidirnebi", "Kadirga", "Kayabasi",  "Cal", "Pokut", "Samistal", "Elevit", "Gito" , "Ovit", "Palovit", "Faroz", "Vazil"
+#' @param palette Choose your favorite palette: "Hidirnebi", "Kadirga", "Kayabasi", "Cal", "Pokut", "Samistal", "Elevit", "Gito", "Ovit", "Palovit", "Faroz", "Vazil"
 #' @param discrete TRUE/FALSE
 #' @param reverse TRUE/FALSE
 #' @author Ali Guner
@@ -116,7 +116,7 @@ scale_color_karadeniz <- function(palette = "Faroz",
 
 #' @title scale_fill_karadeniz
 #' @description To define my color pallette to standardize color use in projects
-#' @param palette Choose your favorite palette: "Hidirnebi", "Kadirga", "Kayabasi",  "Cal", "Pokut", "Samistal", "Elevit", "Gito" , "Ovit", "Palovit", "Faroz", "Vazil"
+#' @param palette Choose your favorite palette: "Hidirnebi", "Kadirga", "Kayabasi", "Cal", "Pokut", "Samistal", "Elevit", "Gito", "Ovit", "Palovit", "Faroz", "Vazil"
 #' @param discrete TRUE/FALSE
 #' @param reverse TRUE/FALSE
 #' @author Ali Guner
