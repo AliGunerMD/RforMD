@@ -43,7 +43,7 @@ ag_generate_template_quarto <- function(name = "01 initial.qmd",
         new_qmd_file <- use_template("ag_template_quarto.qmd",
                      save_as = name,
                      package = "MyR", ...,
-                     open = open)
+                     open = FALSE)
 
         # Return the path of the created file
         return(new_qmd_file)
