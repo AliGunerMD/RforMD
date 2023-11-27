@@ -103,19 +103,19 @@ ag_create_project_folders <- function() {
                 cat("No .qmd file found in the main directory.\n")
         }
 
-        # Insert a new .qmd template into "_Codes"
+        # Insert a new .qmd template
         new_qmd_template <- ag_generate_template_quarto()
 
         # Move the newly created file to the "_Codes" folder
         if (!is.null(new_qmd_template)) {
                 new_qmd_file <- file.path(codes_folder, "01 initial.qmd")
-                file.copy(from = new_qmd_template, to = new_qmd_file)
 
-                # Optionally, remove the original file
-                file.remove(new_qmd_template)
+                # Move the file
+                file.rename(from = "01 initial.qmd", to = new_qmd_file)
 
-                cat(sprintf("Copied to %s\n", new_qmd_file))
+                cat(sprintf("Moved to %s\n", new_qmd_file))
         }
+
 }
 
 
