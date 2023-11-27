@@ -107,7 +107,7 @@ ag_create_project_folders <- function() {
         new_qmd_template <- ag_generate_template_quarto()
 
         # Move the newly created file to the "_Codes" folder
-        if (!is.null(new_qmd_template) && file.exists(new_qmd_template)) {
+        if (!is.null(new_qmd_template)) {
                 new_qmd_file <- file.path(codes_folder, "01 initial.qmd")
                 file.rename(new_qmd_template, new_qmd_file)
                 cat(sprintf("Moved and renamed file: %s\n", new_qmd_file))
