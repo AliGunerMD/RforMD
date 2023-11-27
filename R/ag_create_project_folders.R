@@ -1,23 +1,20 @@
 #' @title Create Project Folders
 #'
-#' @description This function creates the essential folder structure for a new R project.
-#' It includes the main folders, subfolders, and necessary files to organize the project.
-#' Should be used just after "the project was created" via create_project() or "New Project"
+#' @description
+#' This function automates the creation of essential folder structures for a new R project.
+#' It sets up main directories such as "_Codes," "_Outputs," and "_Data," along with subdirectories,
+#' subfolders, and necessary files for organizing the project efficiently.
+#' The function performs the following steps:
 #'
-#' @details The function performs the following steps:
-#' 1. Define folder names, including "_Codes," "_Outputs," and "_Data."
-#' 2. Check and create the main folders: "_Codes," "_Outputs," and "_Data."
-#' 3. Check and create a subfolder within "_Codes" named "_Functions."
-#' 4. Check and create a README file within "_Codes" named "README.md" for project documentation.
-#' 5. Find .qmd files in the main directory, and if only one is found, move and rename it to
-#' "_Codes" as "00 initial.qmd" (with a warning if there are multiple .qmd files).
-#' 6. Check and create subfolders within "_Outputs," including "_Figures" and "_Tables."
-#' 7. Check and create subfolders within "_Data," including "_Raw" and "_Processed."
+#' 1. Creates main folders: "_Codes," "_Outputs," and "_Data."
+#' 2. Sets up subfolders within "_Codes," including "_Functions."
+#' 3. Creates a README file within "_Codes" named "00 README.md" for project documentation.
+#' 4. Sets up subfolders within "_Outputs," including "_Figures" and "_Tables."
+#' 5. Sets up subfolders within "_Data," including "_Raw" and "_Processed."
+#' 6. Checks for and deletes a single .qmd file in the main directory with user confirmation.
+#' 7. Inserts a new .qmd template file named "01 initial.qmd" into the "_Codes" folder.
 #'
-#' @param None
-#'
-#'
-#' @return None
+#' This function is designed to be used right after creating a new R project via "New Project" or any other project creation method.
 #'
 #' @examples
 #' \dontrun{
@@ -25,7 +22,7 @@
 #' ag_create_project_folders()
 #' }
 #'
-#' @seealso \code{\link{dir.create}}, \code{\link{file.rename}}, \code{\link{writeLines}}
+#' @seealso \code{\link{dir.create}}, \code{\link{file.remove}}, \code{\link{writeLines}}, \code{\link{ag_generate_template_quarto}}
 #'
 #' @keywords project folders organization initialization
 #'
@@ -59,27 +56,6 @@ ag_create_project_folders <- function() {
                 cat(sprintf("Created subfolder: %s\n", functions_subfolder))
         }
 
-        # Check and create README file
-        if (!file.exists(readme_file)) {
-                readme_content <- "# Project Readme\n\nThis is a placeholder for project documentation."
-                writeLines(readme_content, readme_file)
-                cat(sprintf("Created file: %s\n", readme_file))
-        }
-
-        # Find .qmd files in the main directory
-        qmd_files <- list.files(pattern = "\\.qmd$")
-        if (length(qmd_files) == 1) {
-                qmd_file <- qmd_files[1]
-                new_qmd_file <- file.path(codes_folder, "01 initial.qmd")
-
-                file.rename(qmd_file, new_qmd_file)
-                cat(sprintf("Moved and renamed file: %s\n", new_qmd_file))
-        } else if (length(qmd_files) > 1) {
-                cat("Skipping moving step as there are multiple .qmd files in the main directory.\n")
-        } else {
-                cat("No .qmd file found in the main directory.\n")
-        }
-
         # Check and create subfolders within "_Outputs"
         outputs_folder <- file.path("_Outputs")
         for (subfolder in output_subfolder_names) {
@@ -99,6 +75,36 @@ ag_create_project_folders <- function() {
                         cat(sprintf("Created subfolder: %s\n", subfolder_path))
                 }
         }
-}
 
+
+        # Check and create README file
+        if (!file.exists(readme_file)) {
+                readme_content <- "# Project Readme\n\nThis is a placeholder for project documentation."
+                writeLines(readme_content, readme_file)
+                cat(sprintf("Created file: %s\n", readme_file))
+        }
+
+        # Find .qmd files in the main directory
+        qmd_files <- list.files(pattern = "\\.qmd$")
+        if (length(qmd_files) == 1) {
+                qmd_file <- qmd_files[1]
+                cat(sprintf("A .qmd file (%s) found in the main directory.\n", qmd_file))
+                confirm <- utils::menu(sprintf('Do you want to delete the file "%s"?', qmd_file),
+                                       title = "Confirmation", choices = c("Yes", "No"))
+                if (confirm == 1) {
+                        file.remove(qmd_file)
+                        cat(sprintf("Deleted file: %s\n", qmd_file))
+                } else {
+                        cat("File not deleted.\n")
+                }
+        } else if (length(qmd_files) > 1) {
+                cat("Skipping deletion step as there are multiple .qmd files in the main directory.\n")
+        } else {
+                cat("No .qmd file found in the main directory.\n")
+        }
+
+
+        # Insert a new .qmd template into "_Codes"
+        ag_generate_template_quarto(name = file.path(codes_folder, "01 initial.qmd"))
+}
 

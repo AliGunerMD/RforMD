@@ -6,27 +6,21 @@
 \usage{
 ag_create_project_folders()
 }
-\arguments{
-\item{None}{}
-}
-\value{
-None
-}
 \description{
-This function creates the essential folder structure for a new R project.
-It includes the main folders, subfolders, and necessary files to organize the project.
-Should be used just after "the project was created" via create_project() or "New Project"
-}
-\details{
+This function automates the creation of essential folder structures for a new R project.
+It sets up main directories such as "_Codes," "_Outputs," and "_Data," along with subdirectories,
+subfolders, and necessary files for organizing the project efficiently.
 The function performs the following steps:
-1. Define folder names, including "_Codes," "_Outputs," and "_Data."
-2. Check and create the main folders: "_Codes," "_Outputs," and "_Data."
-3. Check and create a subfolder within "_Codes" named "_Functions."
-4. Check and create a README file within "_Codes" named "README.md" for project documentation.
-5. Find .qmd files in the main directory, and if only one is found, move and rename it to
-"_Codes" as "00 initial.qmd" (with a warning if there are multiple .qmd files).
-6. Check and create subfolders within "_Outputs," including "_Figures" and "_Tables."
-7. Check and create subfolders within "_Data," including "_Raw" and "_Processed."
+
+1. Creates main folders: "_Codes," "_Outputs," and "_Data."
+2. Sets up subfolders within "_Codes," including "_Functions."
+3. Creates a README file within "_Codes" named "00 README.md" for project documentation.
+4. Sets up subfolders within "_Outputs," including "_Figures" and "_Tables."
+5. Sets up subfolders within "_Data," including "_Raw" and "_Processed."
+6. Checks for and deletes a single .qmd file in the main directory with user confirmation.
+7. Inserts a new .qmd template file named "01 initial.qmd" into the "_Codes" folder.
+
+This function is designed to be used right after creating a new R project via "New Project" or any other project creation method.
 }
 \examples{
 \dontrun{
@@ -36,7 +30,7 @@ ag_create_project_folders()
 
 }
 \seealso{
-\code{\link{dir.create}}, \code{\link{file.rename}}, \code{\link{writeLines}}
+\code{\link{dir.create}}, \code{\link{file.remove}}, \code{\link{writeLines}}, \code{\link{ag_generate_template_quarto}}
 }
 \keyword{folders}
 \keyword{initialization}
