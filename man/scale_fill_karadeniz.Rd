@@ -26,6 +26,7 @@ to FILL function
 ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width, color=Species))+
 geom_point() + scale_fill_karadeniz()
 }
+
 }
 \author{
 Ali Guner

@@ -113,7 +113,9 @@ scale_color_karadeniz <- function(palette = "Hidirnebi", discrete = TRUE, revers
 #' ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width, color=Species))+
 #' geom_point() + scale_fill_karadeniz()
 #'}
+#'
 #'@export
+#'
 scale_fill_karadeniz <- function(palette = "Hidirnebi", discrete = TRUE, reverse = FALSE, ...) {
         pal <- karadeniz(palette = palette, reverse = reverse)
 

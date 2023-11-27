@@ -35,7 +35,8 @@ ag_generate_template_quarto <- function(name = "01 initial.qmd",
         template_path <- system.file("templates", "ag_template_quarto.qmd", package = "MyR")
 
         # Use the template
-        use_template(template_path,
+        use_template("ag_template_quarto.qmd",
                      save_as = name,
-                     package = "usethis", ..., open = open)
+                     package = "MyR", ...,
+                     open = open)
 }
