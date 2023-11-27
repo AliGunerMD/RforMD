@@ -10,7 +10,6 @@
 #' @param open A logical indicating whether to open the newly created Quarto document interactively.
 #' @param ... Additional arguments passed to the \code{use_template} function.
 #'
-#' @importFrom usethis use_template
 #' @return None
 #'
 #' @examples
@@ -22,7 +21,7 @@
 #' @seealso
 #' \code{\link{use_template}}
 #'
-#' @importFrom MyR use_template
+#' @importFrom usethis use_template
 #'
 #' @export
 
@@ -36,7 +35,7 @@ ag_generate_template_quarto <- function(name = "01 initial.qmd",
         template_path <- system.file("templates", "ag_template_quarto.qmd", package = "MyR")
 
         # Use the template
-        usethis::use_template(template_path,
+        use_template(template_path,
                      save_as = name,
-                     package = "MyR", ..., open = open)
+                     package = "usethis", ..., open = open)
 }

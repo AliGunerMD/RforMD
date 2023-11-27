@@ -1,6 +1,7 @@
 #' @title to_select_colors
 #' @description  To define my color pallette to standardize color use in projects
 #' @author Ali Guner
+#' @importFrom grDevices colorRampPalette
 
 #' @examples
 #' \dontrun{
@@ -42,15 +43,18 @@ to_select_colors <- function(...) {
         selected_colors[cols]
 }
 
-#' @title karadeniz
+#' @title karadeniz color pallette
 #' @description Multiple color palettes based on the "palette" argument
 #' @param palette Choose your favourite palette: "Hidirnebi", "Kadirga", "Kayabasi",  "Cal", "Pokut", "Samistal", "Elevit", "Gito" , "Ovit", "Vazil"  or "Palovit"
 #' @param reverse TRUE/FALSE
 #' @author Ali Guner
 #' @examples
+#' \dontrun{
 #' karadeniz("Vazil")
 #' colors
 #' show_col(karadeniz("Vazil")(12))
+#'}
+#'
 #'
 karadeniz <- function(palette = "main", reverse = FALSE, ...) {
 
@@ -65,7 +69,7 @@ karadeniz <- function(palette = "main", reverse = FALSE, ...) {
                 "Gito" = to_select_colors("dark red","dark blue","light grey", "teal green"),
                 "Ovit" = to_select_colors("dodger blue", "light blue","light blue", "light grey", "teal green"),
                 "Palovit" = to_select_colors("light blue","dark red", "teal green","orange"),
-                "Vazil" = to_select_colors("green",  "turquoise", "light blue")
+                "Vazil" = to_select_colors("green",  "turquoise", "light blue", "ferrari")
         )
         pal <- mypalettes[[palette]]
 
@@ -81,8 +85,10 @@ karadeniz <- function(palette = "main", reverse = FALSE, ...) {
 #' @param reverse TRUE/FALSE
 #' @author Ali Guner
 #' @examples
+#' \dontrun{
 #' ggplot(data=iris,mapping=aes(x=Petal.Length, y=Petal.Width, color=Species))+
 #' geom_point() + scale_color_karadeniz()
+#'}
 #'
 scale_color_karadeniz <- function(palette = "Hidirnebi", discrete = TRUE, reverse = FALSE, ...) {
         pal <- karadeniz(palette = palette, reverse = reverse)
@@ -101,9 +107,10 @@ scale_color_karadeniz <- function(palette = "Hidirnebi", discrete = TRUE, revers
 #' @param reverse TRUE/FALSE
 #' @author Ali Guner
 #' @examples
+#' \dontrun{
 #' ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width, color=Species))+
 #' geom_point() + scale_fill_karadeniz()
-#'
+#'}
 scale_fill_karadeniz <- function(palette = "Hidirnebi", discrete = TRUE, reverse = FALSE, ...) {
         pal <- karadeniz(palette = palette, reverse = reverse)
 

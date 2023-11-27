@@ -59,7 +59,7 @@ my_font <- "Helvetica"
                 strip.text = element_text(color = "black", size = my_plot_size),
                 panel.spacing = unit(1.2, "lines"),
                 panel.border = element_blank(),
-                plot.title = element_text(size = my_plot_size,  face = "bold", size = 16, hjust = .5, vjust = 2),
+                plot.title = element_text(face = "bold", size = 16, hjust = .5, vjust = 2),
                 plot.subtitle = element_text(hjust = .5, size = 14))
 
 }

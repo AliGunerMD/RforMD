@@ -22,8 +22,10 @@ scale_color_karadeniz(
 to COLOR function
 }
 \examples{
+\dontrun{
 ggplot(data=iris,mapping=aes(x=Petal.Length, y=Petal.Width, color=Species))+
 geom_point() + scale_color_karadeniz()
+}
 
 }
 \author{

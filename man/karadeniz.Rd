@@ -2,7 +2,7 @@
 % Please edit documentation in R/ag_colors.R
 \name{karadeniz}
 \alias{karadeniz}
-\title{karadeniz}
+\title{karadeniz color pallette}
 \usage{
 karadeniz(palette = "main", reverse = FALSE, ...)
 }
@@ -15,9 +15,12 @@ karadeniz(palette = "main", reverse = FALSE, ...)
 Multiple color palettes based on the "palette" argument
 }
 \examples{
+\dontrun{
 karadeniz("Vazil")
 colors
 show_col(karadeniz("Vazil")(12))
+}
+
 
 }
 \author{
