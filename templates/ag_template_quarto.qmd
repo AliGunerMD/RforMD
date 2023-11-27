@@ -1,0 +1,111 @@
+---
+author: 
+  - name: "Ali Guner"
+    url: "https://aliguner.com"
+    affiliation: "Department of Biostatistics and Medical Informatics, KTU"
+date: today
+date-format: "DD/MM/YYYY"
+title: ""                               # FILL
+editor: source
+editor_options: 
+  chunk_output_type: console
+execute: 
+   echo: false                      
+   message: false
+   warning: false
+   cache: false
+format:
+   html:
+    toc: true
+    toc-location: "left"
+    toc-depth: 4
+    code-fold: true
+    code-summary: "R Code"
+    code-copy: true
+    embed-resources: false ### CHANGE this before sharing with Colleagues
+    output-file: ""                     # FILL
+    output-ext: "html"
+  # pdf:
+  #   toc: true
+  #   toc-location: "left"
+  #   toc-depth: 4
+  #   lof: true
+  #   lot: true
+  #   output-file: ""                   # FILL
+  #   output-ext: "pdf"
+  # docx:
+  #   toc: true
+  #   toc-location: "left"
+  #   toc-depth: 4
+  #   lof: true
+  #   lot: true
+  #   output-file: ""                   # FILL
+  #   output-ext: "docx"
+---
+
+```{r}
+#| label: Import My library
+#| eval: false                                  
+## If you are here, You already installed MyR package
+
+if (!require("MyR", quietly = TRUE)) {
+  if (!requireNamespace("remotes", quietly = TRUE)) {
+    install.packages("remotes")
+  }
+  remotes::install_github("AliGunerMD/MyR",
+    dependencies = TRUE, quiet = FALSE, force = TRUE)
+  library("MyR")
+}
+
+```
+
+
+```{r}
+#| label: Import libraries
+
+
+install.packages("remotes")
+remotes::install_github("AliGunerMD/MyR")
+
+# Define the required package names
+packages <- c("tidyverse", "scales", "glue", "readxl", "skimr", "naniar", 
+              "janitor", "scales", "here")
+
+# Function to check, install, and load packages
+load_packages <- function(packages) {
+        
+  for (package in packages) {
+    if (!require(package, character.only = TRUE)) {
+        install.packages(package)
+        library(package, character.only = TRUE)
+    } else {
+      suppressPackageStartupMessages(library(package, character.only = TRUE))
+        # library(package, character.only = TRUE)
+    }
+  }
+}
+
+load_packages(packages)
+```
+
+
+```{r}
+#| label: Import data
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

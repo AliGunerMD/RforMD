@@ -2,6 +2,7 @@
 #'
 #' @description This function creates the essential folder structure for a new R project.
 #' It includes the main folders, subfolders, and necessary files to organize the project.
+#' Should be used just after "the project was created" via create_project() or "New Project"
 #'
 #' @details The function performs the following steps:
 #' 1. Define folder names, including "_Codes," "_Outputs," and "_Data."
@@ -15,9 +16,6 @@
 #'
 #' @param None
 #'
-#' @import dplyr
-#' @import magrittr
-#' @importFrom ggplot2 theme
 #'
 #' @return None
 #'
