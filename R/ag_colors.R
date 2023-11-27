@@ -60,17 +60,17 @@ to_select_colors <- function(...) {
 karadeniz <- function(palette = "main", reverse = FALSE, ...) {
 
         mypalettes <- list(
-                "Hidirnebi" = to_select_colors("ferrari","green", "dodger blue","orange", "gray"),             # to_select_colors(sample(names(selected_colors), 6)),
+                "Hidirnebi" = to_select_colors("ferrari", "dodger blue", "gray", "green", "orange"),             # to_select_colors(sample(names(selected_colors), 6)),
                 "Kadirga" = to_select_colors("turquoise", "ferrari","dodger blue", "coral red"),
                 "Kayabasi" = to_select_colors("dark blue", "green","ferrari", "gray"),
                 "Cal" = to_select_colors("teal green","orange", "blue", "turquoise","ferrari"),
-                "Pokut" = to_select_colors("green", "gray","ark blue","ligth orange", "black"),
-                "Samistal" = to_select_colors("light grey", "coral red", "green","dark red"),
+                "Pokut" = to_select_colors("green", "gray","dark blue","ligth orange", "black"),
+                "Samistal" = to_select_colors("coral red", "green","dark red"),
                 "Elevit" = to_select_colors("ferrari","dodger blue", "teal green", "black"),
                 "Gito" = to_select_colors("dark red","dark blue","light grey", "teal green"),
                 "Ovit" = to_select_colors("dodger blue", "light blue","light blue", "light grey", "teal green"),
                 "Palovit" = to_select_colors("light blue","dark red", "teal green","orange"),
-                "Vazil" = to_select_colors("green",  "turquoise", "light blue", "ferrari")
+                "Vazil" = to_select_colors("green",  "turquoise", "light blue")
         )
         pal <- mypalettes[[palette]]
 
