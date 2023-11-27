@@ -54,6 +54,7 @@ to_select_colors <- function(...) {
 #' colors
 #' show_col(karadeniz("Vazil")(12))
 #'}
+#'@export
 #'
 #'
 karadeniz <- function(palette = "main", reverse = FALSE, ...) {
@@ -89,6 +90,7 @@ karadeniz <- function(palette = "main", reverse = FALSE, ...) {
 #' ggplot(data=iris,mapping=aes(x=Petal.Length, y=Petal.Width, color=Species))+
 #' geom_point() + scale_color_karadeniz()
 #'}
+#'@export
 #'
 scale_color_karadeniz <- function(palette = "Hidirnebi", discrete = TRUE, reverse = FALSE, ...) {
         pal <- karadeniz(palette = palette, reverse = reverse)
@@ -111,6 +113,7 @@ scale_color_karadeniz <- function(palette = "Hidirnebi", discrete = TRUE, revers
 #' ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width, color=Species))+
 #' geom_point() + scale_fill_karadeniz()
 #'}
+#'@export
 scale_fill_karadeniz <- function(palette = "Hidirnebi", discrete = TRUE, reverse = FALSE, ...) {
         pal <- karadeniz(palette = palette, reverse = reverse)
 

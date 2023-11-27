@@ -20,8 +20,6 @@ karadeniz("Vazil")
 colors
 show_col(karadeniz("Vazil")(12))
 }
-
-
 }
 \author{
 Ali Guner

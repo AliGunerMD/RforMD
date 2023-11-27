@@ -26,7 +26,6 @@ to COLOR function
 ggplot(data=iris,mapping=aes(x=Petal.Length, y=Petal.Width, color=Species))+
 geom_point() + scale_color_karadeniz()
 }
-
 }
 \author{
 Ali Guner
