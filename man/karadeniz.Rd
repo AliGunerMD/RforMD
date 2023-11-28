@@ -7,7 +7,7 @@
 karadeniz(palette = "main", reverse = FALSE, ...)
 }
 \arguments{
-\item{palette}{Choose your favourite palette: "Hidirnebi", "Kadirga", "Kayabasi",  "Cal", "Pokut", "Samistal", "Elevit", "Gito" , "Ovit", "Vazil"  or "Palovit"}
+\item{palette}{Choose your favourite palette: "Hidirnebi", "Kadirga", "Kayabasi",  "Erikbeli", "Pokut", "Samistal", "Elevit", "Gito" , "Ovit", "Vazil"  or "Palovit"}
 
 \item{reverse}{TRUE/FALSE}
 }

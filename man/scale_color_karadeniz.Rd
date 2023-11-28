@@ -7,7 +7,7 @@
 scale_color_karadeniz(palette = "Faroz", discrete = TRUE, reverse = FALSE, ...)
 }
 \arguments{
-\item{palette}{Choose your favorite palette: "Hidirnebi", "Kadirga", "Kayabasi", "Cal", "Pokut", "Samistal", "Elevit", "Gito", "Ovit", "Palovit", "Faroz", "Vazil"}
+\item{palette}{Choose your favorite palette: "Hidirnebi", "Kadirga", "Kayabasi", "Erikbeli", "Pokut", "Samistal", "Elevit", "Gito", "Ovit", "Palovit", "Faroz", "Vazil"}
 
 \item{discrete}{TRUE/FALSE}
 
@@ -26,8 +26,8 @@ scale_color_karadeniz()
 
 iris \%>\%
 ggplot(aes(Sepal.Length, Sepal.Width, color = Petal.Length)) +
-       geom_point() +
-       scale_color_karadeniz(palette = "Vazil", discrete = FALSE)
+geom_point() +
+scale_color_karadeniz(palette = "Vazil", discrete = FALSE)
 }
 \author{
 Ali Guner
