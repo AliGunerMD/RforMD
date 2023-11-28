@@ -202,3 +202,63 @@ scale_fill_karadeniz <- function(palette = "Faroz",
     scale_fill_gradientn(colours = pal(256), ...)
   }
 }
+
+#' DEFINE MY COLORS --------------------------------------
+#'
+#' @title  ag_colors
+#' @description  To define single color for standardizing color use in projects (Source: RColorBrewer)
+#' @param palette_name A character string specifying the name of the desired color palette. If NULL (default), a palette is randomly selected.
+#' @return A vector representing either the selected color palette or a randomly chosen color from a palette.
+#'
+#' @examples
+#' # Select a specific palette
+#' ag_colors("greens")
+#' ag_colors("greens")[4]
+#'
+#' # Randomly select a color from any palette
+#' ag_colors()
+#'
+#'
+#' @keywords color palette, data visualization
+#' @export
+#'
+
+ag_colors <- function(palette_name = NULL) {
+        # Define the palettes
+        ag_blues <- c("#F7FBFF", "#DEEBF7", "#C6DBEF", "#9ECAE1", "#6BAED6", "#4292C6", "#2171B5" ,"#084594")
+        ag_greens <- c("#F7FCF5", "#E5F5E0", "#C7E9C0", "#A1D99B", "#74C476", "#41AB5D" ,"#238B45", "#005A32")
+        ag_reds <- c("#FFF5F0", "#FEE0D2", "#FCBBA1", "#FC9272" ,"#FB6A4A" ,"#EF3B2C", "#CB181D", "#99000D")
+        ag_grays <- c("#FFFFFF", "#F0F0F0", "#D9D9D9", "#BDBDBD", "#969696", "#737373", "#525252", "#252525")
+        ag_oranges <- c("#FFF5EB", "#FEE6CE", "#FDD0A2", "#FDAE6B", "#FD8D3C", "#F16913", "#D94801", "#8C2D04")
+        ag_spectral <- c("#D53E4F", "#F46D43", "#FDAE61", "#FEE08B", "#E6F598", "#ABDDA4", "#66C2A5", "#3288BD")
+        ag_brewer1 <- c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3", "#FF7F00", "#FFFF33", "#A65628", "#F781BF")
+
+        # Check if the provided palette name is one of the predefined palettes
+        if (!is.null(palette_name) && !(palette_name %in% c("blues", "greens", "reds", "grays", "oranges", "spectral", "brewer1"))) {
+                stop("Invalid palette_name. Choose from 'blues', 'greens', 'reds', 'grays', 'oranges', 'spectral', 'brewer1'")
+        }
+
+
+        if (is.null(palette_name)) {
+
+                # If palette_name is not provided, randomly select one
+                palettes <- list(ag_blues, ag_greens, ag_reds, ag_grays, ag_oranges, ag_spectral, ag_brewer1)
+                random_palette <- sample(palettes, 1)
+
+                random_color <- sample(random_palette[[1]], 1)
+                return(random_color)
+
+        }
+
+        # Return the selected palette
+        switch(palette_name,
+               blues = ag_blues,
+               greens = ag_greens,
+               reds = ag_reds,
+               grays = ag_grays,
+               oranges = ag_oranges,
+               spectral = ag_spectral,
+               brewer1 = ag_brewer1,
+               stop("Invalid palette_name. Choose from 'blues', 'greens', 'reds', 'grays', 'oranges', 'spectral', 'brewer1'"))
+}
+
