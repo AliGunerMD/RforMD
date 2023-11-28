@@ -92,6 +92,11 @@ load_packages <- function(packages) {
 load_packages(packages)
 ```
 
+```{r}
+
+my_font <- "Arial"
+
+```
 
 ```{r}
 #| label: Import data

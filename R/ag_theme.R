@@ -14,6 +14,8 @@
 #' - Gray background for facet strips.
 #' - Increased panel spacing and removed panel borders.
 #' - Bold and centrally aligned plot title, and centered plot subtitle.
+#' @param my_plot_size Numeric, size of the text in the plot.
+#' @param my_font Character, font family for the text in the plot.
 #'
 #' @import ggplot2
 #' @import magrittr
@@ -42,10 +44,9 @@
 #'
 
 
-ag_theme <- function(){
+ag_theme <- function(my_plot_size = 12,
+                     my_font = "Arial"){
 
-my_plot_size <- 12
-my_font <- "Helvetica"
 
         ggplot2::theme_light(base_family = my_font) %+replace%
 
@@ -55,7 +56,7 @@ my_font <- "Helvetica"
                 legend.position = "top",
                 legend.text = element_text(size = my_plot_size),
                 axis.text = element_text(size = my_plot_size),
-                strip.background = element_rect(fill = my_grays[2]),
+                strip.background = element_rect(fill = ag_colors("grays")[2]),
                 strip.text = element_text(color = "black", size = my_plot_size),
                 panel.spacing = unit(1.2, "lines"),
                 panel.border = element_blank(),

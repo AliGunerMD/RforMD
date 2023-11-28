@@ -19,4 +19,6 @@ Depends: R (>= 3.3.0)
 Imports: 
     ggplot2 (>= 3.3.0),
     magrittr (>= 2.0.3),
-    usethis (>= 2.2.2)
+    usethis (>= 2.2.2),
+    flextable (>= 0.9.1),
+    officer (>= 0.6.2)
