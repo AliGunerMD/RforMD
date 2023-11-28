@@ -116,7 +116,7 @@ to_select_colors <- function(...) {
 #'
 karadeniz <- function(palette = "main", reverse = FALSE, ...) {
   mypalettes <- list(
-          "Hidirnebi" = to_select_colors("Dark Blue", "Pistachio", "Amazon", "Charcoal", "Smoky Black"),
+          "Hidirnebi" = to_select_colors("Dark Blue", "Amazon", "Pistachio",  "Charcoal", "Smoky Black"),
           "Kadirga" = to_select_colors("Deep Sky Blue", "Argentinan", "Dodger Blue", "Deep Fuchsia", "Dark Orchid", "Dark charcoal"),
           "Kayabasi" = to_select_colors("Forest Green",  "Dark Olive Green", "Saddle Brown", "Dark Slate Grey"),
           "Cal" = to_select_colors("Orange", "Pumpkin",  "Crimson", "Chocolate", "Dark Scarlet"),
