@@ -18,7 +18,7 @@
 #' @param my_font Character, font family for the text in the plot.
 #'
 #' @import ggplot2
-#' @import magrittr
+#' @importFrom magrittr %>%
 #' @return
 #' The function returns a ggplot2 theme object that can be applied to ggplot objects
 #' to achieve the specified custom styling.

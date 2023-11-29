@@ -83,68 +83,36 @@ ag_flex <- function(data, flex_font_family = "Arial", flex_font_size = 11) {
 
 
 
-
-#' Create Landscape Page Section for Flextable
-#'
-#' @description
-#' This function generates a landscape-oriented page section for use in creating a Microsoft Word document with the `officer` package.
-#' The section is defined with landscape orientation, and default page margins are applied.
-#'
-#' @param page_size An officer page size object specifying the orientation of the page.
-#' @param type Character, the type of section to be added ("nextPage" for a new page).
-#' @param page_margins An officer page margin object defining the margins for the page.
-#' @return A landscape-oriented page section for use in creating a Word document with officer.
+#' @title Page section
+#' @param orientation A character value specifying the page orientation. Use "landscape" for landscape orientation and "portrait" for portrait orientation.
+#' @return A page section object for use in a flextable document (while saving with pr_section ()).
 #' @author Ali Guner
 #' @export
+#'
 #' @examples
 #' \dontrun{
-#' # Create a landscape page section
-#' flex_landscape <- officer::prop_section(
-#'   page_size = officer::page_size(orient = "landscape"),
-#'   type = "nextPage",
-#'   page_margins = officer::page_mar()
-#' )
+#' # Assuming you want to create a landscape page section
+#' flex_page_section("landscape")
+#'
+#' # Assuming you want to create a portrait page section
+#' flex_page_section("portrait")
 #' }
 #'
-#' @importFrom officer page_size page_mar prop_section
+#' @importFrom officer prop_section page_size page_mar
 
+flex_page_section <- function(orientation) {
+        if (orientation %in% c("landscape", "portrait")) {
 
-flex_landscape <- officer::prop_section(
-        page_size = officer::page_size(orient = "landscape"),
-        type = "nextPage",
-        page_margins = officer::page_mar()
-)
-
-
-
-#' Create Portrait Page Section for Flextable
-#'
-#' @description
-#' This function generates a portrait-oriented page section for use in creating a Microsoft Word document with the `officer` package.
-#' The section is defined with portrait orientation and a specified width, and default page margins are applied.
-#'
-#' @param page_size An officer page size object specifying the orientation and width of the page.
-#' @param type Character, the type of section to be added ("nextPage" for a new page).
-#' @param page_margins An officer page margin object defining the margins for the page.
-#' @return A portrait-oriented page section for use in creating a Word document with officer.
-#' @author Ali Guner
-#' @export
-#' @examples
-#' \dontrun{
-#' # Create a portrait page section
-#' flex_portrait <- officer::prop_section(
-#'   page_size = officer::page_size(orient = "portrait", width = 14),
-#'   type = "nextPage",
-#'   page_margins = officer::page_mar()
-#' )
-#' }
-#' @importFrom officer page_size page_mar prop_section
-#'
-
-
-flex_portrait <- officer::prop_section(
-        page_size = officer::page_size(orient = "portrait", width = 14),
-        type = "nextPage",
-        page_margins = officer::page_mar()
-)
-
+                width <- if (orientation == "portrait") 14 else NULL
+                return(
+                        officer::prop_section(
+                                page_size = officer::page_size(orient = orientation,
+                                                               width = width),
+                                type = "nextPage",
+                                page_margins = officer::page_mar()
+                        )
+                )
+        } else {
+                stop("Invalid orientation. Use 'landscape' or 'portrait'.")
+        }
+}
