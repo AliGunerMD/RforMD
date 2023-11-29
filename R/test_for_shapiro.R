@@ -11,8 +11,8 @@
 #' Before this test, all variables which are desired to be tests, should be defined in explanatory vector.
 #'
 #' @param dataset A data frame containing the variables of interest.
-#' @param table_vars A character vector of variable names to be tested for normality. Can be defined with names(select()) functions.
 #' @param strata An optional grouping variable for stratified analysis. Default is NULL.
+#' @param table_vars A character vector of variable names to be tested for normality. Can be defined with names(select()) functions.
 #' @param names Logical. If TRUE, returns the names of non-normally distributed variables;
 #' if FALSE, returns the indices of these variables. Default is FALSE.
 #' @param message Logical. If TRUE, displays informative messages about the analysis. Default is FALSE.
@@ -40,11 +40,29 @@
 #'
 #' @import dplyr
 #' @import tidyr
+#' @import tidyselect
 #'
 #' @export
 
 
-ag_shapiro <- function(dataset, table_vars, strata = NULL, names = FALSE, message = FALSE){
+ag_shapiro <- function(dataset, strata = NULL, table_vars, names = FALSE, message = FALSE){
+
+        # Check if dataset is a data frame
+        if (!is.data.frame(dataset)) {
+                stop("Input 'dataset' must be a data frame.")
+        }
+
+        # Check if strata is NULL or a vector
+        if (!is.null(strata) && !is.vector(strata)) {
+                stop("Input 'strata' must be NULL or a vector.")
+        }
+
+        # Check if table_vars is a vector
+        if (!is.vector(table_vars)) {
+                stop("Input 'table_vars' must be a vector.")
+        }
+
+
 
 
         if (is.null(strata)) {
@@ -114,8 +132,8 @@ ag_shapiro <- function(dataset, table_vars, strata = NULL, names = FALSE, messag
 #' names and message arguments are always FALSE.
 #'
 #' @param dataset A data frame containing the variables of interest.
-#' @param table_vars A character vector of variable names to be tested for normality.
 #' @param strata An optional grouping variable for stratified analysis. Default is NULL.
+#' @param table_vars A character vector of variable names to be tested for normality.
 #'
 #' @return A vector containing the indices of non-normally distributed variables.
 #'
@@ -131,8 +149,9 @@ ag_shapiro <- function(dataset, table_vars, strata = NULL, names = FALSE, messag
 #' dependent <- "Species"
 #'
 #' ag_ff_non_param_vars(dataset = iris,
-#' table_vars = table_vars,
-#' strata = dependent)
+#' strata = dependent,
+#' table_vars = table_vars
+#' )
 #' }
 #' @import dplyr
 #' @import tidyr
@@ -140,12 +159,22 @@ ag_shapiro <- function(dataset, table_vars, strata = NULL, names = FALSE, messag
 #'
 #'
 #'
-#'
-ag_ff_non_param_vars <- function(dataset, table_vars,  strata = NULL){
-        # To use in finalfit functions
 
-        non_param_vars <- ag_shapiro(dataset = dataset, table_vars = table_vars, strata = strata, names = FALSE, message = FALSE)
+
+ag_ff_non_param_vars <- function(dataset, strata = NULL, table_vars){
+        # To use in finalfit functions (but may not be needed because the defaults are same)
+
+        non_param_vars <- ag_shapiro(dataset = dataset, strata = strata, table_vars = table_vars, names = FALSE, message = FALSE)
 
         non_param_vars
 }
+
+
+
+
+
+
+
+
+
 

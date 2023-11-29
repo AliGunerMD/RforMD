@@ -92,15 +92,15 @@ ag_flex <- function(data, flex_font_family = "Arial", flex_font_size = 11) {
 #' @examples
 #' \dontrun{
 #' # Assuming you want to create a landscape page section
-#' flex_page_section("landscape")
+#' ag_flex_page_section("landscape")
 #'
 #' # Assuming you want to create a portrait page section
-#' flex_page_section("portrait")
+#' ag_flex_page_section("portrait")
 #' }
 #'
 #' @importFrom officer prop_section page_size page_mar
 
-flex_page_section <- function(orientation) {
+ag_flex_page_section <- function(orientation) {
         if (orientation %in% c("landscape", "portrait")) {
 
                 width <- if (orientation == "portrait") 14 else NULL
