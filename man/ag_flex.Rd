@@ -4,7 +4,7 @@
 \alias{ag_flex}
 \title{Create a Styled Flextable}
 \usage{
-ag_flex(data, flex_font_family = "Arial", flex_font_size = 14)
+ag_flex(data, flex_font_family = "Arial", flex_font_size = 11)
 }
 \arguments{
 \item{data}{A data frame or a tibble to be displayed in the flextable.}
@@ -18,7 +18,8 @@ A flextable object with customized styling.
 }
 \description{
 This function generates a styled flextable with specified font family and font size.
-The flextable is configured with default font settings, the 'theme_booktabs', and additional styling to make the first row bold.
+The flextable is configured with default font settings, the 'theme_booktabs', and additional styling
+to make the first row bold in the header.
 }
 \examples{
 \dontrun{
