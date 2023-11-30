@@ -150,7 +150,7 @@ ag_ff_summary_factorlist <- function(dataset, dependent, table_vars,
         }
 
         # Perform the rest of the operations
-        summary_result <- dataset %>%
+        combined_ff <- dataset %>%
                 finalfit::summary_factorlist(
                         dependent = dependent,
                         explanatory = table_vars,
@@ -165,7 +165,7 @@ ag_ff_summary_factorlist <- function(dataset, dependent, table_vars,
                 ) %>%
                 suppressWarnings()
 
-        return(summary_result)
+        return(combined_ff)
 }
 
 
