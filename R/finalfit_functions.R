@@ -7,7 +7,7 @@
 #' This function generates summary statistics and statistical tests for both categorical and continuous
 #' variables in a dataset. It is designed to work with the `finalfit` package and provides flexibility
 #' in specifying the type of summary statistics and tests to be performed.
-#'
+
 #' @param dataset A data frame containing the variables of interest.
 #' @param dependent The dependent variable (outcome) in the analysis, should be a factor.
 #' @param table_vars A character vector specifying the explanatory variables (predictors) for the analysis.
@@ -173,7 +173,7 @@ ag_ff_summary_factorlist <- function(dataset, dependent, table_vars,
 
 
 
-#' @title Aggregated Summary Factor List with Fisher Correction
+#' @title Aggregated Summary with Shapiro arrangement / Fisher Correction
 #'
 #' @description
 #'
@@ -184,6 +184,10 @@ ag_ff_summary_factorlist <- function(dataset, dependent, table_vars,
 #' Fisher's correction for expected cell frequencies less than 5 in more than 20% of the cells in a
 #' contingency table. The function provides flexibility in specifying the type of summary statistics
 #' and tests to be performed, including the option for Fisher's correction.
+#'
+#' Normality distributions of continuous variables is evaluated by Shapiro-Wilk test and required test is decided based on the test.
+#' For categorical variables, expected cell frequencies is calculated and required test (Chi-square or Fisher) is decided based on this.
+#'
 #'
 #' @param dataset A data frame containing the variables of interest.
 #' @param dependent The dependent variable (outcome) in the analysis, should be a factor.

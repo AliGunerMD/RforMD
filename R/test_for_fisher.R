@@ -156,7 +156,8 @@ ag_fisher <- function(dataset, strata, table_vars, silence = TRUE, show_tables =
                 variable_name <- names(contingency_tables)[i]
 
                 # Calculate the chi-square test and expected values
-                expected_values <- stats::chisq.test(current_table)$expected
+                expected_values <- stats::chisq.test(current_table)$expected %>%
+                        suppressWarnings()
                 # expected_values <- result$expected
 
                 # Count the cells where the expected value is less than 5
