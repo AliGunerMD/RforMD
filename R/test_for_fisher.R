@@ -2,15 +2,17 @@
 #' @title Identify Factors with Low Expected Cell Frequencies (for Fisher test)
 #'
 #' @description
-#' This function analyzes contingency tables for factor variables within a dataset.
-#' It checks for zero counts and low expected cell frequencies in the chi-square test.
-#' Factors with expected cell frequencies less than 5 in more than 20% of the cells are flagged.
+#' This function performs a contingency table analysis on specified factor or character variables in a given dataset,
+#' with an option to identify variables exhibiting expected cell frequencies less than 5 in more than 20% of cells.
+#' It is designed to handle potential issues gracefully, providing informative warnings and excluding rows with
+#' missing values in the strata variable when necessary.
 #'
 #'
 #' @param dataset The dataset containing the variables of interest.
 #' @param strata The stratifying factor variable for the analysis.
 #' @param table_vars A character vector of factor variable names to analyze.
 #' @param silence Logical, indicating whether to suppress warnings. Default is TRUE.
+#' @param show_tables Logical, indicating whether to display contingency tables. Default is FALSE.
 #'
 #' @return A character vector of factor variable names with low expected cell frequencies, or NULL if none are found.
 #' @author Ali Guner
@@ -26,28 +28,79 @@
 #'
 #' strata <- "species"
 #'
-#' ag_fisher(penguins, table_vars = table_vars, strata = strata, silence = FALSE)
-#'
+#' ag_fisher(penguins, table_vars = table_vars, strata = strata, silence = TRUE)
+#' ag_fisher(penguins, table_vars = table_vars, strata = strata, silence = FALSE, show_tables = TRUE)
 #' }
 #'
 #' @import dplyr
 #' @import tidyselect
 #'
-#' @keywords contingency-tables warning suppression
+#' @keywords contingency-tables fisher chi-square
 #' @seealso \code{\link{chisq.test}}
 #' @export
 #'
 #'
 #'
 
-ag_fisher <- function(dataset, strata, table_vars, silence = TRUE) {
+ag_fisher <- function(dataset, strata, table_vars, silence = TRUE, show_tables = FALSE) {
         library(dplyr)
+
+
+        # Check if dataset argument is missing
+        if (missing(dataset)) {
+                stop("Missing required argument: dataset")
+        }
+
+        # Check if strata argument is missing
+        if (missing(strata)) {
+                stop("Missing required argument: strata")
+        }
+
+        # Check if table_vars argument is missing
+        if (missing(table_vars)) {
+                stop("Missing required argument: table_vars")
+        }
+
+        # Check if dataset is a data frame
+        if (!is.data.frame(dataset)) {
+                stop("The 'dataset' argument should be a data frame.")
+        }
+
+        # Check if strata is a vector with a single element
+        if (!is.vector(strata) || length(strata) != 1) {
+                stop("The 'strata' argument should be a vector with a single element.")
+        }
+
+        # Check if table_vars is a vector
+        if (!is.vector(table_vars)) {
+                stop("The 'table_vars' argument should be a vector.")
+        }
+
+
+        # Check if strata variable of dataset is factor or character
+        if (!is.factor(dataset[[strata]]) && !is.character(dataset[[strata]])) {
+                stop("The 'strata' variable of the 'dataset' should be a factor or character.")
+        }
+
+
 
 
         # Select factor variables
         my_factors <- dataset %>%
-                dplyr::select({{ strata }}, tidyselect::all_of(table_vars)) %>%
+                dplyr::select(all_of({{ strata }}), tidyselect::all_of(table_vars)) %>%
                 dplyr::select_if(function(var) is.factor(var) || is.character(var))
+
+
+
+
+        # Check for missing values in 'strata'
+        if(any(is.na(my_factors %>%
+                     dplyr::select(all_of({{ strata }}))))) {
+                warning(paste0("There are missing values in ", {{ strata }}, ". Rows with missing values in ",{{ strata }}, " will be excluded from the analysis."))
+                my_factors <- my_factors %>%
+                        dplyr::filter(!is.na({{ strata }}))
+        }
+
 
         # Get the variable names (excluding strata)
 
@@ -73,6 +126,18 @@ ag_fisher <- function(dataset, strata, table_vars, silence = TRUE) {
                         contingency_tables[[var]] <- contingency_table
                 }
         }
+
+
+
+        # Show contingency tables if silence is FALSE
+        if (!silence && show_tables) {
+                cat("Contingency Tables:\n")
+                for (i in seq_along(contingency_tables)) {
+                        cat("Variable:", names(non_strata_vars)[i], "\n")
+                        print(contingency_tables[[i]])
+                }
+        }
+
 
         # Create an empty vector to store variable names with low expected values
         variables_low_expected_values <- character()
@@ -105,7 +170,11 @@ ag_fisher <- function(dataset, strata, table_vars, silence = TRUE) {
                 warning("There is no factor/character variable with the expected cell frequencies are less than 5 in more than 20% of the cells in a contingency table.")
                 }
                         return(NULL)
+
         } else {
                 return(variables_low_expected_values)
         }
 }
+
+
+

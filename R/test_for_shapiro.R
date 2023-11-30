@@ -79,7 +79,8 @@ ag_shapiro <- function(dataset, strata = NULL, table_vars, names = FALSE, messag
                 if (message) {
 
                 message("Shapiro-Wilk test results for normality:")
-                message(paste("Variables:", toString(table_vars)))
+                message(paste("Checked variables:", toString(table_vars)))
+
                 message(paste("Non-normally distributed variables:", toString(shapiro_results)))
 
                 }

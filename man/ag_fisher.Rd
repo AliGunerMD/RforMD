@@ -4,7 +4,7 @@
 \alias{ag_fisher}
 \title{Identify Factors with Low Expected Cell Frequencies (for Fisher test)}
 \usage{
-ag_fisher(dataset, strata, table_vars, silence = TRUE)
+ag_fisher(dataset, strata, table_vars, silence = TRUE, show_tables = FALSE)
 }
 \arguments{
 \item{dataset}{The dataset containing the variables of interest.}
@@ -14,14 +14,17 @@ ag_fisher(dataset, strata, table_vars, silence = TRUE)
 \item{table_vars}{A character vector of factor variable names to analyze.}
 
 \item{silence}{Logical, indicating whether to suppress warnings. Default is TRUE.}
+
+\item{show_tables}{Logical, indicating whether to display contingency tables. Default is FALSE.}
 }
 \value{
 A character vector of factor variable names with low expected cell frequencies, or NULL if none are found.
 }
 \description{
-This function analyzes contingency tables for factor variables within a dataset.
-It checks for zero counts and low expected cell frequencies in the chi-square test.
-Factors with expected cell frequencies less than 5 in more than 20% of the cells are flagged.
+This function performs a contingency table analysis on specified factor or character variables in a given dataset,
+with an option to identify variables exhibiting expected cell frequencies less than 5 in more than 20% of cells.
+It is designed to handle potential issues gracefully, providing informative warnings and excluding rows with
+missing values in the strata variable when necessary.
 }
 \examples{
 \dontrun{
@@ -34,8 +37,8 @@ names()
 
 strata <- "species"
 
-ag_fisher(penguins, table_vars = table_vars, strata = strata, silence = FALSE)
-
+ag_fisher(penguins, table_vars = table_vars, strata = strata, silence = TRUE)
+ag_fisher(penguins, table_vars = table_vars, strata = strata, silence = FALSE, show_tables = TRUE)
 }
 
 }
@@ -45,6 +48,6 @@ ag_fisher(penguins, table_vars = table_vars, strata = strata, silence = FALSE)
 \author{
 Ali Guner
 }
+\keyword{chi-square}
 \keyword{contingency-tables}
-\keyword{suppression}
-\keyword{warning}
+\keyword{fisher}
