@@ -213,13 +213,13 @@ ag_ff_summary_factorlist <- function(dataset, dependent, table_vars,
 #' @examples
 #' \dontrun{
 #'   # Example usage:
-#'   result <- ag_ff_summary_factorlist_corrected(penguins, dependent = "species",
+#'   result <- ag_ff_summary(penguins, dependent = "species",
 #'                                                 table_vars = c("bill_length_mm", "bill_depth_mm"),
 #'                                                 na_include = FALSE, row_col_sums = "row_col_based",
 #'                                                 all_cont = "shapiro", fisher_correction = TRUE)
 #' }
 #'
-#' @seealso \code{\link{ag_ff_summary_factorlist}}, \code{\link{ag_fisher}}
+#' @seealso \code{\link{ag_ff_summary}}, \code{\link{ag_fisher}}
 #'
 #' @author Ali Guner
 #'
@@ -230,7 +230,7 @@ ag_ff_summary_factorlist <- function(dataset, dependent, table_vars,
 
 
 
-ag_ff_summary_factorlist_corrected <- function(dataset, dependent, table_vars, na_include = TRUE, row_col_sums = "row_col_based",
+ag_ff_summary <- function(dataset, dependent, table_vars, na_include = TRUE, row_col_sums = "row_col_based",
                                 all_cont = "shapiro", fisher_correction = TRUE, ...) {
 
         # Generate chisquare summary

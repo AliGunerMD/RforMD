@@ -149,7 +149,7 @@ ag_shapiro <- function(dataset, strata = NULL, table_vars, names = FALSE, messag
 
 #' dependent <- "Species"
 #'
-#' ag_ff_non_param_vars(dataset = iris,
+#' ag_non_param_vars(dataset = iris,
 #' strata = dependent,
 #' table_vars = table_vars
 #' )
@@ -162,7 +162,7 @@ ag_shapiro <- function(dataset, strata = NULL, table_vars, names = FALSE, messag
 #'
 
 
-ag_ff_non_param_vars <- function(dataset, strata = NULL, table_vars){
+ag_non_param_vars <- function(dataset, strata = NULL, table_vars){
         # To use in finalfit functions (but may not be needed because the defaults are same)
 
         non_param_vars <- ag_shapiro(dataset = dataset, strata = strata, table_vars = table_vars, names = FALSE, message = FALSE)

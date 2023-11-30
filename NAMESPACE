@@ -2,11 +2,11 @@
 
 export(ag_colors)
 export(ag_create_project_folders)
-export(ag_ff_non_param_vars)
-export(ag_ff_summary_factorlist_corrected)
+export(ag_ff_summary)
 export(ag_fisher)
 export(ag_flex)
 export(ag_flex_page_section)
+export(ag_non_param_vars)
 export(ag_shapiro)
 export(ag_theme)
 export(scale_color_karadeniz)
