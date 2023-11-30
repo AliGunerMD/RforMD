@@ -12,6 +12,8 @@ scale_color_karadeniz(palette = "Faroz", discrete = TRUE, reverse = FALSE, ...)
 \item{discrete}{TRUE/FALSE}
 
 \item{reverse}{TRUE/FALSE}
+
+\item{...}{Additional arguments to be passed}
 }
 \description{
 To define my color pallette to standardize color use in projects

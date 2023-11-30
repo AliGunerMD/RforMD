@@ -93,12 +93,19 @@ ag_fisher <- function(dataset, strata, table_vars, silence = TRUE, show_tables =
 
 
 
-        # Check for missing values in 'strata'
-        if(any(is.na(my_factors %>%
-                     dplyr::select(all_of({{ strata }}))))) {
-                warning(paste0("There are missing values in ", {{ strata }}, ". Rows with missing values in ",{{ strata }}, " will be excluded from the analysis."))
-                my_factors <- my_factors %>%
-                        dplyr::filter(!is.na({{ strata }}))
+        # # Check for missing values in 'strata'
+        # if(any(is.na(my_factors %>%
+        #              dplyr::select(all_of({{ strata }}))))) {
+        #         warning(paste0("Important! There are missing values in ", {{ strata }}, ". Rows with missing values in ",{{ strata }}, " will be removed from the analysis."))
+        #         my_factors <- my_factors %>%
+        #                 dplyr::filter(!is.na({{ strata }}))
+        # }
+
+        # Handle missing values in 'strata'
+        missing_strata <- sum(is.na(my_factors[[1]]))
+        if (missing_strata > 0) {
+                warning(paste0("Important! There are ", missing_strata, " missing values in ", {{ strata }}, ". Rows with missing values in ", {{ strata }}, " will be removed from the analysis."))
+                my_factors <- my_factors[!is.na(my_factors[[1]]), ]
         }
 
 

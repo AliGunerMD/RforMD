@@ -2,6 +2,7 @@
 #' @description  To define my color pallette to standardize color use in projects
 #' @author Ali Guner
 #' @importFrom grDevices colorRampPalette
+#' @param ... Additional arguments to be passed
 
 #' @examples
 #' \dontrun{
@@ -106,6 +107,7 @@ to_select_colors <- function(...) {
 #' @description Multiple color palettes based on the "palette" argument
 #' @param palette Choose your favourite palette: "Hidirnebi", "Kadirga", "Kayabasi",  "Erikbeli", "Pokut", "Samistal", "Elevit", "Gito" , "Ovit", "Vazil"  or "Palovit"
 #' @param reverse TRUE/FALSE
+#' @param ... Additional arguments to be passed
 #' @author Ali Guner
 #' @examples
 #' \dontrun{
@@ -142,6 +144,7 @@ karadeniz <- function(palette = "main", reverse = FALSE, ...) {
 #' @param palette Choose your favorite palette: "Hidirnebi", "Kadirga", "Kayabasi", "Erikbeli", "Pokut", "Samistal", "Elevit", "Gito", "Ovit", "Palovit", "Faroz", "Vazil"
 #' @param discrete TRUE/FALSE
 #' @param reverse TRUE/FALSE
+#' @param ... Additional arguments to be passed
 #' @author Ali Guner
 #' @examples
 #' \dontrun{
@@ -175,6 +178,7 @@ scale_color_karadeniz <- function(palette = "Faroz",
 #' @param palette Choose your favorite palette: "Hidirnebi", "Kadirga", "Kayabasi", "Erikbeli", "Pokut", "Samistal", "Elevit", "Gito", "Ovit", "Palovit", "Faroz", "Vazil"
 #' @param discrete TRUE/FALSE
 #' @param reverse TRUE/FALSE
+#' @param ... Additional arguments to be passed
 #' @author Ali Guner
 #' @examples
 #' \dontrun{

@@ -34,7 +34,7 @@ and "row_col_based" for both row and column-based summaries. Default is "row_col
 and "shapiro" for using the Shapiro-Wilk test for normality and choosing between parametric
 and non-parametric accordingly. Default is "shapiro".}
 
-\item{...}{Additional arguments to be passed to the `finalfit::summary_factorlist` function.}
+\item{...}{Additional arguments to be passed to the \code{\link{finalfit::summary_factorlist}} function.}
 }
 \value{
 A data frame containing the aggregated summary statistics and test results.

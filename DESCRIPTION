@@ -1,7 +1,7 @@
 Package: MyR
 Type: Package
 Title: Use in my MD Projects
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: 
     person(
     "Ali", "Guner", 

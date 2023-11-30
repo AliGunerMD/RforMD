@@ -6,6 +6,9 @@
 \usage{
 to_select_colors(...)
 }
+\arguments{
+\item{...}{Additional arguments to be passed}
+}
 \description{
 To define my color pallette to standardize color use in projects
 }

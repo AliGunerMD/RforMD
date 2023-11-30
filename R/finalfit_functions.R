@@ -21,7 +21,7 @@
 #'                "parametric" for parametric tests (mean), "nonparametric" for non-parametric tests (median),
 #'                and "shapiro" for using the Shapiro-Wilk test for normality and choosing between parametric
 #'                and non-parametric accordingly. Default is "shapiro".
-#' @param ... Additional arguments to be passed to the `finalfit::summary_factorlist` function.
+#' @param ... Additional arguments to be passed to the \code{\link{finalfit::summary_factorlist}} function.
 #'
 #' @return A data frame containing the aggregated summary statistics and test results.
 #'
@@ -66,7 +66,7 @@ ag_ff_summary_factorlist <- function(dataset, dependent, table_vars,
         # Handle missing values in the dependent variable
         missing_dependents <- sum(is.na(dataset[[dependent]]))
         if (missing_dependents > 0) {
-                warning(paste("There are", missing_dependents, "missing values in the dependent variable. Rows with missing dependents will be removed."))
+                warning(paste0("Important! There are ", missing_dependents, " missing values in ", {{ dependent }}, ". Rows with missing values in ", {{ dependent }}, " will be removed from the analysis."))
                 dataset <- dataset[!is.na(dataset[[dependent]]), ]
         }
 
@@ -86,7 +86,6 @@ ag_ff_summary_factorlist <- function(dataset, dependent, table_vars,
                 stop(paste("Invalid data type for the following variables:", paste(invalid_vars, collapse = ", "), ".
                Should be factor, character, or numeric!!"))
         }
-
 
 
         # Check for continuous variables

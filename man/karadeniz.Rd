@@ -10,6 +10,8 @@ karadeniz(palette = "main", reverse = FALSE, ...)
 \item{palette}{Choose your favourite palette: "Hidirnebi", "Kadirga", "Kayabasi",  "Erikbeli", "Pokut", "Samistal", "Elevit", "Gito" , "Ovit", "Vazil"  or "Palovit"}
 
 \item{reverse}{TRUE/FALSE}
+
+\item{...}{Additional arguments to be passed}
 }
 \description{
 Multiple color palettes based on the "palette" argument
