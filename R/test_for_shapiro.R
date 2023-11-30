@@ -4,7 +4,6 @@
 #' @title Perform Shapiro-Wilk Test for Normality
 #'
 #' @description
-#'
 #' This function conducts the Shapiro-Wilk test for normality on numeric variables in a dataset,
 #' either for the entire dataset or within specified strata. It returns the names or counts of
 #' variables that are found to be non-normally distributed based on a significance level of 0.05.
@@ -89,6 +88,7 @@ ag_shapiro <- function(dataset, strata = NULL, table_vars, names = FALSE, messag
 
                 shapiro_results <- dataset %>%
                         dplyr::select(tidyselect::all_of(table_vars), {{ strata }}) %>%
+                        dplyr::filter(!is.na({{ strata }})) %>%
                         dplyr::summarise(across(where(is.numeric), ~ stats::shapiro.test(.)$p.value), .by = {{ strata }}) %>%
                         # I guess, after dplyr updates, group_by, ungroup behaviour was changed. I solved with .by argument.
                         tidyr::pivot_longer(cols = -c(1),

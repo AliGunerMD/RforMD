@@ -47,7 +47,7 @@ ag_fisher <- function(dataset, strata, table_vars, silence = TRUE) {
         # Select factor variables
         my_factors <- dataset %>%
                 dplyr::select({{ strata }}, tidyselect::all_of(table_vars)) %>%
-                dplyr::select_if(is.factor)
+                dplyr::select_if(function(var) is.factor(var) || is.character(var))
 
         # Get the variable names (excluding strata)
 
@@ -87,8 +87,6 @@ ag_fisher <- function(dataset, strata, table_vars, silence = TRUE) {
                 expected_values <- stats::chisq.test(current_table)$expected
                 # expected_values <- result$expected
 
-
-
                 # Count the cells where the expected value is less than 5
                 cells_less_than_5 <- sum(expected_values < 5, na.rm = TRUE)
 
@@ -104,7 +102,7 @@ ag_fisher <- function(dataset, strata, table_vars, silence = TRUE) {
         # Return NULL if no variables meet the condition
         if (length(variables_low_expected_values) == 0) {
                 if (!silence) {
-                warning("There is no factor variable with the expected cell frequencies are less than 5 in more than 20% of the cells in a contingency table.")
+                warning("There is no factor/character variable with the expected cell frequencies are less than 5 in more than 20% of the cells in a contingency table.")
                 }
                         return(NULL)
         } else {
