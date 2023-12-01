@@ -20,7 +20,6 @@ A vector containing the indices of non-normally distributed variables.
 This function serves as a helper for finalfit functions, extracting the indices of non-normally
 distributed variables based on the Shapiro-Wilk test for normality. It utilizes the
 `ag_shapiro` function with specific parameters. Good to use as cont_nonpara argument in summary_factorlist().
-names and message arguments are always FALSE.
 }
 \examples{
 \dontrun{

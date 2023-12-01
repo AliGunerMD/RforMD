@@ -14,7 +14,7 @@
 #' @param table_vars A character vector of variable names to be tested for normality. Can be defined with names(select()) functions.
 #' @param names Logical. If TRUE, returns the names of non-normally distributed variables;
 #' if FALSE, returns the indices of these variables. Default is FALSE.
-#' @param message Logical. If TRUE, displays informative messages about the analysis. Default is FALSE.
+#' @param silence Logical. If FALSE, displays informative messages about the analysis. Default is TRUE.
 #
 #' @return A character vector containing the names of non-normally distributed variables or an integer count,
 #' based on the specified value of the 'names' argument.
@@ -44,7 +44,7 @@
 #' @export
 
 
-ag_shapiro <- function(dataset, strata = NULL, table_vars, names = FALSE, message = FALSE){
+ag_shapiro <- function(dataset, strata = NULL, table_vars, silence = TRUE, names = FALSE){
 
         # Check if dataset is a data frame
         if (!is.data.frame(dataset)) {
@@ -62,6 +62,10 @@ ag_shapiro <- function(dataset, strata = NULL, table_vars, names = FALSE, messag
         }
 
 
+checked_variables <- dataset %>%
+                dplyr::select(tidyselect::all_of(table_vars)) %>%
+                dplyr::select_if(where(is.numeric)) %>%
+        names()
 
 
         if (is.null(strata)) {
@@ -76,16 +80,17 @@ ag_shapiro <- function(dataset, strata = NULL, table_vars, names = FALSE, messag
                         dplyr::distinct(variable) %>%
                         dplyr::pull(variable)
 
-                if (message) {
+                if (!silence) {
 
-                message("Shapiro-Wilk test results for normality:")
-                message(paste("Checked variables:", toString(table_vars)))
-
+                message("Shapiro-Wilk test results for normality (No strata variable):")
+                message(paste("Checked variables:", toString(checked_variables)))
                 message(paste("Non-normally distributed variables:", toString(shapiro_results)))
 
                 }
 
         } else {
+
+
 
                 shapiro_results <- dataset %>%
                         dplyr::select(tidyselect::all_of(table_vars), {{ strata }}) %>%
@@ -99,10 +104,10 @@ ag_shapiro <- function(dataset, strata = NULL, table_vars, names = FALSE, messag
                         dplyr::distinct(variable) %>%
                         dplyr::pull(variable)
 
-                if (message) {
+                if (!silence) {
 
                 message("Shapiro-Wilk test results for normality within strata:")
-                message(paste("Variables:", toString(table_vars)))
+                message(paste("Checked variables:", toString(checked_variables)))
                 message(paste("Stratified by:", strata))
                 message(paste("Non-normally distributed variables:", toString(shapiro_results)))
 
@@ -130,7 +135,6 @@ ag_shapiro <- function(dataset, strata = NULL, table_vars, names = FALSE, messag
 #' This function serves as a helper for finalfit functions, extracting the indices of non-normally
 #' distributed variables based on the Shapiro-Wilk test for normality. It utilizes the
 #' `ag_shapiro` function with specific parameters. Good to use as cont_nonpara argument in summary_factorlist().
-#' names and message arguments are always FALSE.
 #'
 #' @param dataset A data frame containing the variables of interest.
 #' @param strata An optional grouping variable for stratified analysis. Default is NULL.
@@ -156,16 +160,15 @@ ag_shapiro <- function(dataset, strata = NULL, table_vars, names = FALSE, messag
 #' }
 #' @import dplyr
 #' @import tidyr
-#' @export
 #'
 #'
 #'
 
 
 ag_non_param_vars <- function(dataset, strata = NULL, table_vars){
-        # To use in finalfit functions (but may not be needed because the defaults are same)
+        # To use in ff functions (but may not be needed because the defaults are same)
 
-        non_param_vars <- ag_shapiro(dataset = dataset, strata = strata, table_vars = table_vars, names = FALSE, message = FALSE)
+        non_param_vars <- ag_shapiro(dataset = dataset, strata = strata, table_vars = table_vars, names = FALSE, silence = TRUE)
 
         non_param_vars
 }

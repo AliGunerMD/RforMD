@@ -4,7 +4,7 @@
 \alias{ag_shapiro}
 \title{Perform Shapiro-Wilk Test for Normality}
 \usage{
-ag_shapiro(dataset, strata = NULL, table_vars, names = FALSE, message = FALSE)
+ag_shapiro(dataset, strata = NULL, table_vars, silence = TRUE, names = FALSE)
 }
 \arguments{
 \item{dataset}{A data frame containing the variables of interest.}
@@ -13,10 +13,10 @@ ag_shapiro(dataset, strata = NULL, table_vars, names = FALSE, message = FALSE)
 
 \item{table_vars}{A character vector of variable names to be tested for normality. Can be defined with names(select()) functions.}
 
+\item{silence}{Logical. If FALSE, displays informative messages about the analysis. Default is TRUE.}
+
 \item{names}{Logical. If TRUE, returns the names of non-normally distributed variables;
 if FALSE, returns the indices of these variables. Default is FALSE.}
-
-\item{message}{Logical. If TRUE, displays informative messages about the analysis. Default is FALSE.}
 }
 \value{
 A character vector containing the names of non-normally distributed variables or an integer count,

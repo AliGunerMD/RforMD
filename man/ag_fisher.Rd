@@ -4,7 +4,14 @@
 \alias{ag_fisher}
 \title{Identify Factors with Low Expected Cell Frequencies (for Fisher test)}
 \usage{
-ag_fisher(dataset, strata, table_vars, silence = TRUE, show_tables = FALSE)
+ag_fisher(
+  dataset,
+  strata,
+  table_vars,
+  silence = TRUE,
+  observed_tables = FALSE,
+  expected_tables = FALSE
+)
 }
 \arguments{
 \item{dataset}{The dataset containing the variables of interest.}
@@ -15,7 +22,9 @@ ag_fisher(dataset, strata, table_vars, silence = TRUE, show_tables = FALSE)
 
 \item{silence}{Logical, indicating whether to suppress warnings. Default is TRUE.}
 
-\item{show_tables}{Logical, indicating whether to display contingency tables. Default is FALSE.}
+\item{observed_tables}{Logical, indicating whether to display contingency tables for observed values. Default is FALSE.}
+
+\item{expected_tables}{Logical, indicating whether to display tables for expected values. Default is FALSE.}
 }
 \value{
 A character vector of factor variable names with low expected cell frequencies, or NULL if none are found.
@@ -24,7 +33,8 @@ A character vector of factor variable names with low expected cell frequencies, 
 This function performs a contingency table analysis on specified factor or character variables in a given dataset,
 with an option to identify variables exhibiting expected cell frequencies less than 5 in more than 20% of cells.
 It is designed to handle potential issues gracefully, providing informative warnings and excluding rows with
-missing values in the strata variable when necessary.
+missing values in the strata variable when necessary. The function can display observed and/or expected values
+tables based on user preferences.
 }
 \examples{
 \dontrun{
@@ -37,8 +47,8 @@ names()
 
 strata <- "species"
 
-ag_fisher(penguins, table_vars = table_vars, strata = strata, silence = TRUE)
-ag_fisher(penguins, table_vars = table_vars, strata = strata, silence = FALSE, show_tables = TRUE)
+ag_fisher(penguins, table_vars = table_vars, strata = strata, silence = TRUE, observed_tables = TRUE)
+ag_fisher(penguins, table_vars = table_vars, strata = strata, silence = FALSE, observed_tables = TRUE, expected_tables = TRUE)
 }
 
 }

@@ -1,18 +1,18 @@
-
 #' @title Identify Factors with Low Expected Cell Frequencies (for Fisher test)
 #'
 #' @description
 #' This function performs a contingency table analysis on specified factor or character variables in a given dataset,
 #' with an option to identify variables exhibiting expected cell frequencies less than 5 in more than 20% of cells.
 #' It is designed to handle potential issues gracefully, providing informative warnings and excluding rows with
-#' missing values in the strata variable when necessary.
-#'
+#' missing values in the strata variable when necessary. The function can display observed and/or expected values
+#' tables based on user preferences.
 #'
 #' @param dataset The dataset containing the variables of interest.
 #' @param strata The stratifying factor variable for the analysis.
 #' @param table_vars A character vector of factor variable names to analyze.
 #' @param silence Logical, indicating whether to suppress warnings. Default is TRUE.
-#' @param show_tables Logical, indicating whether to display contingency tables. Default is FALSE.
+#' @param observed_tables Logical, indicating whether to display contingency tables for observed values. Default is FALSE.
+#' @param expected_tables Logical, indicating whether to display tables for expected values. Default is FALSE.
 #'
 #' @return A character vector of factor variable names with low expected cell frequencies, or NULL if none are found.
 #' @author Ali Guner
@@ -28,8 +28,8 @@
 #'
 #' strata <- "species"
 #'
-#' ag_fisher(penguins, table_vars = table_vars, strata = strata, silence = TRUE)
-#' ag_fisher(penguins, table_vars = table_vars, strata = strata, silence = FALSE, show_tables = TRUE)
+#' ag_fisher(penguins, table_vars = table_vars, strata = strata, silence = TRUE, observed_tables = TRUE)
+#' ag_fisher(penguins, table_vars = table_vars, strata = strata, silence = FALSE, observed_tables = TRUE, expected_tables = TRUE)
 #' }
 #'
 #' @import dplyr
@@ -42,7 +42,7 @@
 #'
 #'
 
-ag_fisher <- function(dataset, strata, table_vars, silence = TRUE, show_tables = FALSE) {
+ag_fisher <- function(dataset, strata, table_vars, silence = TRUE, observed_tables = FALSE, expected_tables = FALSE) {
         library(dplyr)
 
 
@@ -136,15 +136,24 @@ ag_fisher <- function(dataset, strata, table_vars, silence = TRUE, show_tables =
 
 
 
-        # Show contingency tables if silence is FALSE
-        if (!silence && show_tables) {
-                cat("Contingency Tables:\n")
+        # Show contingency tables (observed values) if observed_tables is TRUE
+        if (!silence && observed_tables) {
+                cat("Observed values:\n")
                 for (i in seq_along(contingency_tables)) {
                         cat("Variable:", names(non_strata_vars)[i], "\n")
                         print(contingency_tables[[i]])
                 }
         }
 
+        # Show tables for expected values if expected_tables is TRUE
+        if (!silence && expected_tables) {
+                cat("Expected values:\n")
+                for (i in seq_along(contingency_tables)) {
+                        cat("Variable:", names(non_strata_vars)[i], "\n")
+                        expected_values <- round(stats::chisq.test(contingency_tables[[i]])$expected, digits = 1)
+                        print(expected_values)
+                }
+        }
 
         # Create an empty vector to store variable names with low expected values
         variables_low_expected_values <- character()
@@ -175,11 +184,18 @@ ag_fisher <- function(dataset, strata, table_vars, silence = TRUE, show_tables =
         # Return NULL if no variables meet the condition
         if (length(variables_low_expected_values) == 0) {
                 if (!silence) {
-                warning("There is no factor/character variable with the expected cell frequencies are less than 5 in more than 20% of the cells in a contingency table.")
+                message(paste("Checked variables:", toString(names(non_strata_vars))))
+                message(paste("Stratified by:", strata))
+                message("There is no factor/character variable with the expected cell frequencies are less than 5 in more than 20% of the cells in a contingency table.")
                 }
                         return(NULL)
 
         } else {
+                if(!silence){
+                        message(paste("Checked variables:", toString(names(non_strata_vars))))
+                        message(paste("Stratified by:", strata))
+                        message(paste("Variables may require Fisher test: ", toString(shapiro_results)))
+                }
                 return(variables_low_expected_values)
         }
 }
