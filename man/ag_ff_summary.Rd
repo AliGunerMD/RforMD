@@ -2,29 +2,28 @@
 % Please edit documentation in R/finalfit_functions.R
 \name{ag_ff_summary}
 \alias{ag_ff_summary}
-\title{Aggregated Summary Factor List with Fisher Correction}
+\title{Enhanced version of finalfit::summary_factorlist}
 \usage{
 ag_ff_summary(
   dataset,
-  dependent,
+  strata = NULL,
   table_vars,
-  na_include = TRUE,
   row_col_sums = "row_col_based",
   all_cont = "shapiro",
+  manual_nonparams = NULL,
   fisher_correction = TRUE,
+  na_include = FALSE,
+  summary_factorlist_args = list(),
   ...
 )
 }
 \arguments{
 \item{dataset}{A data frame containing the variables of interest.}
 
-\item{dependent}{The dependent variable (outcome) in the analysis, should be a factor.}
+\item{strata}{The dependent variable (outcome) in the analysis, should be a factor.}
 
 \item{table_vars}{A character vector specifying the explanatory variables (predictors) for the analysis.
 These can be factors, characters, or numerics.}
-
-\item{na_include}{Logical, indicating whether missing values should be included in the analysis.
-Default is \code{TRUE}.}
 
 \item{row_col_sums}{A character string specifying the type of summary statistics to be generated.
 Options include "row_based" for row-based summaries, "col_based" for column-based summaries,
@@ -33,40 +32,60 @@ and "row_col_based" for both row and column-based summaries. Default is "row_col
 \item{all_cont}{A character string specifying the approach for continuous variables. Options include
 "parametric" for parametric tests (mean), "nonparametric" for non-parametric tests (median),
 and "shapiro" for using the Shapiro-Wilk test for normality and choosing between parametric
-and non-parametric accordingly. Default is "shapiro".}
+and non-parametric accordingly. Default is "shapiro". Manual option is also possible with \code{manual_nonparams}.}
+
+\item{manual_nonparams}{If \code{all_cont} is set to "manual", this argument should contain the values (not index, the name of the varible) for
+\code{cont_nonpara}. It cannot be empty in this case.}
 
 \item{fisher_correction}{Logical, indicating whether Fisher's correction should be applied for expected cell
 frequencies less than 5 in more than 20% of the cells in a contingency table.
 Default is \code{TRUE}.}
 
-\item{...}{Additional arguments to be passed to \code{ag_ff_summary_factorlist}.}
+\item{na_include}{Logical, indicating whether missing values should be included in the analysis.
+Default is \code{TRUE}.}
+
+\item{summary_factorlist_args}{A list containing additional arguments to be passed to \code{ag_ff_summary}.
+All comes from the finalfit::summaryfactorlist function.
+                               Default is an empty list.}
+
+\item{...}{Additional arguments to be passed to \code{ag_ff_summary}.}
 }
 \value{
-A data frame containing the aggregated summary statistics and test results, with or without Fisher's correction.
+A data frame containing the aggregated summary statistics and test results.
 }
 \description{
 Generate aggregated summary statistics and tests for categorical and continuous variables,
 with an option for Fisher's correction in contingency tables.
 
-This function extends the functionality of the `ag_ff_summary_factorlist` function by introducing
-Fisher's correction for expected cell frequencies less than 5 in more than 20% of the cells in a
-contingency table. The function provides flexibility in specifying the type of summary statistics
-and tests to be performed, including the option for Fisher's correction.
+This function extends the functionality of the `summary_factorlist` function by introducing
+Fisher's test and Shapiro-Wilk test.
+Normality distributions of continuous variables is evaluated by Shapiro-Wilk test
+and required test is decided based on the test.
+For categorical variables, expected cell frequencies is calculated
+(expected cell frequencies less than 5 in more than 20% of the cells in a
+contingency table may require using Fisher test) and required test
+(Chi-square or Fisher) is decided based on this.
 }
 \examples{
 \dontrun{
-  # Example usage:
-  result <- ag_ff_summary(penguins, dependent = "species",
-                                                table_vars = c("bill_length_mm", "bill_depth_mm"),
-                                                na_include = FALSE, row_col_sums = "row_col_based",
-                                                all_cont = "shapiro", fisher_correction = TRUE)
-}
+# Example usage of ag_ff_summary function
+library(palmerpenguins)
 
+strata <- "species"
+table_vars_1 <- penguins \%>\%
+dplyr::select(-species) \%>\%
+names()
+
+ag_ff_summary(
+dataset = penguins,
+table_vars = table_vars_1,
+strata = "species"
+)
+}
 }
 \seealso{
-\code{\link{ag_ff_summary}}, \code{\link{ag_fisher}}
+\code{\link{ff_row_col_sums}}
 }
 \author{
 Ali Guner
 }
-\keyword{EDA}
