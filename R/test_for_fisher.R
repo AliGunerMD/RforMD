@@ -150,7 +150,8 @@ ag_fisher <- function(dataset, strata, table_vars, silence = TRUE, observed_tabl
                 cat("Expected values:\n")
                 for (i in seq_along(contingency_tables)) {
                         cat("Variable:", names(non_strata_vars)[i], "\n")
-                        expected_values <- round(stats::chisq.test(contingency_tables[[i]])$expected, digits = 1)
+                        expected_values <- round(stats::chisq.test(contingency_tables[[i]])$expected, digits = 1) %>%
+                                suppressWarnings()
                         print(expected_values)
                 }
         }
