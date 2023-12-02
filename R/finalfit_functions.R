@@ -231,37 +231,53 @@ ag_ff_summary <- function(dataset, strata = NULL, table_vars,
                           na_include = FALSE,
                           summary_factorlist_args = list(),
                           ...) {
+
+
   # Checks
   if (!is.data.frame(dataset)) stop("Your dataset is not a dataframe.")
-  if (any(class(.data) %in% c("tbl_df", "tbl"))) .data <- data.frame(.data)
-
-
-  if (!is.factor(dataset[[strata]]) && !is.character(dataset[[strata]])) stop("The dependent variable should be a factor/character. Please check the data type.")
+  if (any(class(dataset) %in% c("tbl_df", "tbl"))) dataset <- data.frame(dataset)
   if (is.null(table_vars)) stop("table_vars is empty")
+
+
+
+
 
   # Check data types of table_vars
   valid_vars <- sapply(table_vars, function(var) {
-    if (is.factor(dataset[[var]]) || is.character(dataset[[var]]) || is.numeric(dataset[[var]])) {
-      return(var)
-    }
+          if (is.factor(dataset[[var]]) || is.character(dataset[[var]]) || is.numeric(dataset[[var]])) {
+                  return(var)
+          }
   })
 
   valid_vars <- as.vector(unlist(valid_vars))
   invalid_vars <- setdiff(table_vars, valid_vars)
 
   if (length(invalid_vars) > 0) {
-    stop(paste("Invalid data type for the following variables:", paste(invalid_vars, collapse = ", "), ".
+          stop(paste("Invalid data type for the following variables:", paste(invalid_vars, collapse = ", "), ".
                Should be factor, character, or numeric!!"))
   }
 
 
-  # Handle missing values in the strata
-  missing_strata <- sum(is.na(dataset[[strata]]))
 
-  if (missing_strata > 0) {
-    warning(paste0("Important! There are ", missing_strata, " missing values in ", strata, ". Rows with missing values in ", strata, " will be removed from the analysis."))
-    dataset <- dataset[!is.na(dataset[[strata]]), ]
-  }
+  if (!is.null(strata)) {
+          if (!is.factor(dataset[[strata]]) && !is.character(dataset[[strata]])) stop("The strata variable should be a factor/character. Please check the data type.")
+
+
+          # Handle missing values in the strata
+          missing_strata <- sum(is.na(dataset[[strata]]))
+
+          if (missing_strata > 0) {
+                  warning(paste0("Important! There are ", missing_strata, " missing values in ", strata, ". Rows with missing values in ", strata, " will be removed from the analysis."))
+                  dataset <- dataset[!is.na(dataset[[strata]]), ]
+          }
+
+  } else {
+
+
+
+
+
+
 
 
   # Additional arguments from finalfit::summary_factorlist
@@ -376,6 +392,6 @@ ag_ff_summary <- function(dataset, strata = NULL, table_vars,
   }
 }
 
-
+}
 
 
