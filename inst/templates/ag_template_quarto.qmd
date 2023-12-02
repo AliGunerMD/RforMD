@@ -46,20 +46,20 @@ format:
 ```{r}
 #| label: Import My library
 #| eval: false                                  
-## If you are here, You already installed MyR package
+## If you are here, You already installed RforMD package
 
-# if (!require("MyR", quietly = TRUE)) {
+# if (!require("RforMD", quietly = TRUE)) {
 #   if (!requireNamespace("remotes", quietly = TRUE)) {
 #     install.packages("remotes")
 #   }
-#   remotes::install_github("AliGunerMD/MyR",
+#   remotes::install_github("AliGunerMD/RforMD",
 #     dependencies = TRUE, quiet = FALSE, force = TRUE)
-#   library("MyR")
+#   library("RforMD")
 # }
 
 # 
 # install.packages("remotes")
-# remotes::install_github("AliGunerMD/MyR")
+# remotes::install_github("AliGunerMD/RforMD")
 # 
 
 
@@ -73,7 +73,7 @@ format:
 # Define the required package names
 packages <- c("tidyverse", "scales", "glue", "readxl", "skimr", "naniar", 
               "janitor", "scales", "here",
-              "MyR")
+              "RforMD")
 
 # Function to check, install, and load packages
 load_packages <- function(packages) {

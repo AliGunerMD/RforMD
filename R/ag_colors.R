@@ -357,14 +357,6 @@ ag_make_colors <- function(num_colors, seed = 2023) {
         ))
 }
 
-# Example usage:
-num_colors <- 8
-
-ag_make_colors(num_colors)$lighter
-ag_make_colors(num_colors)$darker
-
-ag_make_colors(4)$palette
-
 
 
 

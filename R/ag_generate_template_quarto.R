@@ -2,7 +2,7 @@
 #'
 #' @description
 #' The \code{ag_generate_template_quarto()} function creates a new Quarto (.qmd) document
-#' using a template file provided by the "MyR" package. This function simplifies the process
+#' using a template file provided by the "RforMD" package. This function simplifies the process
 #' of initializing Quarto projects with a customizable template.
 #'
 #' @param name A character string specifying the name of the output Quarto document.
@@ -32,17 +32,17 @@ ag_generate_template_quarto <- function(name = "01 initial.qmd",
                                         ...) {
 
         # Construct the path to the template file in "inst/templates" directory
-        template_path <- system.file("templates", "ag_template_quarto.qmd", package = "MyR")
+        template_path <- system.file("templates", "ag_template_quarto.qmd", package = "RforMD")
 
         # Check if the template file exists
         if (!file.exists(template_path)) {
-                stop("Could not find template 'ag_template_quarto.qmd' in package 'MyR'.")
+                stop("Could not find template 'ag_template_quarto.qmd' in package 'RforMD'.")
         }
 
         # Use the template
         new_qmd_file <- use_template("ag_template_quarto.qmd",
                      save_as = name,
-                     package = "MyR", ...,
+                     package = "RforMD", ...,
                      open = FALSE)
 
         # Return the path of the created file

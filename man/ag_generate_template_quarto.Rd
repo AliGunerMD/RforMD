@@ -19,7 +19,7 @@ None
 }
 \description{
 The \code{ag_generate_template_quarto()} function creates a new Quarto (.qmd) document
-using a template file provided by the "MyR" package. This function simplifies the process
+using a template file provided by the "RforMD" package. This function simplifies the process
 of initializing Quarto projects with a customizable template.
 }
 \examples{
