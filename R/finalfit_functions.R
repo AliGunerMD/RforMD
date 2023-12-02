@@ -271,7 +271,7 @@ ag_ff_summary <- function(dataset, strata = NULL, table_vars,
                   dataset <- dataset[!is.na(dataset[[strata]]), ]
           }
 
-  } else {
+  }
 
 
 
@@ -392,6 +392,6 @@ ag_ff_summary <- function(dataset, strata = NULL, table_vars,
   }
 }
 
-}
+
 
 
