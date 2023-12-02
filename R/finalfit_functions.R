@@ -273,6 +273,9 @@ ag_ff_summary <- function(dataset, strata = NULL, table_vars,
 
   }
 
+  if(is.null(strata)){
+          message("No strata was provided")
+  }
 
 
 
