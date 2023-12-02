@@ -48,10 +48,9 @@ ag_theme <- function(my_plot_size = 12,
                      my_font = "Arial"){
 
 
-        ggplot2::theme_light(base_family = my_font) %+replace%
+        ggplot2::theme_set(theme_light(base_family = my_font))
 
-
-        ggplot2::theme(
+        ggplot2::theme_update(
                 text = element_text(size = my_plot_size),
                 legend.position = "top",
                 legend.text = element_text(size = my_plot_size),

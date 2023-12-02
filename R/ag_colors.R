@@ -227,6 +227,8 @@ scale_fill_karadeniz <- function(palette = "Faroz",
 #' @export
 #'
 
+
+
 ag_colors <- function(palette_name = NULL) {
         # Define the palettes
         ag_blues <- c("#F7FBFF", "#DEEBF7", "#C6DBEF", "#9ECAE1", "#6BAED6", "#4292C6", "#2171B5" ,"#084594")
@@ -265,4 +267,105 @@ ag_colors <- function(palette_name = NULL) {
                brewer1 = ag_brewer1,
                stop("Invalid palette_name. Choose from 'blues', 'greens', 'reds', 'grays', 'oranges', 'spectral', 'brewer1'"))
 }
+
+
+
+
+
+
+
+#' @title Generate Dark-Light Colors
+#'
+#' @description
+#' The \code{ag_make_colors} function generates a color palette consisting of normal, darker, and lighter colors based on random hues.
+#'
+#' @param num_colors An integer specifying the number of colors to generate in the color palette.
+#' @param seed An optional argument specifying the seed for the random number generator. If not provided, the default seed of 2023 will be used.
+#'
+#' @return A list with the following components:
+#' \describe{
+#'   \item{palette}{A list containing the color palette. Each color in the palette is represented as a list with the following components: \code{normal_color}, \code{darker_color}, and \code{lighter_color}.}
+#'   \item{normal}{A vector of the normal colors in the palette.}
+#'   \item{darker}{A vector of the darker colors in the palette.}
+#'   \item{lighter}{A vector of the lighter colors in the palette.}
+#' }
+#'
+#' @author Ali Guner
+#'
+#'
+#' @examples
+#' \dontrun{
+#' # Generate a color palette with 5 colors using the default seed:
+#' colors <- ag_make_colors(5)
+#'
+#' # Generate a color palette with 10 colors using a specific seed (e.g., 123):
+#' colors <- ag_make_colors(10, seed = 123)
+#'
+#' ag_make_colors(4)$palette
+#'
+#' num_colors <- 8
+#' ag_make_colors(num_colors)$lighter
+#' ag_make_colors(num_colors)$darker
+#' }
+#'
+#' @export
+#'
+#'
+#'
+#'
+#'
+
+ag_make_colors <- function(num_colors, seed = 2023) {
+        # Function to adjust brightness
+        adjust_brightness <- function(color, factor) {
+                rgb_val <- col2rgb(color)
+                rgb_val <- rgb_val * factor
+                rgb_val[rgb_val > 255] <- 255
+                return(rgb(rgb_val[1, ], rgb_val[2, ], rgb_val[3, ], maxColorValue = 255))
+        }
+
+        # Generate random hues for the specified number of colors
+        if (missing(seed)) {
+                set.seed(2023)
+        } else {
+                set.seed(seed)
+        }
+
+        base_hues <- runif(num_colors)
+
+        # Generate normal, darker, and lighter colors for each hue
+        color_palette <- lapply(base_hues, function(base_hue) {
+                dark_factor <- 0.6
+                light_factor <- 1.5
+                normal_color <- hcl(base_hue * 360, 80, 70)
+                darker_color <- adjust_brightness(normal_color, dark_factor)
+                lighter_color <- adjust_brightness(normal_color, light_factor)
+
+                return(list(normal_color = normal_color, darker_color = darker_color, lighter_color = lighter_color))
+        })
+
+        # Extract vectors for normal, darker, and lighter colors
+        normal_colors <- sapply(color_palette, function(p) p$normal_color)
+        darker_colors <- sapply(color_palette, function(p) p$darker_color)
+        lighter_colors <- sapply(color_palette, function(p) p$lighter_color)
+
+        return(list(
+                palette = color_palette,
+                normal = normal_colors,
+                darker= darker_colors,
+                lighter = lighter_colors
+        ))
+}
+
+# Example usage:
+num_colors <- 8
+
+ag_make_colors(num_colors)$lighter
+ag_make_colors(num_colors)$darker
+
+ag_make_colors(4)$palette
+
+
+
+
 

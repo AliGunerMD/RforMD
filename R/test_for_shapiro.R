@@ -127,6 +127,15 @@ checked_variables <- dataset %>%
                 return(non_param_vars)
 
 
+
+
+
+
+
+
+
+
+
 }
 
 

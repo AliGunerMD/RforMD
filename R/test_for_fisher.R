@@ -195,7 +195,7 @@ ag_fisher <- function(dataset, strata, table_vars, silence = TRUE, observed_tabl
                 if(!silence){
                         message(paste("Checked variables:", toString(names(non_strata_vars))))
                         message(paste("Stratified by:", strata))
-                        message(paste("Variables may require Fisher test: ", toString(shapiro_results)))
+                        message(paste("Variables may require Fisher test: ", toString(variables_low_expected_values)))
                 }
                 return(variables_low_expected_values)
         }

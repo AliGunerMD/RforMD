@@ -83,8 +83,8 @@ short_ff <- function(dataset, strata = NULL, table_vars = NULL,
 
 
         fisher_short <- fisher_ff %>%
-          dplyr::filter(label %in% explanatory_fisher) %>%
-          dplyr::select(label, p_fisher = p)
+          dplyr::filter(.[[1]] %in% explanatory_fisher) %>%     # do not use names (label)
+          dplyr::select(1, p_fisher = p)
 
         combined_ff <- chisquare_ff %>%
           dplyr::left_join(fisher_short, by = "label") %>%
@@ -175,6 +175,9 @@ ff_row_col_sums <- function(dataset,
 #' (expected cell frequencies less than 5 in more than 20% of the cells in a
 #' contingency table may require using Fisher test) and required test
 #' (Chi-square or Fisher) is decided based on this.
+#' \code{row_col_sums} function can be used for different presenting styles.
+#' In the default one, the sums of the rows is 100% for the groups.
+#' For Total column, the sum of colon will be 100%. This approach is good for summary tables.
 #'
 #'
 #' @param dataset A data frame containing the variables of interest.
@@ -293,13 +296,13 @@ ag_ff_summary <- function(dataset, strata = NULL, table_vars,
     p_cont_para = "aov",
     orderbytotal = FALSE,
     digits = c(1, 1, 3, 1, 0),
-    # na_include_dependent = FALSE,         # already excluded. consider to relevel strata
+    # na_include_dependent = FALSE,             already excluded. consider to relevel strata
     na_complete_cases = FALSE,
     na_to_p = FALSE,
     na_to_prop = TRUE,
-    add_dependent_label = FALSE,
-    dependent_label_prefix = "Dependent: ",
-    dependent_label_suffix = "",
+    # add_dependent_label = FALSE,              "label" is good to manipulate.
+    # dependent_label_prefix = "Dependent: ",
+    # dependent_label_suffix = "",
     add_col_totals = FALSE,
     include_col_totals_percent = TRUE,
     col_totals_prefix = "",
