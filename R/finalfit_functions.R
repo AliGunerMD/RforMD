@@ -44,7 +44,8 @@ short_ff <- function(dataset, strata = NULL, table_vars = NULL,
       total_col = TRUE,
       p = FALSE,
       ...
-    )
+    ) %>%
+            suppressWarnings()
 
     return(init_ff)
   } else {
@@ -57,7 +58,8 @@ short_ff <- function(dataset, strata = NULL, table_vars = NULL,
       total_col = TRUE,
       p = TRUE,
       ...
-    )
+    ) %>%
+            suppressWarnings()
 
 
     if (fisher_correction) {
@@ -76,7 +78,8 @@ short_ff <- function(dataset, strata = NULL, table_vars = NULL,
           p = TRUE,
           p_cat = "fisher",
           ...
-        )
+        ) %>%
+                suppressWarnings()
 
 
         fisher_short <- fisher_ff %>%
