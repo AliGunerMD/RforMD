@@ -13,7 +13,7 @@
 #' table_vars_1 <- penguins %>%
 #' dplyr::select(-species) %>% names()
 #'
-#' ag_shapiro_p_long(penguins, "species", table_vars_1)
+#' ag_shapiro_results(penguins, "species", table_vars_1)
 #'
 #' @import dplyr
 #' @import tidyr
@@ -21,7 +21,7 @@
 
 
 
-ag_shapiro_p_long <- function(dataset, strata = NULL, table_vars){
+ag_shapiro_results <- function(dataset, strata = NULL, table_vars){
 
         if (is.null(strata)) {
 
@@ -67,9 +67,11 @@ ag_shapiro_p_long <- function(dataset, strata = NULL, table_vars){
 #' @param dataset A data frame containing the variables of interest.
 #' @param strata An optional grouping variable for stratified analysis. Default is NULL.
 #' @param table_vars A character vector of variable names to be tested for normality. Can be defined with names(select()) functions.
+#' If NULL, function will use all numeric variables in dataset, except for strata if present (NOT RECOMMENDED,
+#' it is better idea to define table_vars)
 #' @param names Logical. If TRUE, returns the names of non-normally distributed variables;
-#' if FALSE, returns the indices of these variables. Default is FALSE.
-#' @param silence Logical. If FALSE, displays informative messages about the analysis. Default is TRUE.
+#' if FALSE, returns the indices of these variables. Default is TRUE
+#' @param silence Logical. If FALSE, displays informative messages about the analysis. Default is FALSE
 #
 #' @return A character vector containing the names of non-normally distributed variables or an integer count,
 #' based on the specified value of the 'names' argument.
@@ -88,7 +90,7 @@ ag_shapiro_p_long <- function(dataset, strata = NULL, table_vars){
 #' dependent <- "Species"
 #'
 #' ag_shapiro(dataset = iris, table_vars = table_vars)
-#' ag_shapiro(dataset = iris, table_vars = table_vars, names = TRUE, message = TRUE)
+#' ag_shapiro(dataset = iris, table_vars = table_vars, silence = TRUE, names = FALSE)
 #' }
 #'
 #'
@@ -97,9 +99,38 @@ ag_shapiro_p_long <- function(dataset, strata = NULL, table_vars){
 #' @import tidyselect
 #'
 #' @export
+#'
+#'
+
+# xxx <- function(dataset, strata = NULL) {
+#         if (is.null(strata) || !is.numeric(dataset[[strata]])) {
+#                 dataset %>%
+#                         dplyr::select(where(is.numeric))
+#         } else {
+#                 dataset %>%
+#                         dplyr::select(where(is.numeric), -{{ strata }})
+#         }
+# }
+#
+#        xxx(penguins, strata = "species")
+#
+#         dataset %>%
+#                 dplyr::select(where(is.numeric)) %>%
+#                 dplyr::select(-one_of(.data[[strata]]))
+# }
+#
+# xxx(penguins, strata = "species")
+#
+#
+#
+#
+# penguins %>%
+#         mutate(species = as.numeric(species)) %>%
+#         dplyr::select(-species, where(is.numeric))
 
 
-ag_shapiro <- function(dataset, strata = NULL, table_vars, silence = TRUE, names = FALSE){
+
+ag_shapiro <- function(dataset, strata = NULL, table_vars = NULL, silence = FALSE, names = TRUE){
 
         # Check if dataset is a data frame
         if (!is.data.frame(dataset)) {
@@ -111,13 +142,36 @@ ag_shapiro <- function(dataset, strata = NULL, table_vars, silence = TRUE, names
                 stop("Input 'strata' must be NULL or a vector.")
         }
 
-        # Check if table_vars is a vector
-        if (!is.vector(table_vars)) {
-                stop("Input 'table_vars' must be a vector.")
+
+
+        if(is.null(table_vars)){
+
+                if(silence){
+                        message("Because all variables were included, silence argument were converted to FALSE")
+                        silence <- FALSE
+                }
+
+
+                message("No table_vars were defined. All numeric variables in dataset were evaluated")
+                if (is.null(strata) || !is.numeric(dataset[[strata]])) {
+                        table_vars <- dataset %>%
+                                dplyr::select(where(is.numeric)) %>%
+                                names()
+                } else {
+                        table_vars <- dataset %>%
+                                dplyr::select(where(is.numeric), -{{ strata }}) %>%
+                                names()
+                }
         }
 
 
-checked_variables <- dataset %>%
+        # Check if table_vars is a vector
+        if (!is.vector(table_vars)) {
+                stop("Input 'table_vars' must be a vector or NULL.")
+        }
+
+
+        checked_variables <- dataset %>%
                 dplyr::select(tidyselect::all_of(table_vars)) %>%
                 dplyr::select_if(where(is.numeric)) %>%
         names()
@@ -125,7 +179,7 @@ checked_variables <- dataset %>%
 
         if (is.null(strata)) {
 
-                shapiro_results <- ag_shapiro_p_long(dataset, strata = strata, table_vars) %>%
+                shapiro_results <- ag_shapiro_results(dataset, strata = strata, table_vars) %>%
                         dplyr::filter(shapiro_results < 0.05) %>%
                         dplyr::distinct(variable) %>%
                         dplyr::pull(variable)
@@ -142,7 +196,7 @@ checked_variables <- dataset %>%
 
 
 
-                shapiro_results <- ag_shapiro_p_long(dataset, strata = strata, table_vars) %>%
+                shapiro_results <- ag_shapiro_results(dataset, strata = strata, table_vars) %>%
                         dplyr::filter(shapiro_results < 0.05) %>%
                         dplyr::distinct(variable) %>%
                         dplyr::pull(variable)
@@ -172,24 +226,7 @@ checked_variables <- dataset %>%
 
 }
 
-
-
-#
-#
-# xxx <- function(dataset, strata, table_vars) {
-#
-#         xxd <- dataset %>%
-#                 dplyr::select(tidyselect::all_of(table_vars), {{ strata }}) %>%
-#                 dplyr::filter(!is.na(.data[[strata]]))
-#         #
-#         #
-#         # xxd <- dataset %>%
-#         #         mutate({{strata}} := stringr::str_to_title(.data[[strata]]))
-#
-#         return(xxd)
-# }
-# xxx(penguins, "sex", table_vars_1) %>% count(sex)
-
+ag_shapiro(penguins,  silence = TRUE, names = TRUE)
 
 
 
@@ -238,7 +275,7 @@ ag_non_param_vars <- function(dataset, strata = NULL, table_vars){
 
 
 
-
+# ag_non_param_vars(penguins, "species", table_vars_1)
 
 
 

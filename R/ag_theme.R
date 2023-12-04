@@ -45,7 +45,8 @@
 
 
 ag_theme <- function(my_plot_size = 12,
-                     my_font = "Arial"){
+                     my_font = "Arial",
+                     ...){
 
 
         ggplot2::theme_set(theme_light(base_family = my_font))
@@ -60,6 +61,8 @@ ag_theme <- function(my_plot_size = 12,
                 panel.spacing = unit(1.2, "lines"),
                 panel.border = element_blank(),
                 plot.title = element_text(face = "bold", size = 16, hjust = .5, vjust = 2),
-                plot.subtitle = element_text(hjust = .5, size = 14))
+                plot.subtitle = element_text(hjust = .5, size = 14)) +
+                theme(...)
+
 
 }

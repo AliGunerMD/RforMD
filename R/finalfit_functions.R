@@ -332,7 +332,7 @@ ag_ff_summary <- function(dataset, strata = NULL, table_vars,
 
     if (!is.null(manual_nonparams)) message("manual_nonparams argument is useless, if all_cont is not 'manual'")
     cont <- "mean"
-    cont_nonpara <- ag_shapiro(dataset, strata = strata, table_vars = table_vars)
+    cont_nonpara <- ag_shapiro(dataset, strata = strata, table_vars = table_vars, silence = TRUE, names = FALSE)
 
   } else if (all_cont == "manual") {
 

@@ -1,6 +1,9 @@
 
 ## version 0.1.
-- ag_shapiro_p
+- ag_shapiro_results
+- ag_shapiro 
+(update: silence = FALSE and names = TRUE, as default.)
+(update: is.null(table_vars) -> all variables are selected)
 
 
 
