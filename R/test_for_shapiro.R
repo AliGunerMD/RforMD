@@ -1,3 +1,58 @@
+#' @title Calculate Shapiro-Wilk p-values
+#' @description
+#' This function calculates Shapiro-Wilk p-values for normality testing of numeric variables in a dataset.
+#'
+#'
+#' @param dataset The input dataset.
+#' @param strata (Optional) A column name in the dataset to stratify the analysis by. Default is \code{NULL}.
+#' @param table_vars A character vector of variable names to include in the analysis.
+#'
+#' @return A tibble with columns for the variable names and Shapiro-Wilk p-values.
+#'
+#' @examples
+#' table_vars_1 <- penguins %>%
+#' dplyr::select(-species) %>% names()
+#'
+#' ag_shapiro_p_long(penguins, "species", table_vars_1)
+#'
+#' @import dplyr
+#' @import tidyr
+
+
+
+
+ag_shapiro_p_long <- function(dataset, strata = NULL, table_vars){
+
+        if (is.null(strata)) {
+
+                shapiro_results <- dataset %>%
+                        dplyr::select(tidyselect::all_of(table_vars)) %>%
+                        dplyr::summarise(across(where(is.numeric), ~ stats::shapiro.test(.)$p.value)) %>%
+                        tidyr::pivot_longer(tidyselect::everything(),
+                                            names_to = "variable",
+                                            values_to = "shapiro_results")
+        } else {
+
+                shapiro_results <- dataset %>%
+                        dplyr::select(tidyselect::all_of(table_vars), {{ strata }}) %>%
+                        dplyr::filter(!is.na(.data[[strata]])) %>%
+                        dplyr::summarise(across(where(is.numeric), ~ stats::shapiro.test(.)$p.value), .by = {{ strata }}) %>%
+                        # I guess, after dplyr updates, group_by, ungroup behaviour was changed. I solved with .by argument.
+                        tidyr::pivot_longer(cols = -c(1),
+                                            names_to = "variable",
+                                            values_to = "shapiro_results")
+        }
+
+        return(shapiro_results)
+}
+
+
+
+
+
+
+
+
 
 
 #'
@@ -70,12 +125,7 @@ checked_variables <- dataset %>%
 
         if (is.null(strata)) {
 
-                shapiro_results <- dataset %>%
-                        dplyr::select(tidyselect::all_of(table_vars)) %>%
-                        dplyr::summarise(across(where(is.numeric), ~ stats::shapiro.test(.)$p.value)) %>%
-                        tidyr::pivot_longer(tidyselect::everything(),
-                                            names_to = "variable",
-                                            values_to = "shapiro_results") %>%
+                shapiro_results <- ag_shapiro_p_long(dataset, strata = strata, table_vars) %>%
                         dplyr::filter(shapiro_results < 0.05) %>%
                         dplyr::distinct(variable) %>%
                         dplyr::pull(variable)
@@ -92,14 +142,7 @@ checked_variables <- dataset %>%
 
 
 
-                shapiro_results <- dataset %>%
-                        dplyr::select(tidyselect::all_of(table_vars), {{ strata }}) %>%
-                        dplyr::filter(!is.na({{ strata }})) %>%
-                        dplyr::summarise(across(where(is.numeric), ~ stats::shapiro.test(.)$p.value), .by = {{ strata }}) %>%
-                        # I guess, after dplyr updates, group_by, ungroup behaviour was changed. I solved with .by argument.
-                        tidyr::pivot_longer(cols = -c(1),
-                                            names_to = "variable",
-                                            values_to = "shapiro_results") %>%
+                shapiro_results <- ag_shapiro_p_long(dataset, strata = strata, table_vars) %>%
                         dplyr::filter(shapiro_results < 0.05) %>%
                         dplyr::distinct(variable) %>%
                         dplyr::pull(variable)
@@ -127,16 +170,27 @@ checked_variables <- dataset %>%
                 return(non_param_vars)
 
 
-
-
-
-
-
-
-
-
-
 }
+
+
+
+#
+#
+# xxx <- function(dataset, strata, table_vars) {
+#
+#         xxd <- dataset %>%
+#                 dplyr::select(tidyselect::all_of(table_vars), {{ strata }}) %>%
+#                 dplyr::filter(!is.na(.data[[strata]]))
+#         #
+#         #
+#         # xxd <- dataset %>%
+#         #         mutate({{strata}} := stringr::str_to_title(.data[[strata]]))
+#
+#         return(xxd)
+# }
+# xxx(penguins, "sex", table_vars_1) %>% count(sex)
+
+
 
 
 #' @title Extract indices for Non-Normally Distributed Variables

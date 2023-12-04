@@ -12,7 +12,7 @@ ag_make_colors(num_colors, seed = 2023)
 \item{seed}{An optional argument specifying the seed for the random number generator. If not provided, the default seed of 2023 will be used.}
 }
 \value{
-A list with the following components:
+A list with the following components (1000 different options were defined):
 \describe{
   \item{palette}{A list containing the color palette. Each color in the palette is represented as a list with the following components: \code{normal_color}, \code{darker_color}, and \code{lighter_color}.}
   \item{normal}{A vector of the normal colors in the palette.}
@@ -28,17 +28,27 @@ The \code{ag_make_colors} function generates a color palette consisting of norma
 # Generate a color palette with 5 colors using the default seed:
 colors <- ag_make_colors(5)
 
-# Generate a color palette with 10 colors using a specific seed (e.g., 123):
-colors <- ag_make_colors(10, seed = 123)
+# Generate a color palette with 10 colors using a specific seed (e.g., 1967):
+colors <- ag_make_colors(10, seed = 1967)
 
-ag_make_colors(4)$palette
+# Extract the color palette
+palette <- colors$palette
 
-num_colors <- 8
-ag_make_colors(num_colors)$lighter
-ag_make_colors(num_colors)$darker
+# Extract the normal colors
+normal_colors <- colors$normal
+
+# Extract the darker colors
+darker_colors <- colors$darker
+
+# Extract the lighter colors
+lighter_colors <- colors$lighter
 }
 
+#' @export
 }
 \author{
 Ali Guner
 }
+\keyword{color}
+\keyword{generator}
+\keyword{palette}

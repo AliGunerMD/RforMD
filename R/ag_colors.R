@@ -272,17 +272,16 @@ ag_colors <- function(palette_name = NULL) {
 
 
 
-
-
 #' @title Generate Dark-Light Colors
 #'
 #' @description
 #' The \code{ag_make_colors} function generates a color palette consisting of normal, darker, and lighter colors based on random hues.
 #'
+#'
 #' @param num_colors An integer specifying the number of colors to generate in the color palette.
 #' @param seed An optional argument specifying the seed for the random number generator. If not provided, the default seed of 2023 will be used.
 #'
-#' @return A list with the following components:
+#' @return A list with the following components (1000 different options were defined):
 #' \describe{
 #'   \item{palette}{A list containing the color palette. Each color in the palette is represented as a list with the following components: \code{normal_color}, \code{darker_color}, and \code{lighter_color}.}
 #'   \item{normal}{A vector of the normal colors in the palette.}
@@ -292,28 +291,31 @@ ag_colors <- function(palette_name = NULL) {
 #'
 #' @author Ali Guner
 #'
+#' @keywords color palette generator
+#'
 #'
 #' @examples
 #' \dontrun{
 #' # Generate a color palette with 5 colors using the default seed:
 #' colors <- ag_make_colors(5)
 #'
-#' # Generate a color palette with 10 colors using a specific seed (e.g., 123):
-#' colors <- ag_make_colors(10, seed = 123)
+#' # Generate a color palette with 10 colors using a specific seed (e.g., 1967):
+#' colors <- ag_make_colors(10, seed = 1967)
 #'
-#' ag_make_colors(4)$palette
+#' # Extract the color palette
+#' palette <- colors$palette
 #'
-#' num_colors <- 8
-#' ag_make_colors(num_colors)$lighter
-#' ag_make_colors(num_colors)$darker
+#' # Extract the normal colors
+#' normal_colors <- colors$normal
+#'
+#' # Extract the darker colors
+#' darker_colors <- colors$darker
+#'
+#' # Extract the lighter colors
+#' lighter_colors <- colors$lighter
 #' }
 #'
-#' @export
-#'
-#'
-#'
-#'
-#'
+#' #' @export
 
 ag_make_colors <- function(num_colors, seed = 2023) {
         # Function to adjust brightness
@@ -331,7 +333,17 @@ ag_make_colors <- function(num_colors, seed = 2023) {
                 set.seed(seed)
         }
 
-        base_hues <- runif(num_colors)
+        # Predefined set of hue values
+        hue_values <- seq(0, 1, length.out = 1000)
+
+        # Set the seed for reproducibility
+        set.seed(seed)
+
+        # Generate random indices to select hues from the predefined set
+        hue_indices <- sample(1:length(hue_values), num_colors, replace = FALSE)
+
+        # Select hues based on the random indices
+        base_hues <- hue_values[hue_indices]
 
         # Generate normal, darker, and lighter colors for each hue
         color_palette <- lapply(base_hues, function(base_hue) {
