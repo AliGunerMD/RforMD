@@ -102,7 +102,7 @@ ag_qq_plot_single <- function(dataset, strata = NULL, table_vars = NULL) {
         if(!is.null(strata)){
 
                 strip <- ggh4x::strip_themed(background_x = ggh4x::elem_list_rect(fill = viridisLite::viridis(n_color_x, begin = 0.6)), by_layer_x = FALSE,
-                                      background_y = ggh4x::elem_list_rect(fill = ag_color_scale("gray", num_colors = n_color_y, start = 0.7, end = 0.4)), by_layer_y = FALSE)
+                                      background_y = ggh4x::elem_list_rect(fill = ag_colors_scale("gray", num_colors = n_color_y, start = 0.7, end = 0.4)), by_layer_y = FALSE)
 
         } else {
 

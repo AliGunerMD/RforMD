@@ -392,8 +392,8 @@ ag_make_colors <- function(num_colors, seed = 2023) {
 #'
 #' @examples
 #' \dontrun{
-#' ag_scale_color("yellow", 1)
-#' ag_scale_color("gray", 255)
+#' ag_colors_scale("yellow", 1)
+#' ag_colors_scale("gray", 255)
 #' }
 #'
 #' @author Ali Guner
@@ -402,7 +402,7 @@ ag_make_colors <- function(num_colors, seed = 2023) {
 #' @export
 
 
-ag_scale_color <- function(color, num_colors = 8, start = 1, end = 0) {
+ag_colors_scale <- function(color, num_colors = 8, start = 1, end = 0) {
 
         switch(color,
                "gray" = gray(seq(start, end, length.out = num_colors)),
