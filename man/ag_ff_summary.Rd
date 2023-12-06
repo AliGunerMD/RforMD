@@ -65,9 +65,9 @@ For categorical variables, expected cell frequencies is calculated
 (expected cell frequencies less than 5 in more than 20% of the cells in a
 contingency table may require using Fisher test) and required test
 (Chi-square or Fisher) is decided based on this.
-\code{row_col_sums} function can be used for different presenting styles.
-In the default one, the sums of the rows is 100% for the groups.
-For Total column, the sum of colon will be 100%. This approach is good for summary tables.
+\code{row_col_sums} function can be used for presenting different sum styles.
+In the default one, the sums of the rows is 100% for the groups. For Total column, the sum of colon will be 100%.
+This approach is good for summary tables.
 }
 \examples{
 \dontrun{

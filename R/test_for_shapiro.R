@@ -27,12 +27,6 @@ ag_shapiro_results <- function(dataset, strata = NULL, table_vars = NULL, asteri
 
         if(is.null(table_vars)){
 
-                # if(exist(silence) && silence){
-                #         message("Because all variables were included, silence argument were converted to FALSE")
-                #         silence <- FALSE
-                # }
-                #
-
                 message("No table_vars were defined. All numeric variables in dataset will be evaluated")
                 if (is.null(strata) || !is.numeric(dataset[[strata]])) {
                         table_vars <- dataset %>%
@@ -53,7 +47,8 @@ ag_shapiro_results <- function(dataset, strata = NULL, table_vars = NULL, asteri
                         tidyr::pivot_longer(tidyselect::everything(),
                                             names_to = "variable",
                                             values_to = "shapiro_results")
-        } else {
+
+                } else {
 
                 shapiro_results <- dataset %>%
                         dplyr::select(tidyselect::all_of(table_vars), {{ strata }}) %>%
@@ -64,6 +59,8 @@ ag_shapiro_results <- function(dataset, strata = NULL, table_vars = NULL, asteri
                                             names_to = "variable",
                                             values_to = "shapiro_results")
         }
+
+
 
 
         if(asteriks){
