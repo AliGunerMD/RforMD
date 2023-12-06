@@ -63,14 +63,14 @@ ag_qq_plot_single <- function(dataset, strata = NULL, table_vars = NULL) {
                 strata_levels <- NULL
         }
 
-
+ag_shapiro_results
 
 
                 n_empty_strata <- nrow(dataset) - nrow(noempty)
 
 
         # Function to compute Shapiro-Wilk test and format the result
-        annotations <- ag_shapiro_results(noempty, strata = strata, table_vars = table_vars) %>%
+        annotations <- ag_shapiro_results(noempty, strata = strata, table_vars = table_vars, asteriks = FALSE) %>%
                 dplyr::mutate(shapiro_results = format(shapiro_results, scientific = TRUE, digits = 3),
                        shapiro_results = as.numeric(shapiro_results)) %>%
                 dplyr::mutate(values_p = paste0("p value: ", shapiro_results),

@@ -1,6 +1,7 @@
 
 ## version 0.1.5 (under construction)
 - ag_shapiro_results
+- ag_shapiro_results (asteriks argument)
 - ag_shapiro 
 (update: silence = FALSE and names = TRUE, as default.)
 (update: is.null(table_vars) -> all variables are selected)

@@ -6,6 +6,7 @@
 #' @param dataset The input dataset.
 #' @param strata (Optional) A column name in the dataset to stratify the analysis by. Default is \code{NULL}.
 #' @param table_vars A character vector of variable names to include in the analysis.
+#' @param asteriks if \code{TRUE}, test results will be reader-friendly. Default is \code{TRUE}.
 #'
 #' @return A tibble with columns for the variable names and Shapiro-Wilk p-values.
 #'
@@ -17,11 +18,12 @@
 #'
 #' @import dplyr
 #' @import tidyr
+#' @export
 
 
 
 
-ag_shapiro_results <- function(dataset, strata = NULL, table_vars = NULL){
+ag_shapiro_results <- function(dataset, strata = NULL, table_vars = NULL, asteriks = TRUE){
 
         if(is.null(table_vars)){
 
@@ -62,6 +64,14 @@ ag_shapiro_results <- function(dataset, strata = NULL, table_vars = NULL){
                                             names_to = "variable",
                                             values_to = "shapiro_results")
         }
+
+
+        if(asteriks){
+                shapiro_results <- shapiro_results %>%
+                        dplyr::mutate(shapiro_results_ns = if_else(shapiro_results < 0.001, "<0.001", as.character(round(shapiro_results, 3))),
+                                      shapiro_results_ns = if_else(shapiro_results < 0.05, paste0(shapiro_results_ns, "*"), shapiro_results_ns))
+        }
+
 
         return(shapiro_results)
 }
@@ -199,7 +209,7 @@ ag_shapiro <- function(dataset, strata = NULL, table_vars = NULL, silence = FALS
 
         if (is.null(strata)) {
 
-                shapiro_results <- ag_shapiro_results(dataset, strata = strata, table_vars) %>%
+                shapiro_results <- ag_shapiro_results(dataset, strata = strata, table_vars, asteriks = FALSE) %>%
                         dplyr::filter(shapiro_results < 0.05) %>%
                         dplyr::distinct(variable) %>%
                         dplyr::pull(variable)
@@ -216,7 +226,7 @@ ag_shapiro <- function(dataset, strata = NULL, table_vars = NULL, silence = FALS
 
 
 
-                shapiro_results <- ag_shapiro_results(dataset, strata = strata, table_vars) %>%
+                shapiro_results <- ag_shapiro_results(dataset, strata = strata, table_vars, asteriks = FALSE) %>%
                         dplyr::filter(shapiro_results < 0.05) %>%
                         dplyr::distinct(variable) %>%
                         dplyr::pull(variable)
