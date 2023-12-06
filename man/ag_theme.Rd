@@ -4,7 +4,7 @@
 \alias{ag_theme}
 \title{AG Theme Customization}
 \usage{
-ag_theme(my_plot_size = 12, my_font = "Arial")
+ag_theme(my_plot_size = 12, my_font = "Arial", ...)
 }
 \arguments{
 \item{my_plot_size}{Numeric, size of the text in the plot.}

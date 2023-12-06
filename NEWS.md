@@ -1,9 +1,15 @@
 
-## version 0.1.
+## version 0.1.5 (under construction)
 - ag_shapiro_results
 - ag_shapiro 
 (update: silence = FALSE and names = TRUE, as default.)
 (update: is.null(table_vars) -> all variables are selected)
+- ag_qq_plot_single
+- ag_qq_plots
+- ag_color_scale
+- ag_colors_standard
+
+- README.Rmd
 
 
 

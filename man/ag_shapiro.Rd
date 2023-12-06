@@ -4,19 +4,27 @@
 \alias{ag_shapiro}
 \title{Perform Shapiro-Wilk Test for Normality}
 \usage{
-ag_shapiro(dataset, strata = NULL, table_vars, silence = TRUE, names = FALSE)
+ag_shapiro(
+  dataset,
+  strata = NULL,
+  table_vars = NULL,
+  silence = FALSE,
+  names = TRUE
+)
 }
 \arguments{
 \item{dataset}{A data frame containing the variables of interest.}
 
 \item{strata}{An optional grouping variable for stratified analysis. Default is NULL.}
 
-\item{table_vars}{A character vector of variable names to be tested for normality. Can be defined with names(select()) functions.}
+\item{table_vars}{A character vector of variable names to be tested for normality. Can be defined with names(select()) functions.
+If NULL, function will use all numeric variables in dataset, except for strata if present (NOT RECOMMENDED,
+it is better idea to define table_vars)}
 
-\item{silence}{Logical. If FALSE, displays informative messages about the analysis. Default is TRUE.}
+\item{silence}{Logical. If FALSE, displays informative messages about the analysis. Default is FALSE}
 
 \item{names}{Logical. If TRUE, returns the names of non-normally distributed variables;
-if FALSE, returns the indices of these variables. Default is FALSE.}
+if FALSE, returns the indices of these variables. Default is TRUE}
 }
 \value{
 A character vector containing the names of non-normally distributed variables or an integer count,
@@ -39,7 +47,7 @@ names()
 dependent <- "Species"
 
 ag_shapiro(dataset = iris, table_vars = table_vars)
-ag_shapiro(dataset = iris, table_vars = table_vars, names = TRUE, message = TRUE)
+ag_shapiro(dataset = iris, table_vars = table_vars, silence = TRUE, names = FALSE)
 }
 
 

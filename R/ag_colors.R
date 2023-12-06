@@ -207,20 +207,29 @@ scale_fill_karadeniz <- function(palette = "Faroz",
   }
 }
 
+
+
+
+
+
+
+
+
+
 #' DEFINE MY COLORS --------------------------------------
 #'
-#' @title  ag_colors
+#' @title  ag_colors_standard
 #' @description  To define single color for standardizing color use in projects (Source: RColorBrewer)
 #' @param palette_name A character string specifying the name of the desired color palette. If NULL (default), a palette is randomly selected.
 #' @return A vector representing either the selected color palette or a randomly chosen color from a palette.
 #'
 #' @examples
 #' # Select a specific palette
-#' ag_colors("greens")
-#' ag_colors("greens")[4]
+#' ag_colors_standard("greens")
+#' ag_colors_standard("greens")[4]
 #'
 #' # Randomly select a color from any palette
-#' ag_colors()
+#' ag_colors_standard()
 #'
 #'
 #' @keywords color palette, data visualization
@@ -229,7 +238,7 @@ scale_fill_karadeniz <- function(palette = "Faroz",
 
 
 
-ag_colors <- function(palette_name = NULL) {
+ag_colors_standard <- function(palette_name = NULL) {
         # Define the palettes
         ag_blues <- c("#F7FBFF", "#DEEBF7", "#C6DBEF", "#9ECAE1", "#6BAED6", "#4292C6", "#2171B5" ,"#084594")
         ag_greens <- c("#F7FCF5", "#E5F5E0", "#C7E9C0", "#A1D99B", "#74C476", "#41AB5D" ,"#238B45", "#005A32")
@@ -299,7 +308,7 @@ ag_colors <- function(palette_name = NULL) {
 #' # Generate a color palette with 5 colors using the default seed:
 #' colors <- ag_make_colors(5)
 #'
-#' # Generate a color palette with 10 colors using a specific seed (e.g., 1967):
+#' # Generate a color palette with 10 colors using a specific seed:
 #' colors <- ag_make_colors(10, seed = 1967)
 #'
 #' # Extract the color palette
@@ -309,10 +318,10 @@ ag_colors <- function(palette_name = NULL) {
 #' normal_colors <- colors$normal
 #'
 #' # Extract the darker colors
-#' darker_colors <- colors$darker
+#' darker_colors <- colors$dark
 #'
 #' # Extract the lighter colors
-#' lighter_colors <- colors$lighter
+#' lighter_colors <- colors$light
 #' }
 #'
 #' #' @export
@@ -364,12 +373,47 @@ ag_make_colors <- function(num_colors, seed = 2023) {
         return(list(
                 palette = color_palette,
                 normal = normal_colors,
-                darker= darker_colors,
-                lighter = lighter_colors
+                dark= darker_colors,
+                light = lighter_colors
         ))
 }
 
 
+#' @title Generate a scaled color palette
+#' @description
+#' This function generates a scaled color palette based on the specified color.
+#'
+#' @param color The color to create the palette from. Options include "gray", "red", "blue", "green", "orange", "cyan", "magenta", "yellow".
+#' @param num_colors The number of colors in the palette. Default is 8.
+#' @param start The starting value for the color scale. Default is 1. Used for gray scale.
+#' @param end The ending value for the color scale. Default is 0. Used for gray scale.
+#'
+#' @return A vector of colors representing the scaled color palette.
+#'
+#' @examples
+#' \dontrun{
+#' ag_scale_color("yellow", 1)
+#' ag_scale_color("gray", 255)
+#' }
+#'
+#' @author Ali Guner
+#' @importFrom grDevices gray
+#' @importFrom grDevices colorRampPalette
+#' @export
 
 
+ag_scale_color <- function(color, num_colors = 8, start = 1, end = 0) {
+
+        switch(color,
+               "gray" = gray(seq(start, end, length.out = num_colors)),
+               "red" = colorRampPalette(c("lightpink", "darkred"))(num_colors),
+               "blue" = colorRampPalette(c("lightblue", "darkblue"))(num_colors),
+               "green" = colorRampPalette(c("lightgreen", "darkgreen"))(num_colors),
+               "orange" = colorRampPalette(c("lightyellow", "darkorange"))(num_colors),
+               "cyan" = colorRampPalette(c("lightcyan", "darkcyan"))(num_colors),
+               "magenta" = colorRampPalette(c("lightpink", "darkmagenta"))(num_colors),
+               "yellow" = colorRampPalette(c("lightyellow", "darkgoldenrod2"))(num_colors),
+               colorRampPalette(c("white", color))(num_colors)
+        )
+}
 

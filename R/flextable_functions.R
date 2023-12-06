@@ -17,11 +17,11 @@
 #'
 #' @importFrom officer fp_border
 
-col_table_header <- ag_colors("blues")[4]
-col_footer <- ag_colors("grays")[6]
-col_table_border <- ag_colors("grays")[5]
+col_table_header <- ag_colors_standard("blues")[4]
+col_footer <- ag_colors_standard("grays")[6]
+col_table_border <- ag_colors_standard("grays")[5]
 table_border <- officer::fp_border(color = col_table_border)
-col_table_header_bg <- ag_colors("grays")[2]
+col_table_header_bg <- ag_colors_standard("grays")[2]
 
 
 

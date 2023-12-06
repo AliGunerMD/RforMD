@@ -21,7 +21,27 @@
 
 
 
-ag_shapiro_results <- function(dataset, strata = NULL, table_vars){
+ag_shapiro_results <- function(dataset, strata = NULL, table_vars = NULL){
+
+        if(is.null(table_vars)){
+
+                # if(exist(silence) && silence){
+                #         message("Because all variables were included, silence argument were converted to FALSE")
+                #         silence <- FALSE
+                # }
+                #
+
+                message("No table_vars were defined. All numeric variables in dataset will be evaluated")
+                if (is.null(strata) || !is.numeric(dataset[[strata]])) {
+                        table_vars <- dataset %>%
+                                dplyr::select(where(is.numeric)) %>%
+                                names()
+                } else {
+                        table_vars <- dataset %>%
+                                dplyr::select(where(is.numeric), -{{ strata }}) %>%
+                                names()
+                }
+        }
 
         if (is.null(strata)) {
 
@@ -152,7 +172,7 @@ ag_shapiro <- function(dataset, strata = NULL, table_vars = NULL, silence = FALS
                 }
 
 
-                message("No table_vars were defined. All numeric variables in dataset were evaluated")
+                message("No table_vars were defined. All numeric variables in dataset will be evaluated")
                 if (is.null(strata) || !is.numeric(dataset[[strata]])) {
                         table_vars <- dataset %>%
                                 dplyr::select(where(is.numeric)) %>%
@@ -226,7 +246,6 @@ ag_shapiro <- function(dataset, strata = NULL, table_vars = NULL, silence = FALS
 
 }
 
-ag_shapiro(penguins,  silence = TRUE, names = TRUE)
 
 
 
@@ -273,9 +292,6 @@ ag_non_param_vars <- function(dataset, strata = NULL, table_vars){
         non_param_vars
 }
 
-
-
-# ag_non_param_vars(penguins, "species", table_vars_1)
 
 
 

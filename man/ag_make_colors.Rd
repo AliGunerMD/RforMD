@@ -28,7 +28,7 @@ The \code{ag_make_colors} function generates a color palette consisting of norma
 # Generate a color palette with 5 colors using the default seed:
 colors <- ag_make_colors(5)
 
-# Generate a color palette with 10 colors using a specific seed (e.g., 1967):
+# Generate a color palette with 10 colors using a specific seed:
 colors <- ag_make_colors(10, seed = 1967)
 
 # Extract the color palette
@@ -38,10 +38,10 @@ palette <- colors$palette
 normal_colors <- colors$normal
 
 # Extract the darker colors
-darker_colors <- colors$darker
+darker_colors <- colors$dark
 
 # Extract the lighter colors
-lighter_colors <- colors$lighter
+lighter_colors <- colors$light
 }
 
 #' @export

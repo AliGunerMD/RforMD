@@ -25,6 +25,9 @@ Imports:
     usethis (>= 2.2.2),
     finalfit (>= 1.0.7),
     flextable (>= 0.9.1),
-    officer (>= 0.6.2)
+    officer (>= 0.6.2),
+    ggh4x (>= 0.2.6),
+    viridisLite (>= 0.4.2),
+    rlang(>= 1.1.2)
 
 
