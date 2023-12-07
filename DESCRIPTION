@@ -1,7 +1,7 @@
 Package: RforMD
 Type: Package
 Title: Use in MD Projects
-Version: 0.1.4
+Version: 0.1.5
 Authors@R: 
     person(
     "Ali", "Guner", 
@@ -29,5 +29,6 @@ Imports:
     ggh4x (>= 0.2.6),
     viridisLite (>= 0.4.2),
     rlang(>= 1.1.2)
+    
 
 

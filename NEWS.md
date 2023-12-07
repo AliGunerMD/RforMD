@@ -1,5 +1,5 @@
 
-## version 0.1.5 (under construction)
+## version 0.1.5 
 - ag_shapiro_results
 - ag_shapiro_results (asteriks argument)
 - ag_shapiro 
@@ -13,6 +13,8 @@
 - ag_ff_columns
 - ag_ff_labels
 - ag_create_excel
+
+- package website
 
 - README.Rmd
 
