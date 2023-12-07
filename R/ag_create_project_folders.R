@@ -119,3 +119,99 @@ ag_create_project_folders <- function() {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+#'
+#'
+#' @title Create an Excel File for Variables Name
+#' @description This function creates an Excel file with column names of the main dataset.
+#'
+#' @param dataset The dataset to extract column names from. Default is 'analysis_dataset'.
+#' @param excel_path The path and filename for the Excel file. Default is "_Data/Variables.xlsx".
+#'
+#' @return Saves a .xlsx file into the path.
+#'
+#' @author Ali Guner
+#' @import openxlsx
+#' @importFrom tibble add_column
+#'
+#' @examples
+#' \dontrun{
+#' #' ag_create_excel(dataset = iris)
+#' ag_create_excel(dataset = penguins, excel_path = "MyExcelFile.xlsx")
+#' }
+
+#' @export
+
+
+
+# Function to create an Excel file with column names and descriptions
+# Default dataset is 'analysis_dataset', default Excel path is "_Data/Variables.xlsx"
+ag_create_excel <- function(dataset = analysis_dataset, excel_path = "_Data/Variables.xlsx") {
+
+        column_names <- colnames(dataset)
+
+        # Create a data frame with 'original' and 'corrected' column names
+        df <- data.frame(original = column_names) %>%
+                tibble::add_column(corrected = " ")
+
+        dir_path <- dirname(excel_path)
+
+        # Check if the file already exists in the specified directory
+        if (file.exists(excel_path)) {
+                stop("File with the same name already exists. Please choose a different path or filename.")
+        }
+
+        # Create the directory if it doesn't exist
+        if (!dir.exists(dir_path)) {
+                tryCatch(
+                        expr = {
+                                dir.create(dir_path, recursive = TRUE)
+                        },
+                        error = function(e) {
+                                stop("Unable to create directory. Please check if the path is valid and you have sufficient permissions.")
+                        }
+                )
+        }
+
+        # Create a new workbook
+        wb <- openxlsx::createWorkbook()
+
+        # Add a worksheet named "Sheet 1"
+        openxlsx::addWorksheet(wb, "Sheet 1")
+
+        # Set column widths to 18 ("auto" is an option)
+        openxlsx::setColWidths(wb, sheet = 1, cols = 1:ncol(df), widths = 18)
+
+        # Write the data frame to "Sheet 1" with autofilter
+        openxlsx::writeData(wb, sheet = 1, x = df, withFilter = TRUE)
+
+        # Create and add a style to the column headers
+        headerStyle <- openxlsx::createStyle(
+                fontSize = 13, fontColour = "black", halign = "center",
+                fgFill = "#9ECAE1", textDecoration = "bold"
+        )
+        openxlsx::addStyle(wb, sheet = "Sheet 1", headerStyle, rows = 1, cols = 1:ncol(df))
+
+        # Freeze the pane at the first row
+        openxlsx::freezePane(wb, "Sheet 1", firstActiveRow = 2)
+
+        # Save the workbook to the specified Excel path
+        openxlsx::saveWorkbook(wb, excel_path)
+
+        message("Excel file created successfully at", excel_path)
+}
+
+
+
+

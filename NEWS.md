@@ -9,6 +9,10 @@
 - ag_qq_plots
 - ag_color_scale
 - ag_colors_standard
+- ag_ff_relocate
+- ag_ff_columns
+- ag_ff_labels
+- ag_create_excel
 
 - README.Rmd
 

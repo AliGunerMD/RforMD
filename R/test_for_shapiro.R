@@ -39,6 +39,15 @@ ag_shapiro_results <- function(dataset, strata = NULL, table_vars = NULL, asteri
                 }
         }
 
+
+        numeric_vars <- dataset %>%
+                dplyr::select(tidyselect::all_of(table_vars)) %>%
+                dplyr::select(where(is.numeric)) %>% names()
+
+        if(length(numeric_vars) == 0){
+                stop("There is no numeric variables in variable list.")
+        }
+
         if (is.null(strata)) {
 
                 shapiro_results <- dataset %>%
@@ -129,31 +138,6 @@ ag_shapiro_results <- function(dataset, strata = NULL, table_vars = NULL, asteri
 #'
 #'
 
-# xxx <- function(dataset, strata = NULL) {
-#         if (is.null(strata) || !is.numeric(dataset[[strata]])) {
-#                 dataset %>%
-#                         dplyr::select(where(is.numeric))
-#         } else {
-#                 dataset %>%
-#                         dplyr::select(where(is.numeric), -{{ strata }})
-#         }
-# }
-#
-#        xxx(penguins, strata = "species")
-#
-#         dataset %>%
-#                 dplyr::select(where(is.numeric)) %>%
-#                 dplyr::select(-one_of(.data[[strata]]))
-# }
-#
-# xxx(penguins, strata = "species")
-#
-#
-#
-#
-# penguins %>%
-#         mutate(species = as.numeric(species)) %>%
-#         dplyr::select(-species, where(is.numeric))
 
 
 

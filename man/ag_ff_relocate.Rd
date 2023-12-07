@@ -4,10 +4,10 @@
 \alias{ag_ff_relocate}
 \title{Relocate Columns of finalfit summary table}
 \usage{
-ag_ff_relocate(dataset, order = NULL)
+ag_ff_relocate(.data, order = NULL)
 }
 \arguments{
-\item{dataset}{The input dataset to be modified.}
+\item{.data}{The input (ag_ff_summary table) to be modified.}
 
 \item{order}{Optional. The order to relocate the columns. Default is "GTP".
 Possible values are: "G" (Groups), "GP" (Groups and P-value),
