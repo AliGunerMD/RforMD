@@ -33,27 +33,27 @@
 
 ## version 0.1.3
 
-ag_make_colors()    
-ag_ff_summary()   (updated)  
-test_for_fisher()  
-test_for_shapiro()  
+- ag_make_colors()    
+- ag_ff_summary()   (updated)  
+- test_for_fisher()  
+- test_for_shapiro()  
 
 
 ## version 0.1.2
 
 
 flextable functions
-* ag_flex
-* ag_flex_page_section()  
+- ag_flex
+- ag_flex_page_section()  
 
 ## version 0.1.1
 
 
-ag_theme
-ag_colors functions
-* scale_color_karadeniz()    
-* scale_fill_karadeniz()  
-* ag_colors()  
+- ag_theme
+ ag_colors functions
+- scale_color_karadeniz()    
+- scale_fill_karadeniz()  
+- ag_colors()  
 
 
 
@@ -61,8 +61,8 @@ ag_colors functions
 
 ## Initial packages
 
-ag_create_project_folders()    
-ag_generate_quarto_template()  
+- ag_create_project_folders()    
+- ag_generate_quarto_template()  
 
 
 
