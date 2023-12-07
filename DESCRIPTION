@@ -1,12 +1,9 @@
 Package: RforMD
 Type: Package
-Title: Use in MD Projects
+Title: Some helper functions to create tables for an article in medicine
 Version: 0.1.5
 Authors@R: 
-    person(
-    "Ali", "Guner", 
-    email = "draliguner@yahoo.com", 
-    role = c("aut", "cre"))
+    person("Ali", "Guner", , "draliguner@yahoo.com", role = c("aut", "cre"))
 Maintainer: The package maintainer <draliguner@yahoo.com>
 Description: I want to use this package in all my projects, because I hate copy/paste codes.
 License: MIT + file LICENSE 
