@@ -1,7 +1,4 @@
 url: https://aligunermd.github.io/RforMD/
-home:
-  title: Additional features for preparing tables with finalfit and others
-  description: Stop copy pasting your previous code
 template:
   bootstrap: 5
 
