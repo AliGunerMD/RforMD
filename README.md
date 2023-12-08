@@ -6,7 +6,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of RforMD is to provide some functions for personal use.
+`{RforMD}` aims to provide some functions for personal use.  
 Surely, any academic in medicine, can use any.  
 I am open to improve.
 
