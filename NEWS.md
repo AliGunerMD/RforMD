@@ -42,7 +42,7 @@
 ## version 0.1.2
 
 
-flextable functions
+### flextable functions
 - ag_flex
 - ag_flex_page_section()  
 
@@ -50,7 +50,8 @@ flextable functions
 
 
 - ag_theme
- ag_colors functions
+ 
+### ag_colors functions
 - scale_color_karadeniz()    
 - scale_fill_karadeniz()  
 - ag_colors()  
@@ -59,8 +60,7 @@ flextable functions
 
 ## version 0.1.0
 
-## Initial packages
-
+### Initial packages
 - ag_create_project_folders()    
 - ag_generate_quarto_template()  
 
