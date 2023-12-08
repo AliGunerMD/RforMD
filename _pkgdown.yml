@@ -2,7 +2,8 @@ url: https://aligunermd.github.io/RforMD/
 template:
   bootstrap: 5
   opengraph:
-   twitter:
+    twitter:
       creator: '@AliGunerMD'
       site: https://twitter.com/AliGunerMD
       card: summary
+
