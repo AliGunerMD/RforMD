@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# RforMD
+# RforMD <a href="https://aligunermd.github.io/RforMD/"><img src="man/figures/hexsticker.png" align="right" height="120" /></a>
 
 <!-- badges: start -->
 <!-- badges: end -->
@@ -18,6 +18,5 @@ You can install the development version of RforMD from
 ``` r
 # install.packages("remotes")
 remotes::install_github("AliGunerMD/RforMD")
+library("RforMD")
 ```
-
-## Example
