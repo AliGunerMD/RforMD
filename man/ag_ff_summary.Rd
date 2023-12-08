@@ -2,7 +2,7 @@
 % Please edit documentation in R/finalfit_functions.R
 \name{ag_ff_summary}
 \alias{ag_ff_summary}
-\title{Enhanced version of finalfit::summary_factorlist}
+\title{Enhanced version of \code{finalfit::summary_factorlist}}
 \usage{
 ag_ff_summary(
   dataset,
@@ -34,7 +34,7 @@ and "row_col_based" for both row and column-based summaries. Default is "row_col
 and "shapiro" for using the Shapiro-Wilk test for normality and choosing between parametric
 and non-parametric accordingly. Default is "shapiro". Manual option is also possible with \code{manual_nonparams}.}
 
-\item{manual_nonparams}{If \code{all_cont} is set to "manual", this argument should contain the values (not index, the name of the varible) for
+\item{manual_nonparams}{If \code{all_cont} is set to "manual", this argument should contain the values (not index, the name of the variable) for
 \code{cont_nonpara}. It cannot be empty in this case.}
 
 \item{fisher_correction}{Logical, indicating whether Fisher's correction should be applied for expected cell

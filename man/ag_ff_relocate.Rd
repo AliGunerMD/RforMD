@@ -2,7 +2,7 @@
 % Please edit documentation in R/finalfit_functions.R
 \name{ag_ff_relocate}
 \alias{ag_ff_relocate}
-\title{Relocate Columns of finalfit summary table}
+\title{Relocate columns of ag_ff_summary table}
 \usage{
 ag_ff_relocate(.data, order = NULL)
 }

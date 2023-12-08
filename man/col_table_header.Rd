@@ -25,6 +25,7 @@ ag_flex() \%>\%
 flextable::bg(i = 1, j = NULL, bg = col_table_header, part = "header")
 }
 
+
 }
 \author{
 Ali Guner

@@ -2,7 +2,7 @@
 % Please edit documentation in R/finalfit_functions.R
 \name{short_ff}
 \alias{short_ff}
-\title{minimized version of summary_factorlist}
+\title{Minimized version of summary_factorlist}
 \usage{
 short_ff(
   dataset,

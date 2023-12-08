@@ -2,7 +2,7 @@
 % Please edit documentation in R/ag_colors.R
 \name{scale_color_karadeniz}
 \alias{scale_color_karadeniz}
-\title{scale_color_karadeniz}
+\title{Color palette to use in color}
 \usage{
 scale_color_karadeniz(palette = "Faroz", discrete = TRUE, reverse = FALSE, ...)
 }
@@ -24,12 +24,12 @@ iris \%>\%
 ggplot(aes(Petal.Length, Petal.Width, color = Species))+
 geom_point() +
 scale_color_karadeniz()
-}
 
 iris \%>\%
 ggplot(aes(Sepal.Length, Sepal.Width, color = Petal.Length)) +
 geom_point() +
 scale_color_karadeniz(palette = "Vazil", discrete = FALSE)
+}
 }
 \author{
 Ali Guner

@@ -196,7 +196,7 @@ ff_row_col_sums <- function(dataset,
 #' @param fisher_correction Logical, indicating whether Fisher's correction should be applied for expected cell
 #'                         frequencies less than 5 in more than 20% of the cells in a contingency table.
 #'                         Default is \code{TRUE}.
-#' @param manual_nonparams If \code{all_cont} is set to "manual", this argument should contain the values (not index, the name of the varible) for
+#' @param manual_nonparams If \code{all_cont} is set to "manual", this argument should contain the values (not index, the name of the variable) for
 #'                         \code{cont_nonpara}. It cannot be empty in this case.
 #' @param summary_factorlist_args A list containing additional arguments to be passed to \code{ag_ff_summary}.
 #' All comes from the finalfit::summaryfactorlist function.

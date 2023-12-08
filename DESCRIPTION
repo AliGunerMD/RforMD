@@ -1,6 +1,6 @@
 Package: RforMD
 Type: Package
-Title: Helper functions to analysis and to create tables for an article in medicine
+Title: Helper functions to analysis data and to create tables/figures for a medical article
 Version: 0.1.6
 Authors@R: 
     person("Ali", "Guner", , "draliguner@yahoo.com", role = c("aut", "cre"))

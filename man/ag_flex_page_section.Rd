@@ -2,7 +2,7 @@
 % Please edit documentation in R/flextable_functions.R
 \name{ag_flex_page_section}
 \alias{ag_flex_page_section}
-\title{Page section}
+\title{Page section to save flextable as .docx}
 \usage{
 ag_flex_page_section(orientation)
 }
@@ -13,7 +13,7 @@ ag_flex_page_section(orientation)
 A page section object for use in a flextable document (while saving with pr_section ()).
 }
 \description{
-Page section
+Page section to save flextable as .docx
 }
 \examples{
 \dontrun{

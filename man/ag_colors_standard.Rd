@@ -2,7 +2,7 @@
 % Please edit documentation in R/ag_colors.R
 \name{ag_colors_standard}
 \alias{ag_colors_standard}
-\title{ag_colors_standard}
+\title{Standardized colors for across projects}
 \usage{
 ag_colors_standard(palette_name = NULL)
 }
