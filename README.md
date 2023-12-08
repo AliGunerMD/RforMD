@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# RforMD <a href="https://aligunermd.github.io/RforMD/"><img src="man/figures/hexsticker.png" align="right" height="120" /></a>
+# RforMD <a href="https://aligunermd.github.io/RforMD/"><img src="reference/figures/hexsticker.png" align="right" height="120" /></a>
 
 <!-- badges: start -->
 <!-- badges: end -->
