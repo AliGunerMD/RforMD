@@ -44,9 +44,9 @@
     </div>
 
     <div class="section level2">
-      <h2 id="all-functions">All functions<a class="anchor" aria-label="anchor" href="#all-functions"></a></h2>
+      <h2 id="finalfit-helpers">Finalfit helpers<a class="anchor" aria-label="anchor" href="#finalfit-helpers"></a></h2>
       
-      
+      <p class="section-desc"></p><p>finalfit is the main package for analysis of medical data. In all analysis, I repeat my tasks (almost same tasks in different studies). So I decide to make some helper functions with arguments I need.</p>
 
       
     </div><div id="" class="section level2">
@@ -56,24 +56,14 @@
 
       <dl><dt>
           
-          <code><a href="ag_colors_scale.html">ag_colors_scale()</a></code> 
+          <code><a href="ag_ff_summary.html">ag_ff_summary()</a></code> 
         </dt>
-        <dd>Generate a scaled color palette</dd>
+        <dd>Enhanced version of finalfit::summary_factorlist</dd>
       </dl><dl><dt>
           
-          <code><a href="ag_colors_standard.html">ag_colors_standard()</a></code> 
+          <code><a href="ag_ff_relocate.html">ag_ff_relocate()</a></code> 
         </dt>
-        <dd>ag_colors_standard</dd>
-      </dl><dl><dt>
-          
-          <code><a href="ag_create_excel.html">ag_create_excel()</a></code> 
-        </dt>
-        <dd>Create an Excel File for Variables Name</dd>
-      </dl><dl><dt>
-          
-          <code><a href="ag_create_project_folders.html">ag_create_project_folders()</a></code> 
-        </dt>
-        <dd>Create Project Folders</dd>
+        <dd>Relocate Columns of finalfit summary table</dd>
       </dl><dl><dt>
           
           <code><a href="ag_ff_columns.html">ag_ff_columns()</a></code> 
@@ -84,22 +74,18 @@
           <code><a href="ag_ff_labels.html">ag_ff_labels()</a></code> 
         </dt>
         <dd>Rename labels of a ag_ff_summary table</dd>
-      </dl><dl><dt>
-          
-          <code><a href="ag_ff_relocate.html">ag_ff_relocate()</a></code> 
-        </dt>
-        <dd>Relocate Columns of finalfit summary table</dd>
-      </dl><dl><dt>
-          
-          <code><a href="ag_ff_summary.html">ag_ff_summary()</a></code> 
-        </dt>
-        <dd>Enhanced version of finalfit::summary_factorlist</dd>
-      </dl><dl><dt>
-          
-          <code><a href="ag_fisher.html">ag_fisher()</a></code> 
-        </dt>
-        <dd>Identify Factors with Low Expected Cell Frequencies (for Fisher test)</dd>
-      </dl><dl><dt>
+      </dl></div><div class="section level2">
+      <h2 id="flextable-helpers">Flextable helpers<a class="anchor" aria-label="anchor" href="#flextable-helpers"></a></h2>
+      
+      <p class="section-desc"></p><p>Same idea with the finalfit helpers. Some useful shortcut for redo coding while using <a href="https://ardata-fr.github.io/flextable-book/" class="external-link">flextable</a></p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
           
           <code><a href="ag_flex.html">ag_flex()</a></code> 
         </dt>
@@ -109,6 +95,22 @@
           <code><a href="ag_flex_page_section.html">ag_flex_page_section()</a></code> 
         </dt>
         <dd>Page section</dd>
+      </dl></div><div class="section level2">
+      <h2 id="folder-file-templates">Folder/file templates<a class="anchor" aria-label="anchor" href="#folder-file-templates"></a></h2>
+      
+      <p class="section-desc"></p><p>Some shortcuts to prepare default template folder/filestructure</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="ag_create_project_folders.html">ag_create_project_folders()</a></code> 
+        </dt>
+        <dd>Create Project Folders</dd>
       </dl><dl><dt>
           
           <code><a href="ag_generate_template_quarto.html">ag_generate_template_quarto()</a></code> 
@@ -116,9 +118,102 @@
         <dd>Generate Quarto Document Using Template</dd>
       </dl><dl><dt>
           
+          <code><a href="ag_create_excel.html">ag_create_excel()</a></code> 
+        </dt>
+        <dd>Create an Excel File for Variables Name</dd>
+      </dl></div><div class="section level2">
+      <h2 id="biostats-stuffs">Biostats stuffs<a class="anchor" aria-label="anchor" href="#biostats-stuffs"></a></h2>
+      
+      <p class="section-desc"></p><p>For some quick looks in data</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="ag_shapiro.html">ag_shapiro()</a></code> 
+        </dt>
+        <dd>Perform Shapiro-Wilk Test for Normality</dd>
+      </dl><dl><dt>
+          
+          <code><a href="ag_shapiro_results.html">ag_shapiro_results()</a></code> 
+        </dt>
+        <dd>Calculate Shapiro-Wilk p-values</dd>
+      </dl><dl><dt>
+          
+          <code><a href="ag_fisher.html">ag_fisher()</a></code> 
+        </dt>
+        <dd>Identify Factors with Low Expected Cell Frequencies (for Fisher test)</dd>
+      </dl><dl><dt>
+          
+          <code><a href="ag_qq_plots.html">ag_qq_plots()</a></code> 
+        </dt>
+        <dd>Generate multiple QQ plots for all/selected numeric variables</dd>
+      </dl></div><div class="section level2">
+      <h2 id="color-management">Color management<a class="anchor" aria-label="anchor" href="#color-management"></a></h2>
+      
+      <p class="section-desc"></p><p>To manage color choices</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="ag_theme.html">ag_theme()</a></code> 
+        </dt>
+        <dd>AG Theme Customization</dd>
+      </dl><dl><dt>
+          
           <code><a href="ag_make_colors.html">ag_make_colors()</a></code> 
         </dt>
         <dd>Generate Dark-Light Colors</dd>
+      </dl><dl><dt>
+          
+          <code><a href="ag_colors_standard.html">ag_colors_standard()</a></code> 
+        </dt>
+        <dd>ag_colors_standard</dd>
+      </dl><dl><dt>
+          
+          <code><a href="ag_colors_scale.html">ag_colors_scale()</a></code> 
+        </dt>
+        <dd>Generate a scaled color palette</dd>
+      </dl><dl><dt>
+          
+          <code><a href="scale_color_karadeniz.html">scale_color_karadeniz()</a></code> 
+        </dt>
+        <dd>scale_color_karadeniz</dd>
+      </dl><dl><dt>
+          
+          <code><a href="scale_fill_karadeniz.html">scale_fill_karadeniz()</a></code> 
+        </dt>
+        <dd>scale_fill_karadeniz</dd>
+      </dl></div><div class="section level2">
+      <h2 id="utilities">Utilities<a class="anchor" aria-label="anchor" href="#utilities"></a></h2>
+      
+      <p class="section-desc"></p><p>Helper functions and utilities</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="short_ff.html">short_ff()</a></code> 
+        </dt>
+        <dd>minimized version of summary_factorlist</dd>
+      </dl><dl><dt>
+          
+          <code><a href="ff_row_col_sums.html">ff_row_col_sums()</a></code> 
+        </dt>
+        <dd>Generate Row-, Column-based or both-based Summary Statistics</dd>
       </dl><dl><dt>
           
           <code><a href="ag_non_param_vars.html">ag_non_param_vars()</a></code> 
@@ -131,34 +226,9 @@
         <dd>Generate QQ plots for numeric variables</dd>
       </dl><dl><dt>
           
-          <code><a href="ag_qq_plots.html">ag_qq_plots()</a></code> 
-        </dt>
-        <dd>Generate multiple QQ plots for all/selected numeric variables</dd>
-      </dl><dl><dt>
-          
-          <code><a href="ag_shapiro.html">ag_shapiro()</a></code> 
-        </dt>
-        <dd>Perform Shapiro-Wilk Test for Normality</dd>
-      </dl><dl><dt>
-          
-          <code><a href="ag_shapiro_results.html">ag_shapiro_results()</a></code> 
-        </dt>
-        <dd>Calculate Shapiro-Wilk p-values</dd>
-      </dl><dl><dt>
-          
-          <code><a href="ag_theme.html">ag_theme()</a></code> 
-        </dt>
-        <dd>AG Theme Customization</dd>
-      </dl><dl><dt>
-          
           <code><a href="col_table_header.html">col_table_header</a></code> 
         </dt>
         <dd>Define Colors for Table Styling</dd>
-      </dl><dl><dt>
-          
-          <code><a href="ff_row_col_sums.html">ff_row_col_sums()</a></code> 
-        </dt>
-        <dd>Generate Row-, Column-based or both-based Summary Statistics</dd>
       </dl><dl><dt>
           
           <code><a href="karadeniz.html">karadeniz()</a></code> 
@@ -166,26 +236,12 @@
         <dd>karadeniz color pallette</dd>
       </dl><dl><dt>
           
-          <code><a href="scale_color_karadeniz.html">scale_color_karadeniz()</a></code> 
-        </dt>
-        <dd>scale_color_karadeniz</dd>
-      </dl><dl><dt>
-          
-          <code><a href="scale_fill_karadeniz.html">scale_fill_karadeniz()</a></code> 
-        </dt>
-        <dd>scale_fill_karadeniz</dd>
-      </dl><dl><dt>
-          
-          <code><a href="short_ff.html">short_ff()</a></code> 
-        </dt>
-        <dd>minimized version of summary_factorlist</dd>
-      </dl><dl><dt>
-          
           <code><a href="to_select_colors.html">to_select_colors()</a></code> 
         </dt>
         <dd>to_select_colors</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">

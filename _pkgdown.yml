@@ -1,4 +1,6 @@
 url: https://aligunermd.github.io/RforMD/
+home:
+  title: An accelerator for an analysis
 template:
   bootstrap: 5
   opengraph:
@@ -6,4 +8,49 @@ template:
       creator: '@AliGunerMD'
       site: https://twitter.com/AliGunerMD
       card: summary
-
+reference:
+- title: Finalfit helpers
+  desc: finalfit is the main package for analysis of medical data. In all analysis, I repeat my tasks (almost same tasks in different studies). So I decide to make some helper functions with arguments I need.
+  contents:
+  - ag_ff_summary
+  - ag_ff_relocate
+  - ag_ff_columns
+  - ag_ff_labels
+- title: Flextable helpers
+  desc: Same idea with the finalfit helpers. Some useful shortcut for redo coding while using `{flextable}`
+  contents:
+  - ag_flex
+  - ag_flex_page_section
+- title: Folder/file templates
+  desc: Some shortcuts to prepare default template folder/filestructure
+  contents:
+  - ag_create_project_folders
+  - ag_generate_template_quarto
+  - ag_create_excel
+- title: Biostats stuffs
+  desc: For some quick looks in data
+  contents:
+  - ag_shapiro
+  - ag_shapiro_results
+  - ag_fisher
+  - ag_qq_plots
+- title: Color management
+  desc: To manage color choices
+  contents:
+  - ag_theme
+  - ag_make_colors
+  - ag_colors_standard
+  - ag_colors_scale
+  - scale_color_karadeniz
+  - scale_fill_karadeniz
+- title: Utilities
+  desc: Helper functions and utilities
+  contents:
+  - short_ff
+  - ff_row_col_sums
+  - ag_non_param_vars
+  - ag_qq_plot_single
+  - col_table_header
+  - ff_row_col_sums
+  - karadeniz
+  - to_select_colors

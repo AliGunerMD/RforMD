@@ -15,6 +15,7 @@
 #' flextable::bg(i = 1, j = NULL, bg = col_table_header, part = "header")
 #' }
 #'
+#'
 #' @importFrom officer fp_border
 
 col_table_header <- ag_colors_standard("blues")[4]
@@ -83,7 +84,7 @@ ag_flex <- function(data, flex_font_family = "Arial", flex_font_size = 11) {
 
 
 
-#' @title Page section
+#' @title Page section to save flextable as .docx
 #' @param orientation A character value specifying the page orientation. Use "landscape" for landscape orientation and "portrait" for portrait orientation.
 #' @return A page section object for use in a flextable document (while saving with pr_section ()).
 #' @author Ali Guner

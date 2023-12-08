@@ -139,7 +139,7 @@ karadeniz <- function(palette = "main", reverse = FALSE, ...) {
   colorRampPalette(pal, bias = 1, ...)
 }
 
-#' @title scale_color_karadeniz
+#' @title Color palette to use in color
 #' @description To define my color pallette to standardize color use in projects
 #' @param palette Choose your favorite palette: "Hidirnebi", "Kadirga", "Kayabasi", "Erikbeli", "Pokut", "Samistal", "Elevit", "Gito", "Ovit", "Palovit", "Faroz", "Vazil"
 #' @param discrete TRUE/FALSE
@@ -152,12 +152,12 @@ karadeniz <- function(palette = "main", reverse = FALSE, ...) {
 #' ggplot(aes(Petal.Length, Petal.Width, color = Species))+
 #' geom_point() +
 #' scale_color_karadeniz()
-#'}
 #'
 #' iris %>%
 #' ggplot(aes(Sepal.Length, Sepal.Width, color = Petal.Length)) +
 #' geom_point() +
 #' scale_color_karadeniz(palette = "Vazil", discrete = FALSE)
+#' }
 #'@export
 #'
 scale_color_karadeniz <- function(palette = "Faroz",
@@ -173,7 +173,7 @@ scale_color_karadeniz <- function(palette = "Faroz",
   }
 }
 
-#' @title scale_fill_karadeniz
+#' @title Color palette to use in fill
 #' @description To define my color pallette to standardize color use in projects
 #' @param palette Choose your favorite palette: "Hidirnebi", "Kadirga", "Kayabasi", "Erikbeli", "Pokut", "Samistal", "Elevit", "Gito", "Ovit", "Palovit", "Faroz", "Vazil"
 #' @param discrete TRUE/FALSE
@@ -186,13 +186,13 @@ scale_color_karadeniz <- function(palette = "Faroz",
 #' ggplot(aes(Petal.Length, Petal.Width, fill = Species))+
 #' geom_point() +
 #' scale_fill_karadeniz()
-#'}
 #'
 #' iris %>%
 #' ggplot(aes(Sepal.Length, Sepal.Width, fill = Petal.Length)) +
 #' geom_point() +
 #' scale_fill_karadeniz(palette = "Vazil", discrete = FALSE)
-#'@export
+#' }
+#' @export
 #'
 scale_fill_karadeniz <- function(palette = "Faroz",
                                  discrete = TRUE,
@@ -218,11 +218,10 @@ scale_fill_karadeniz <- function(palette = "Faroz",
 
 #' DEFINE MY COLORS --------------------------------------
 #'
-#' @title  ag_colors_standard
+#' @title Standardized colors for across projects
 #' @description  To define single color for standardizing color use in projects (Source: RColorBrewer)
 #' @param palette_name A character string specifying the name of the desired color palette. If NULL (default), a palette is randomly selected.
 #' @return A vector representing either the selected color palette or a randomly chosen color from a palette.
-#'
 #' @examples
 #' # Select a specific palette
 #' ag_colors_standard("greens")

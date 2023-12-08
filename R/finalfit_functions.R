@@ -1,4 +1,4 @@
-#' @title minimized version of summary_factorlist
+#' @title Minimized version of summary_factorlist
 #' @description
 #' Perform Short Summary Statistics and Hypothesis Testing
 
@@ -160,7 +160,7 @@ ff_row_col_sums <- function(dataset,
 
 
 
-#' @title Enhanced version of finalfit::summary_factorlist
+#' @title Enhanced version of \code{finalfit::summary_factorlist}
 
 #'
 #' @description
@@ -413,7 +413,7 @@ ag_ff_summary <- function(dataset, strata = NULL, table_vars,
 
 
 
-#' @title Relocate Columns of finalfit summary table
+#' @title Relocate columns of ag_ff_summary table
 #'
 #' @description
 #' This function relocates columns of finalfit summary table based on the specified order,
