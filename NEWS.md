@@ -1,4 +1,7 @@
 
+## version 0.1.6
+- package website
+
 ## version 0.1.5 
 - ag_shapiro_results()
 - ag_shapiro_results() (asteriks argument)
