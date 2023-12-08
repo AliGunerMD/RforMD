@@ -2,10 +2,7 @@ url: https://aligunermd.github.io/RforMD/
 template:
   bootstrap: 5
   opengraph:
-    image:
-      src: man/figures/hexsticker.png
-      alt: The package hex logo
-    twitter:
+   twitter:
       creator: '@AliGunerMD'
       site: https://twitter.com/AliGunerMD
       card: summary
