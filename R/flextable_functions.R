@@ -117,3 +117,11 @@ ag_flex_page_section <- function(orientation) {
                 stop("Invalid orientation. Use 'landscape' or 'portrait'.")
         }
 }
+
+
+
+
+
+
+# new functon here.
+
