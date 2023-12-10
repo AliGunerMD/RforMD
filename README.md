@@ -50,3 +50,23 @@ Among many options like `summary()`, `str()`, `dplyr::glimpse()`,
 I prefer `finalfit::ff_glimpse()`.
 
 with some modifications
+
+``` r
+ag_ff_glimpse(penguins, type = "cont")
+```
+
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+
+``` r
+ag_ff_glimpse(penguins, type = "cat") %>% 
+        flextable::height(height = 1.5, part = "body") %>% 
+        flextable::hrule(rule = "atleast", part = "body")
+```
+
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+
+``` r
+ag_ff_glimpse(penguins, type = "cat", strata = "sex", missing = TRUE, flex_font_size = 9)
+```
+
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />

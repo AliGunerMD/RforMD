@@ -62,4 +62,18 @@ I prefer `finalfit::ff_glimpse()`.
 
 with some modifications
 
+```{r}
+ag_ff_glimpse(penguins, type = "cont")
+```
+
+```{r}
+ag_ff_glimpse(penguins, type = "cat") %>% 
+        flextable::height(height = 1.5, part = "body") %>% 
+        flextable::hrule(rule = "atleast", part = "body")
+
+```
+
+```{r}
+ag_ff_glimpse(penguins, type = "cat", strata = "sex", missing = TRUE, flex_font_size = 9)
+```
 
