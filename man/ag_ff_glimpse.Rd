@@ -39,6 +39,7 @@ It generates a summary table with additional information such as levels, missing
 }
 \examples{
 \dontrun{
+library(palmerpenguins)
 ag_ff_glimpse(penguins, type = "cont")
 ag_ff_glimpse(penguins, strata = "sex", missing = TRUE, type = "cat")
 }
