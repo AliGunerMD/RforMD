@@ -58,20 +58,14 @@ ag_ff_glimpse(penguins, type = "cont")
 <img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
 
 ``` r
-ag_ff_glimpse(penguins, type = "cat") %>% 
-        flextable::set_table_properties(
-        opts_html = list(
-    scroll = list(
-      height = "500px",
-      freeze_first_column = TRUE
-    )
-  ))
+
+ag_ff_glimpse(penguins, type = "cat") 
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
 ``` r
-ag_ff_glimpse(penguins, type = "cat", strata = "sex") 
+ag_ff_glimpse(penguins, type = "cat", strata = "sex", flex_font_size = 9) 
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
