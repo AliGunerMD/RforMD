@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="An accelerator for an analysis">
 <meta property="og:description" content="I want to use this package in all my projects, because I hate copy/paste codes.">
@@ -80,7 +80,7 @@
 <!-- badges: end -->
 <p><a href="https://github.com/AliGunerMD/RforMD" class="external-link">RforMD</a> aims to provide some functions for personal use.<br>
 Surely, any academic in medicine, can use any.<br>
-I am open to improve.</p>
+I am open to improve. Do not hesitate for requests/issue reports.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -89,6 +89,45 @@ I am open to improve.</p>
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"AliGunerMD/RforMD"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/AliGunerMD/RforMD" class="external-link">"RforMD"</a></span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="example-use">Example use<a class="anchor" aria-label="anchor" href="#example-use"></a>
+</h2>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># remotes::install_github("AliGunerMD/RforMD", force = TRUE)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/AliGunerMD/RforMD" class="external-link">RforMD</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/" class="external-link">palmerpenguins</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ewenharrison/finalfit" class="external-link">finalfit</a></span><span class="op">)</span></span></code></pre></div>
+<p>The idea of this package comes from the personal needs.<br>
+The <a href="https://finalfit.org" class="external-link">finalfit</a> package is one of the most useful package for a researcher who works in medicine.<br>
+It provides great functionalities. I just want to improve some parts of them, so, try to extent it to save some time.</p>
+<p>Later, I also added some functions for <a href="https://ardata-fr.github.io/flextable-book/" class="external-link">flextable</a> with the same idea. to make faster and totally reproducible Word tables.<br>
+If you are happy with html output, try <a href="https://gt.rstudio.com/" class="external-link">gt</a>, <a href="https://www.danieldsjoberg.com/gtsummary/" class="external-link">gtsummary</a>, <a href="https://jthomasmock.github.io/gtExtras/" class="external-link">gtExtras</a> packages.</p>
+<p><br> All analysis starts with the exploration of data.<br>
+Among many options like <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>, <code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code>, <code><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">dplyr::glimpse()</a></code>, <code><a href="https://docs.ropensci.org/skimr/reference/skim.html" class="external-link">skimr::skim()</a></code>;<br>
+I prefer <code><a href="https://rdrr.io/pkg/finalfit/man/ff_glimpse.html" class="external-link">finalfit::ff_glimpse()</a></code> with some modifications.</p>
+<div class="section level4">
+<h4 id="continuous-variables">Continuous variables<a class="anchor" aria-label="anchor" href="#continuous-variables"></a>
+</h4>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/ag_ff_glimpse.html">ag_ff_glimpse</a></span><span class="op">(</span><span class="va">penguins</span>, type <span class="op">=</span> <span class="st">"cont"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-Continuous-1.png" width="100%"></p>
+</div>
+<div class="section level4">
+<h4 id="categorical-variables">Categorical variables<a class="anchor" aria-label="anchor" href="#categorical-variables"></a>
+</h4>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/ag_ff_glimpse.html">ag_ff_glimpse</a></span><span class="op">(</span><span class="va">penguins</span>, type <span class="op">=</span> <span class="st">"cat"</span><span class="op">)</span> </span></code></pre></div>
+<p><img src="reference/figures/README-Categorical-1.png" width="100%"></p>
+</div>
+<div class="section level4">
+<h4 id="categorical-variables-with-strata">Categorical variables with strata<a class="anchor" aria-label="anchor" href="#categorical-variables-with-strata"></a>
+</h4>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/ag_ff_glimpse.html">ag_ff_glimpse</a></span><span class="op">(</span><span class="va">penguins</span>, type <span class="op">=</span> <span class="st">"cat"</span>, strata <span class="op">=</span> <span class="st">"sex"</span>, flex_font_size <span class="op">=</span> <span class="fl">9</span><span class="op">)</span> </span></code></pre></div>
+<p><img src="reference/figures/README-Categorical_strata-1.png" width="100%"></p>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

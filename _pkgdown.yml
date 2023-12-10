@@ -12,6 +12,7 @@ reference:
 - title: Finalfit helpers
   desc: finalfit is the main package for analysis of medical data. In all analysis, I repeat my tasks (almost same tasks in different studies). So I decide to make some helper functions with arguments I need.
   contents:
+  - ag_ff_glimpse
   - ag_ff_summary
   - ag_ff_relocate
   - ag_ff_columns

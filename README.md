@@ -47,25 +47,28 @@ If you are happy with html output, try [gt](https://gt.rstudio.com/),
 <br> All analysis starts with the exploration of data.  
 Among many options like `summary()`, `str()`, `dplyr::glimpse()`,
 `skimr::skim()`;  
-I prefer `finalfit::ff_glimpse()`.
+I prefer `finalfit::ff_glimpse()` with some modifications.
 
-with some modifications
+#### Continuous variables
 
 ``` r
 ag_ff_glimpse(penguins, type = "cont")
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+<img src="man/figures/README-Continuous-1.png" width="100%" />
+
+#### Categorical variables
 
 ``` r
-
 ag_ff_glimpse(penguins, type = "cat") 
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-Categorical-1.png" width="100%" />
+
+#### Categorical variables with strata
 
 ``` r
 ag_ff_glimpse(penguins, type = "cat", strata = "sex", flex_font_size = 9) 
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-Categorical_strata-1.png" width="100%" />

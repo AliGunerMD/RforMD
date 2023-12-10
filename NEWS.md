@@ -16,6 +16,7 @@
 - ag_ff_columns()
 - ag_ff_labels()
 - ag_create_excel()
+- ag_ff_glimpse
   
 - package website
   
