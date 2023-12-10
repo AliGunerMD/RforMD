@@ -127,8 +127,7 @@ ag_ff_glimpse <- function(.data, strata = NULL, table_vars = NULL, type = NULL, 
         flex_cont()
     } else if (type == "cat") {
       glimpse_table <- finalfit::ff_glimpse(.data, explanatory = table_vars, levels_cut = levels_cut)$Categorical %>%
-        dplyr::mutate(dplyr::across(levels:levels_percent, ~ stringr::str_replace_all(., ", ", "\n")),
-          levels = stringr::str_remove_all(levels, '\\"')
+        dplyr::mutate(dplyr::across(levels:levels_percent, ~ stringr::str_replace_all(., ", ", "\n\n"))
         ) %>%
         flex_cat()
     }
@@ -171,8 +170,7 @@ ag_ff_glimpse <- function(.data, strata = NULL, table_vars = NULL, type = NULL, 
 
       if (type == "cat") {
         combined_df <- combined_df %>%
-                dplyr::mutate(dplyr::across(levels:levels_percent, ~ stringr::str_replace_all(., ", ", "\n")),
-            levels = stringr::str_remove_all(levels, '\\"')
+                dplyr::mutate(dplyr::across(levels:levels_percent, ~ stringr::str_replace_all(., ", ", "\n\n"))
           ) %>%
           flex_cat()
       } else {
