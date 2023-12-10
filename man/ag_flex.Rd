@@ -4,7 +4,12 @@
 \alias{ag_flex}
 \title{Create a Styled Flextable}
 \usage{
-ag_flex(data, flex_font_family = "Arial", flex_font_size = 11)
+ag_flex(
+  data,
+  flex_font_family = "Arial",
+  flex_font_size = 11,
+  color_header = TRUE
+)
 }
 \arguments{
 \item{data}{A data frame or a tibble to be displayed in the flextable.}
@@ -12,6 +17,8 @@ ag_flex(data, flex_font_family = "Arial", flex_font_size = 11)
 \item{flex_font_family}{Character, font family for the text in the flextable.}
 
 \item{flex_font_size}{Numeric, font size for the text in the flextable.}
+
+\item{color_header}{Logical. if TRUE, which is default value, header will be in blue background.}
 }
 \value{
 A flextable object with customized styling.

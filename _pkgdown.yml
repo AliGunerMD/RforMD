@@ -43,8 +43,8 @@ reference:
   - ag_colors_scale
   - scale_color_karadeniz
   - scale_fill_karadeniz
-- title: Utilities
-  desc: Helper functions and utilities
+- title: Misc
+  desc: Utilities used in other functions
   contents:
   - short_ff
   - ff_row_col_sums

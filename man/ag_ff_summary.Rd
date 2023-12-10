@@ -2,7 +2,7 @@
 % Please edit documentation in R/finalfit_functions.R
 \name{ag_ff_summary}
 \alias{ag_ff_summary}
-\title{Enhanced version of \code{finalfit::summary_factorlist}}
+\title{Enhanced version of \code{summary_factorlist()} function of `{finalfit}`}
 \usage{
 ag_ff_summary(
   dataset,
@@ -57,8 +57,8 @@ A data frame containing the aggregated summary statistics and test results.
 Generate aggregated summary statistics and tests for categorical and continuous variables,
 with an option for Fisher's correction in contingency tables.
 
-This function extends the functionality of the `summary_factorlist` function by introducing
-Fisher's test and Shapiro-Wilk test.
+This function extends the functionality of the \code{summary_factorlist} function by introducing
+Shapiro-Wilk test and selecting variables require Fisher's test.
 Normality distributions of continuous variables is evaluated by Shapiro-Wilk test
 and required test is decided based on the test.
 For categorical variables, expected cell frequencies is calculated
@@ -74,7 +74,6 @@ This approach is good for summary tables.
 # Example usage of ag_ff_summary function
 library(palmerpenguins)
 
-strata <- "species"
 table_vars_1 <- penguins \%>\%
 dplyr::select(-species) \%>\%
 names()

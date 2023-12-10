@@ -37,6 +37,7 @@ col_table_header_bg <- ag_colors_standard("grays")[2]
 #' @param data A data frame or a tibble to be displayed in the flextable.
 #' @param flex_font_family Character, font family for the text in the flextable.
 #' @param flex_font_size Numeric, font size for the text in the flextable.
+#' @param color_header Logical. if TRUE, which is default value, header will be in blue background.
 #' @return A flextable object with customized styling.
 #' @author Ali Guner
 #' @export
@@ -52,7 +53,7 @@ col_table_header_bg <- ag_colors_standard("grays")[2]
 #' bold(i = 1, j = NULL, bold = FALSE, part = "header")
 #' }
 #'
-#' @importFrom flextable flextable set_flextable_defaults theme_booktabs bold
+#' @importFrom flextable flextable set_flextable_defaults theme_booktabs bold bg
 #' @importFrom officer fp_border
 
 
@@ -60,7 +61,15 @@ col_table_header_bg <- ag_colors_standard("grays")[2]
 
 
 
-ag_flex <- function(data, flex_font_family = "Arial", flex_font_size = 11) {
+ag_flex <- function(data, flex_font_family = "Arial", flex_font_size = 11, color_header = TRUE) {
+
+        col_table_header <- ag_colors_standard("blues")[4]
+        col_footer <- ag_colors_standard("grays")[6]
+        col_table_border <- ag_colors_standard("grays")[5]
+        table_border <- officer::fp_border(color = col_table_border)
+        col_table_header_bg <- ag_colors_standard("grays")[2]
+
+
 
         flextable::set_flextable_defaults(
                 font.size = flex_font_size,
@@ -68,7 +77,7 @@ ag_flex <- function(data, flex_font_family = "Arial", flex_font_size = 11) {
                 )
 
 
-        data %>%
+        ag_flextable <- data %>%
                 flextable::flextable() %>%
                 flextable::theme_booktabs() %>%
                 flextable::set_table_properties(
@@ -79,6 +88,16 @@ ag_flex <- function(data, flex_font_family = "Arial", flex_font_size = 11) {
                         j = NULL,
                         bold = TRUE,
                         part = "header")
+
+        if(color_header){
+
+                ag_flextable <- ag_flextable %>%
+                        flextable::bg(bg = col_table_header, part = "header", i = 1)
+
+        }
+
+                return(ag_flextable)
+
 }
 
 

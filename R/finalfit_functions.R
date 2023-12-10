@@ -1,3 +1,197 @@
+
+#' @title Enhanced ff_glimpse Function with FlexTable Output
+#'
+#' @description
+#' This function provides an enhanced version of the ff_glimpse function from the `finalfit` package.
+#' It generates a summary table with additional information such as levels, missing values, quartiles, mean, standard deviation, and more. The output is in the form of a `flextable` object, which allows for easy customization and formatting.
+#'#'
+#' @param .data The input dataset.
+#' @param strata The variable used for stratification. Default is `NULL`.
+#' @param table_vars The variables to include in the summary table. Default is `NULL`, which includes all variables in the dataset.
+#' @param type The type of variables to include in the summary table. Valid values are `NULL` (default), "cat" (categorical), or "cont" (continuous).
+#' @param missing Logical indicating whether to include a category for missing values in stratified evaluation Default is `FALSE`.
+#' @param levels_cut The maximum number of levels to display for categorical variables. Default is 10.
+#' @param ... Additional arguments to be passed to the `ag_flex()` function.
+#'
+#' @return A `flextable` object containing the summary table.
+#'
+#' @author Ali Guner
+#'
+#' @importFrom dplyr select mutate across
+#' @importFrom tidyselect everything
+#' @importFrom glue glue
+#' @importFrom flextable flextable vline valign set_header_labels align hline
+#' @importFrom stringr str_replace_all str_remove_all
+#' @importFrom finalfit ff_glimpse
+#' @examples
+#' \dontrun{
+#' ag_ff_glimpse(penguins, type = "cont")
+#' ag_ff_glimpse(penguins, strata = "sex", missing = TRUE, type = "cat")
+#' }
+#'
+#' @export
+
+
+
+
+ag_ff_glimpse <- function(.data, strata = NULL, table_vars = NULL, type = NULL, missing = FALSE, levels_cut = 10, ...) {
+  # Check if type is valid
+  valid_types <- c(NULL, "cat", "cont")
+  if (!is.null(type) && !type %in% valid_types) {
+    stop("Invalid type. Type should be one of: NULL, 'cat', 'cont'")
+  }
+
+  # Check if table_vars is NULL or a vector
+  if (!is.null(table_vars) && !is.vector(table_vars)) {
+    stop("Invalid table_vars. table_vars should be NULL or a vector")
+  }
+
+  # Check if strata is NULL or a single element vector
+  if (!is.null(strata) && (!is.vector(strata) || length(strata) != 1)) {
+    stop("Invalid strata. strata should be NULL or a single element vector")
+  }
+
+  # Check if missing is logical
+  if (!is.logical(missing)) {
+    stop("Invalid missing. missing should be a logical TRUE or FALSE")
+  }
+
+  # Check if levels_cut is numeric
+  if (!is.numeric(levels_cut)) {
+    stop("Invalid levels_cut. levels_cut should be a numeric value")
+  }
+
+
+
+  flex_cat <- . %>%
+    ag_flex(...) %>%
+    flextable::set_header_labels(
+      i = 1,
+      "levels_n" = "Levels (n)",
+      "levels" = "Levels",
+      "var_type" = "Class",
+      "missing_n" = "Missing (n)",
+      "missing_percent" = "Missing (%)",
+      "label" = "Label",
+      "levels_count" = "Levels (Count)",
+      "levels_percent" = "Levels (%)",
+      "n" = glue::glue("n = {nrow(.data)}")
+    ) %>%
+    flextable::vline(j = c("var_type", "missing_percent")) %>%
+    flextable::valign(part = "body", valign = "top") %>%
+    # flextable::hline(i = ~ before(label, names(.))) %>%
+    flextable::align(j = -1, align = "center", part = "all")
+
+  flex_cont <- . %>%
+    ag_flex(...) %>%
+    flextable::set_header_labels(
+      i = 1,
+      "quartile_25" = "Q1",
+      "quartile_75" = "Q3",
+      "var_type" = "Class",
+      "missing_n" = "Missing (n)",
+      "missing_percent" = "Missing (%)",
+      "label" = "Label",
+      "mean" = "Mean",
+      "sd" = "SD",
+      "median" = "Median",
+      "min" = "Min",
+      "max" = "Max",
+      "n" = glue::glue("n = {nrow(.data)}")
+    ) %>%
+    flextable::vline(j = c("var_type", "missing_percent", "sd")) %>%
+    flextable::align(j = -1, align = "center", part = "all")
+
+
+  if (is.null(table_vars)) {
+    # message("No table_vars were defined. All variables in dataset will be evaluated.")
+    if (is.null(strata)) {
+      table_vars <- .data %>%
+        dplyr::select(tidyselect::everything()) %>%
+        names()
+    } else {
+      table_vars <- .data %>%
+        dplyr::select(tidyselect::everything(), -{{ strata }}) %>%
+        names()
+    }
+  }
+
+
+  if (is.null(strata)) {
+    if (is.null(type)) {
+      glimpse_table <- finalfit::ff_glimpse(.data, explanatory = table_vars, levels_cut = levels_cut)
+      message("This is messy. It is better to define a type as Continuous or Categorical.")
+    } else if (type == "cont") {
+      glimpse_table <- finalfit::ff_glimpse(.data, explanatory = table_vars, levels_cut = levels_cut)$Continuous %>%
+        flex_cont()
+    } else if (type == "cat") {
+      glimpse_table <- finalfit::ff_glimpse(.data, explanatory = table_vars, levels_cut = levels_cut)$Categorical %>%
+        dplyr::mutate(dplyr::across(levels:levels_percent, ~ stringr::str_replace_all(., ", ", "\n")),
+          levels = stringr::str_remove_all(levels, '\\"')
+        ) %>%
+        flex_cat()
+    }
+
+    return(glimpse_table)
+  } else {
+    splitted <- function(.data, strata) {
+      if (missing) {
+        .data[[strata]] <- as.character(.data[[strata]])
+        .data[[strata]][is.na(.data[[strata]])] <- "Missing*"
+      }
+
+      split_df <- split(.data, .data[[strata]])
+      split_df <- lapply(split_df, function(x) {
+        x <- x[, -which(names(x) == strata)]
+        x
+      })
+    }
+
+    my_split <- splitted(.data, strata)
+
+    if (is.null(type)) {
+      combined_df <- lapply(my_split, function(x) finalfit::ff_glimpse(x))
+      message("This is messy. It is better to define a type as Continuous or Categorical.")
+    } else {
+      if (type == "cont") {
+        df_list <- lapply(my_split, function(x) finalfit::ff_glimpse(x, explanatory = table_vars, levels_cut = levels_cut)$Continuous)
+      } else if (type == "cat") {
+        df_list <- lapply(my_split, function(x) finalfit::ff_glimpse(x, explanatory = table_vars, levels_cut = levels_cut)$Categorical)
+      }
+      # Combine the list elements into one dataframe
+      combined_df <- do.call(rbind, df_list)
+
+      # Create a new column "strata" with the names of the list elements
+      combined_df$Strata <- rep(names(df_list), sapply(df_list, nrow))
+
+      combined_df <- combined_df %>%
+        dplyr::relocate(Strata, .before = 1) %>%
+        tibble::as_tibble()
+
+      if (type == "cat") {
+        combined_df <- combined_df %>%
+                dplyr::mutate(dplyr::across(levels:levels_percent, ~ stringr::str_replace_all(., ", ", "\n")),
+            levels = stringr::str_remove_all(levels, '\\"')
+          ) %>%
+          flex_cat()
+      } else {
+        combined_df <- combined_df %>%
+          flex_cont()
+      }
+    }
+    return(combined_df)
+  }
+}
+
+
+
+
+
+
+
+
+
+
 #' @title Minimized version of summary_factorlist
 #' @description
 #' Perform Short Summary Statistics and Hypothesis Testing
@@ -160,15 +354,15 @@ ff_row_col_sums <- function(dataset,
 
 
 
-#' @title Enhanced version of \code{finalfit::summary_factorlist}
+#' @title Enhanced version of \code{summary_factorlist()} function of `{finalfit}`
 
 #'
 #' @description
 #' Generate aggregated summary statistics and tests for categorical and continuous variables,
 #' with an option for Fisher's correction in contingency tables.
 #'
-#' This function extends the functionality of the `summary_factorlist` function by introducing
-#' Fisher's test and Shapiro-Wilk test.
+#' This function extends the functionality of the \code{summary_factorlist} function by introducing
+#' Shapiro-Wilk test and selecting variables require Fisher's test.
 #' Normality distributions of continuous variables is evaluated by Shapiro-Wilk test
 #' and required test is decided based on the test.
 #' For categorical variables, expected cell frequencies is calculated
@@ -213,7 +407,6 @@ ff_row_col_sums <- function(dataset,
 #' # Example usage of ag_ff_summary function
 #' library(palmerpenguins)
 #'
-#' strata <- "species"
 #' table_vars_1 <- penguins %>%
 #' dplyr::select(-species) %>%
 #' names()
