@@ -68,12 +68,20 @@ ag_ff_glimpse(penguins, type = "cont")
 
 ```{r}
 ag_ff_glimpse(penguins, type = "cat") %>% 
-        flextable::height(height = 1.5, part = "body") %>% 
-        flextable::hrule(rule = "atleast", part = "body")
+        flextable::set_table_properties(
+        opts_html = list(
+    scroll = list(
+      height = "500px",
+      freeze_first_column = TRUE
+    )
+  ))
 
 ```
 
 ```{r}
-ag_ff_glimpse(penguins, type = "cat", strata = "sex", missing = TRUE, flex_font_size = 9)
+ag_ff_glimpse(penguins, type = "cat", strata = "sex") 
+
 ```
+
+
 
