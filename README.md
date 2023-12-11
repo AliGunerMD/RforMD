@@ -30,6 +30,12 @@ library(RforMD)
 library(palmerpenguins)
 library(tidyverse)
 
+strata <- "species"
+table_vars_penguins <- penguins %>% 
+        select(-species) %>% 
+        names()
+
+
 # library(finalfit)
 # library(flextable)
 ```
@@ -81,11 +87,6 @@ ag_ff_glimpse(penguins, type = "cat", strata = "sex", missing = TRUE, flex_font_
 ### ag_shapiro()
 
 ``` r
-strata <- "species"
-table_vars_penguins <- penguins %>% 
-        select(-species) %>% 
-        names()
-
 ag_shapiro(penguins, strata = strata, table_vars = table_vars_penguins)
 #> Shapiro-Wilk test results for normality within strata:
 #> Checked variables: bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, year
