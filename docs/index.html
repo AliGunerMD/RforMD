@@ -36,7 +36,7 @@
     
     <a class="navbar-brand me-2" href="index.html">RforMD</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,11 +94,14 @@ I am open to improve. Do not hesitate for requests/issue reports.</p>
 <h2 id="example-use">Example use<a class="anchor" aria-label="anchor" href="#example-use"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># remotes::install_github("AliGunerMD/RforMD", force = TRUE)</span></span>
+<code class="sourceCode R"><span></span>
+<span><span class="co"># remotes::install_github("AliGunerMD/RforMD", force = TRUE)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/AliGunerMD/RforMD" class="external-link">RforMD</a></span><span class="op">)</span></span>
-<span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/" class="external-link">palmerpenguins</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ewenharrison/finalfit" class="external-link">finalfit</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># library(finalfit)</span></span>
+<span><span class="co"># library(flextable)</span></span></code></pre></div>
 <p>The idea of this package comes from the personal needs.<br>
 The <a href="https://finalfit.org" class="external-link">finalfit</a> package is one of the most useful package for a researcher who works in medicine.<br>
 It provides great functionalities. I just want to improve some parts of them, so, try to extent it to save some time.</p>
@@ -107,26 +110,112 @@ If you are happy with html output, try <a href="https://gt.rstudio.com/" class="
 <p><br> All analysis starts with the exploration of data.<br>
 Among many options like <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>, <code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code>, <code><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">dplyr::glimpse()</a></code>, <code><a href="https://docs.ropensci.org/skimr/reference/skim.html" class="external-link">skimr::skim()</a></code>;<br>
 I prefer <code><a href="https://rdrr.io/pkg/finalfit/man/ff_glimpse.html" class="external-link">finalfit::ff_glimpse()</a></code> with some modifications.</p>
+<div class="section level3">
+<h3 id="ag_ff_glimpse">ag_ff_glimpse()<a class="anchor" aria-label="anchor" href="#ag_ff_glimpse"></a>
+</h3>
 <div class="section level4">
 <h4 id="continuous-variables">Continuous variables<a class="anchor" aria-label="anchor" href="#continuous-variables"></a>
 </h4>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/ag_ff_glimpse.html">ag_ff_glimpse</a></span><span class="op">(</span><span class="va">penguins</span>, type <span class="op">=</span> <span class="st">"cont"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-Continuous-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-3-1.png" width="100%"></p>
 </div>
 <div class="section level4">
 <h4 id="categorical-variables">Categorical variables<a class="anchor" aria-label="anchor" href="#categorical-variables"></a>
 </h4>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/ag_ff_glimpse.html">ag_ff_glimpse</a></span><span class="op">(</span><span class="va">penguins</span>, type <span class="op">=</span> <span class="st">"cat"</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="reference/figures/README-Categorical-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level4">
 <h4 id="categorical-variables-with-strata">Categorical variables with strata<a class="anchor" aria-label="anchor" href="#categorical-variables-with-strata"></a>
 </h4>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/ag_ff_glimpse.html">ag_ff_glimpse</a></span><span class="op">(</span><span class="va">penguins</span>, type <span class="op">=</span> <span class="st">"cat"</span>, strata <span class="op">=</span> <span class="st">"sex"</span>, flex_font_size <span class="op">=</span> <span class="fl">9</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="reference/figures/README-Categorical_strata-1.png" width="100%"></p>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/ag_ff_glimpse.html">ag_ff_glimpse</a></span><span class="op">(</span><span class="va">penguins</span>, type <span class="op">=</span> <span class="st">"cat"</span>, strata <span class="op">=</span> <span class="st">"sex"</span>, missing <span class="op">=</span> <span class="cn">TRUE</span>, flex_font_size <span class="op">=</span> <span class="fl">9</span><span class="op">)</span> </span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="100%"></p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="ag_shapiro">ag_shapiro()<a class="anchor" aria-label="anchor" href="#ag_shapiro"></a>
+</h3>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">strata</span> <span class="op">&lt;-</span> <span class="st">"species"</span></span>
+<span><span class="va">table_vars_penguins</span> <span class="op">&lt;-</span> <span class="va">penguins</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/ag_shapiro.html">ag_shapiro</a></span><span class="op">(</span><span class="va">penguins</span>, strata <span class="op">=</span> <span class="va">strata</span>, table_vars <span class="op">=</span> <span class="va">table_vars_penguins</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Shapiro-Wilk test results for normality within strata:</span></span>
+<span><span class="co">#&gt; Checked variables: bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, year</span></span>
+<span><span class="co">#&gt; Stratified by: species</span></span>
+<span><span class="co">#&gt; Non-normally distributed variables: body_mass_g, year, bill_length_mm, bill_depth_mm, flipper_length_mm</span></span>
+<span><span class="co">#&gt; [1] "body_mass_g"       "year"              "bill_length_mm"   </span></span>
+<span><span class="co">#&gt; [4] "bill_depth_mm"     "flipper_length_mm"</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/ag_shapiro_results.html">ag_shapiro_results</a></span><span class="op">(</span><span class="va">penguins</span>, strata <span class="op">=</span> <span class="va">strata</span>, table_vars <span class="op">=</span> <span class="va">table_vars_penguins</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>        <span class="fu"><a href="reference/ag_flex.html">ag_flex</a></span><span class="op">(</span>flex_font_size <span class="op">=</span> <span class="fl">9</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level3">
+<h3 id="ag_qq_plots">ag_qq_plots()<a class="anchor" aria-label="anchor" href="#ag_qq_plots"></a>
+</h3>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/ag_qq_plots.html">ag_qq_plots</a></span><span class="op">(</span><span class="va">penguins</span>, strata <span class="op">=</span> <span class="va">strata</span>, table_vars <span class="op">=</span> <span class="va">table_vars_penguins</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-8-1.png" width="100%"></p>
+</div>
+<div class="section level3">
+<h3 id="ag_ff_summary">ag_ff_summary()<a class="anchor" aria-label="anchor" href="#ag_ff_summary"></a>
+</h3>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/ag_ff_summary.html">ag_ff_summary</a></span><span class="op">(</span><span class="va">penguins</span>, strata <span class="op">=</span> <span class="va">strata</span>, table_vars <span class="op">=</span> <span class="va">table_vars_penguins</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>        <span class="fu"><a href="reference/ag_flex.html">ag_flex</a></span><span class="op">(</span>flex_font_size <span class="op">=</span> <span class="fl">9</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level3">
+<h3 id="ag_ff_relocate">ag_ff_relocate()<a class="anchor" aria-label="anchor" href="#ag_ff_relocate"></a>
+</h3>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/ag_ff_summary.html">ag_ff_summary</a></span><span class="op">(</span><span class="va">penguins</span>, strata <span class="op">=</span> <span class="va">strata</span>, table_vars <span class="op">=</span> <span class="va">table_vars_penguins</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>        <span class="fu"><a href="reference/ag_ff_relocate.html">ag_ff_relocate</a></span><span class="op">(</span>order <span class="op">=</span> <span class="st">"TGP"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>        <span class="fu"><a href="reference/ag_flex.html">ag_flex</a></span><span class="op">(</span>flex_font_size <span class="op">=</span> <span class="fl">9</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Relocated columns:label -- levels -- Total -- Adelie -- Chinstrap -- Gentoo -- p</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-10-1.png" width="80%" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level3">
+<h3 id="ag_ff_columns">ag_ff_columns()<a class="anchor" aria-label="anchor" href="#ag_ff_columns"></a>
+</h3>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/ag_ff_summary.html">ag_ff_summary</a></span><span class="op">(</span><span class="va">penguins</span>, strata <span class="op">=</span> <span class="va">strata</span>, table_vars <span class="op">=</span> <span class="va">table_vars_penguins</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>        <span class="fu"><a href="reference/ag_ff_relocate.html">ag_ff_relocate</a></span><span class="op">(</span>order <span class="op">=</span> <span class="st">"TGP"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>        <span class="fu"><a href="reference/ag_ff_columns.html">ag_ff_columns</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>        <span class="fu"><a href="reference/ag_flex.html">ag_flex</a></span><span class="op">(</span>flex_font_size <span class="op">=</span> <span class="fl">9</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Relocated columns:label -- levels -- Total -- Adelie -- Chinstrap -- Gentoo -- p</span></span>
+<span><span class="co">#&gt; Manual check may be needed for some levels.</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-11-1.png" width="80%" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level3">
+<h3 id="ag_ff_labels">ag_ff_labels()<a class="anchor" aria-label="anchor" href="#ag_ff_labels"></a>
+</h3>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">penguins_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>        <span class="st">"island"</span> <span class="op">=</span> <span class="st">"Island"</span>,</span>
+<span>        <span class="st">"bill_length_mm"</span> <span class="op">=</span> <span class="st">"Bill length (mm)"</span>,</span>
+<span>        <span class="st">"bill_depth_mm"</span> <span class="op">=</span> <span class="st">"Bill depth (mm)"</span>,</span>
+<span>        <span class="st">"flipper_length_mm"</span> <span class="op">=</span> <span class="st">"Flipper length (mm)"</span>,</span>
+<span>        <span class="st">"body_mass_g"</span> <span class="op">=</span> <span class="st">"Body mass (g)"</span>,</span>
+<span>        <span class="st">"sex"</span> <span class="op">=</span> <span class="st">"Sex"</span>,</span>
+<span>        <span class="st">"year"</span> <span class="op">=</span> <span class="st">"Year"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/ag_ff_summary.html">ag_ff_summary</a></span><span class="op">(</span><span class="va">penguins</span>, strata <span class="op">=</span> <span class="va">strata</span>, table_vars <span class="op">=</span> <span class="va">table_vars_penguins</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>        <span class="fu"><a href="reference/ag_ff_relocate.html">ag_ff_relocate</a></span><span class="op">(</span>order <span class="op">=</span> <span class="st">"TGP"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>        <span class="fu"><a href="reference/ag_ff_columns.html">ag_ff_columns</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>        <span class="fu"><a href="reference/ag_ff_labels.html">ag_ff_labels</a></span><span class="op">(</span>use_vector <span class="op">=</span> <span class="cn">TRUE</span>, vector_name <span class="op">=</span> <span class="va">penguins_names</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>        <span class="fu"><a href="reference/ag_flex.html">ag_flex</a></span><span class="op">(</span>flex_font_size <span class="op">=</span> <span class="fl">9</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Relocated columns:label -- levels -- Total -- Adelie -- Chinstrap -- Gentoo -- p</span></span>
+<span><span class="co">#&gt; Manual check may be needed for some levels.</span></span>
+<span><span class="co">#&gt; A vector for variable names was used to rename labels.</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-12-1.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 </div>

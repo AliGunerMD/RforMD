@@ -40,12 +40,15 @@ library("RforMD")
 
 ## Example use
 
-```{r}
+```{r, message=FALSE}
+
 # remotes::install_github("AliGunerMD/RforMD", force = TRUE)
 library(RforMD)
-
 library(palmerpenguins)
-library(finalfit)
+library(tidyverse)
+
+# library(finalfit)
+# library(flextable)
 
 ```
 The idea of this package comes from the personal needs.   
@@ -60,27 +63,95 @@ All analysis starts with the exploration of data.
 Among many options like `summary()`, `str()`, `dplyr::glimpse()`, `skimr::skim()`;  
 I prefer `finalfit::ff_glimpse()` with some modifications.
 
+### ag_ff_glimpse()
 
 #### Continuous variables
 
 ```{r}
-#| label: Continuous
 ag_ff_glimpse(penguins, type = "cont")
 ```
 
 #### Categorical variables
-```{r}
-#| label: Categorical
+```{r, fig.dpi=300, out.width='80%', fig.align='center'}
 ag_ff_glimpse(penguins, type = "cat") 
 
 ```
 
 #### Categorical variables with strata
-```{r}
-#| label: Categorical_strata
-ag_ff_glimpse(penguins, type = "cat", strata = "sex", flex_font_size = 9) 
-
+```{r, fig.dpi=300}
+ag_ff_glimpse(penguins, type = "cat", strata = "sex", missing = TRUE, flex_font_size = 9) 
 ```
 
 
+### ag_shapiro()
+```{r}
+strata <- "species"
+table_vars_penguins <- penguins %>% 
+        select(-species) %>% 
+        names()
+
+ag_shapiro(penguins, strata = strata, table_vars = table_vars_penguins)
+```
+
+
+```{r, out.width='80%', fig.align='center'}
+ag_shapiro_results(penguins, strata = strata, table_vars = table_vars_penguins) %>% 
+        ag_flex(flex_font_size = 9)
+
+```
+
+### ag_qq_plots()
+
+```{r, fig.height=8}
+ag_qq_plots(penguins, strata = strata, table_vars = table_vars_penguins)
+
+```
+
+### ag_ff_summary()
+
+```{r, out.width='80%', fig.align='center'}
+ag_ff_summary(penguins, strata = strata, table_vars = table_vars_penguins) %>% 
+        ag_flex(flex_font_size = 9)
+
+```
+
+### ag_ff_relocate()
+
+```{r, out.width='80%', fig.align='center'}
+ag_ff_summary(penguins, strata = strata, table_vars = table_vars_penguins) %>% 
+        ag_ff_relocate(order = "TGP") %>% 
+        ag_flex(flex_font_size = 9)
+
+```
+
+### ag_ff_columns()
+
+```{r, out.width='80%', fig.align='center'}
+ag_ff_summary(penguins, strata = strata, table_vars = table_vars_penguins) %>% 
+        ag_ff_relocate(order = "TGP") %>% 
+        ag_ff_columns(levels = TRUE) %>% 
+        ag_flex(flex_font_size = 9)
+
+```
+
+### ag_ff_labels()
+
+```{r, out.width='80%', fig.align='center'}
+penguins_names <- c(
+        "island" = "Island",
+        "bill_length_mm" = "Bill length (mm)",
+        "bill_depth_mm" = "Bill depth (mm)",
+        "flipper_length_mm" = "Flipper length (mm)",
+        "body_mass_g" = "Body mass (g)",
+        "sex" = "Sex",
+        "year" = "Year"
+)
+
+ag_ff_summary(penguins, strata = strata, table_vars = table_vars_penguins) %>% 
+        ag_ff_relocate(order = "TGP") %>% 
+        ag_ff_columns(levels = TRUE) %>% 
+        ag_ff_labels(use_vector = TRUE, vector_name = penguins_names) %>% 
+        ag_flex(flex_font_size = 9)
+
+```
 

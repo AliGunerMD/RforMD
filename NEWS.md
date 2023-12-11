@@ -1,4 +1,9 @@
 
+
+## version 0.1.7
+- README
+- ag_ff_glimpse
+
 ## version 0.1.6
 - package website
 
@@ -16,7 +21,7 @@
 - ag_ff_columns()
 - ag_ff_labels()
 - ag_create_excel()
-- ag_ff_glimpse
+
   
 - package website
   
