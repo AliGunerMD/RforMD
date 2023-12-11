@@ -5,7 +5,7 @@
 \title{Perform Shapiro-Wilk Test for Normality}
 \usage{
 ag_shapiro(
-  dataset,
+  .data,
   strata = NULL,
   table_vars = NULL,
   silence = FALSE,
@@ -13,12 +13,12 @@ ag_shapiro(
 )
 }
 \arguments{
-\item{dataset}{A data frame containing the variables of interest.}
+\item{.data}{A data frame containing the variables of interest.}
 
 \item{strata}{An optional grouping variable for stratified analysis. Default is NULL.}
 
 \item{table_vars}{A character vector of variable names to be tested for normality. Can be defined with names(select()) functions.
-If NULL, function will use all numeric variables in dataset, except for strata if present (NOT RECOMMENDED,
+If NULL, function will use all numeric variables in .data, except for strata if present (NOT RECOMMENDED,
 it is better idea to define table_vars)}
 
 \item{silence}{Logical. If FALSE, displays informative messages about the analysis. Default is FALSE}
@@ -31,8 +31,8 @@ A character vector containing the names of non-normally distributed variables or
 based on the specified value of the 'names' argument.
 }
 \description{
-This function conducts the Shapiro-Wilk test for normality on numeric variables in a dataset,
-either for the entire dataset or within specified strata. It returns the names or counts of
+This function conducts the Shapiro-Wilk test for normality on numeric variables in a .data,
+either for the entire .data or within specified strata. It returns the names or counts of
 variables that are found to be non-normally distributed based on a significance level of 0.05.
 Before this test, all variables which are desired to be tests, should be defined in explanatory vector.
 }
@@ -46,8 +46,8 @@ dplyr::select(-Species) \%>\%
 names()
 dependent <- "Species"
 
-ag_shapiro(dataset = iris, table_vars = table_vars)
-ag_shapiro(dataset = iris, table_vars = table_vars, silence = TRUE, names = FALSE)
+ag_shapiro(.data = iris, table_vars = table_vars)
+ag_shapiro(.data = iris, table_vars = table_vars, silence = TRUE, names = FALSE)
 }
 
 

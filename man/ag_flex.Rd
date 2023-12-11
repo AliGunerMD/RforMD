@@ -5,14 +5,14 @@
 \title{Create a Styled Flextable}
 \usage{
 ag_flex(
-  data,
+  .data,
   flex_font_family = "Arial",
-  flex_font_size = 11,
+  flex_font_size = 10,
   color_header = TRUE
 )
 }
 \arguments{
-\item{data}{A data frame or a tibble to be displayed in the flextable.}
+\item{.data}{A data frame or a tibble to be displayed in the flextable.}
 
 \item{flex_font_family}{Character, font family for the text in the flextable.}
 

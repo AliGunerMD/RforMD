@@ -15,11 +15,11 @@ ag_ff_glimpse(
 )
 }
 \arguments{
-\item{.data}{The input dataset.}
+\item{.data}{The input .data.}
 
 \item{strata}{The variable used for stratification. Default is `NULL`.}
 
-\item{table_vars}{The variables to include in the summary table. Default is `NULL`, which includes all variables in the dataset.}
+\item{table_vars}{The variables to include in the summary table. Default is `NULL`, which includes all variables in the .data.}
 
 \item{type}{The type of variables to include in the summary table. Valid values are `NULL` (default), "cat" (categorical), or "cont" (continuous).}
 

@@ -5,7 +5,7 @@
 \title{Enhanced version of \code{summary_factorlist()} function of `{finalfit}`}
 \usage{
 ag_ff_summary(
-  dataset,
+  .data,
   strata = NULL,
   table_vars,
   row_col_sums = "row_col_based",
@@ -18,7 +18,7 @@ ag_ff_summary(
 )
 }
 \arguments{
-\item{dataset}{A data frame containing the variables of interest.}
+\item{.data}{A data frame containing the variables of interest.}
 
 \item{strata}{The dependent variable (outcome) in the analysis, should be a factor.}
 
@@ -79,7 +79,7 @@ dplyr::select(-species) \%>\%
 names()
 
 ag_ff_summary(
-dataset = penguins,
+.data = penguins,
 table_vars = table_vars_1,
 strata = "species"
 )
