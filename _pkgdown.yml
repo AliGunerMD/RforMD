@@ -1,6 +1,6 @@
 url: https://aligunermd.github.io/RforMD/
 home:
-  title: An accelerator for an analysis
+  title: The best assistant for an academic
 template:
   bootstrap: 5
   opengraph:
@@ -47,11 +47,6 @@ reference:
 - title: Misc
   desc: Utilities used in other functions
   contents:
-  - short_ff
-  - ff_row_col_sums
-  - ag_non_param_vars
   - ag_qq_plot_single
   - col_table_header
-  - ff_row_col_sums
-  - karadeniz
-  - to_select_colors
+

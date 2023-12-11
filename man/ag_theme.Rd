@@ -10,6 +10,8 @@ ag_theme(my_plot_size = 12, my_font = "Arial", ...)
 \item{my_plot_size}{Numeric, size of the text in the plot.}
 
 \item{my_font}{Character, font family for the text in the plot.}
+
+\item{...}{Any additional arguments}
 }
 \value{
 The function returns a ggplot2 theme object that can be applied to ggplot objects

@@ -7,17 +7,20 @@
 #' @param strata (Optional) A column name in the .data to stratify the analysis by. Default is \code{NULL}.
 #' @param table_vars A character vector of variable names to include in the analysis.
 #' @param asteriks if \code{TRUE}, test results will be reader-friendly. Default is \code{TRUE}.
-#'
+#' @param scientific will shapiro results be formetted in Scientific version? Default is FALSE.
 #' @return A tibble with columns for the variable names and Shapiro-Wilk p-values.
 #'
 #' @examples
+#' \dontrun{
+#'
 #' table_vars_1 <- penguins %>%
 #' dplyr::select(-species) %>% names()
 #'
 #' ag_shapiro_results(penguins, "species", table_vars_1)
-#'
+#' }
 #' @import dplyr
 #' @import tidyr
+#' @importFrom magrittr  %>%
 #' @export
 
 
@@ -273,6 +276,7 @@ ag_shapiro <- function(.data, strata = NULL, table_vars = NULL, silence = FALSE,
 #' table_vars = table_vars
 #' )
 #' }
+#' @keywords internal
 #' @import dplyr
 #' @import tidyr
 #'

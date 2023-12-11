@@ -16,7 +16,7 @@
 #' - Bold and centrally aligned plot title, and centered plot subtitle.
 #' @param my_plot_size Numeric, size of the text in the plot.
 #' @param my_font Character, font family for the text in the plot.
-#'
+#' @param ... Any additional arguments
 #' @import ggplot2
 #' @importFrom magrittr %>%
 #' @return

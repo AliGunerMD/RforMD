@@ -44,7 +44,7 @@ This function generates row or column-based summary statistics based on the spec
 \examples{
 \dontrun{
 # Example usage of ff_row_col_sums function
-row_col_result <- ff_row_col_sums(my_data, strata = "Response", table_vars = c("Var1", "Var2"), row_col_sums = "row_based")
+row_col_result <- ff_row_col_sums(my_data, strata, table_vars, row_col_sums = "row_based")
 }
 }
 \seealso{
@@ -53,3 +53,4 @@ row_col_result <- ff_row_col_sums(my_data, strata = "Response", table_vars = c("
 \author{
 Ali Guner
 }
+\keyword{internal}

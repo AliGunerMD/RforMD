@@ -28,8 +28,8 @@
 #'
 #' strata <- "species"
 #'
-#' ag_fisher(penguins, table_vars = table_vars, strata = strata, silence = TRUE, observed_tables = TRUE)
-#' ag_fisher(penguins, table_vars = table_vars, strata = strata, silence = FALSE, observed_tables = TRUE, expected_tables = TRUE)
+#' ag_fisher(penguins, strata, table_vars,  silence = TRUE, observed_tables = TRUE)
+#' ag_fisher(penguins, strata, table_vars,   expected_tables = TRUE)
 #' }
 #'
 #' @import dplyr
