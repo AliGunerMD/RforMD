@@ -4,12 +4,18 @@
 \alias{ag_shapiro_results}
 \title{Calculate Shapiro-Wilk p-values}
 \usage{
-ag_shapiro_results(dataset, strata = NULL, table_vars = NULL, asteriks = TRUE)
+ag_shapiro_results(
+  .data,
+  strata = NULL,
+  table_vars = NULL,
+  asteriks = TRUE,
+  scientific = FALSE
+)
 }
 \arguments{
-\item{dataset}{The input dataset.}
+\item{.data}{The input .data.}
 
-\item{strata}{(Optional) A column name in the dataset to stratify the analysis by. Default is \code{NULL}.}
+\item{strata}{(Optional) A column name in the .data to stratify the analysis by. Default is \code{NULL}.}
 
 \item{table_vars}{A character vector of variable names to include in the analysis.}
 
@@ -19,7 +25,7 @@ ag_shapiro_results(dataset, strata = NULL, table_vars = NULL, asteriks = TRUE)
 A tibble with columns for the variable names and Shapiro-Wilk p-values.
 }
 \description{
-This function calculates Shapiro-Wilk p-values for normality testing of numeric variables in a dataset.
+This function calculates Shapiro-Wilk p-values for normality testing of numeric variables in a .data.
 }
 \examples{
 table_vars_1 <- penguins \%>\%

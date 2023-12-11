@@ -5,7 +5,7 @@
 \title{Identify Factors with Low Expected Cell Frequencies (for Fisher test)}
 \usage{
 ag_fisher(
-  dataset,
+  .data,
   strata,
   table_vars,
   silence = TRUE,
@@ -14,7 +14,7 @@ ag_fisher(
 )
 }
 \arguments{
-\item{dataset}{The dataset containing the variables of interest.}
+\item{.data}{The .data containing the variables of interest.}
 
 \item{strata}{The stratifying factor variable for the analysis.}
 
@@ -30,7 +30,7 @@ ag_fisher(
 A character vector of factor variable names with low expected cell frequencies, or NULL if none are found.
 }
 \description{
-This function performs a contingency table analysis on specified factor or character variables in a given dataset,
+This function performs a contingency table analysis on specified factor or character variables in a given .data,
 with an option to identify variables exhibiting expected cell frequencies less than 5 in more than 20% of cells.
 It is designed to handle potential issues gracefully, providing informative warnings and excluding rows with
 missing values in the strata variable when necessary. The function can display observed and/or expected values

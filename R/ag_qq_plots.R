@@ -142,10 +142,10 @@ ag_shapiro_results
                                     labeller = my_label) +
                         ggplot2::geom_text(data = annotations, aes(x = .data[[strata]],
                                                           label = values_label, fontface = ifelse(shapiro_results <0.05, "bold", "plain")),
-                                  x = -Inf, y = Inf, hjust = 0, vjust = 1, size = 4) +
+                                  x = -Inf, y = Inf, hjust = 0, vjust = 1, size = 3) +
                         ggplot2::geom_text(data = annotations, aes(x = .data[[strata]],
                                                           label = values_p, fontface = ifelse(shapiro_results <0.05, "bold", "plain")),
-                                  x = Inf, y = -Inf, hjust = 1, vjust = -1, size = 4) +
+                                  x = Inf, y = -Inf, hjust = 1, vjust = -1, size = 3) +
                         ggplot2::labs(title = title_lab,
                              x = x_lab,
                              y = y_lab,

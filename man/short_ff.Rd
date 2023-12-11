@@ -5,7 +5,7 @@
 \title{Minimized version of summary_factorlist}
 \usage{
 short_ff(
-  dataset,
+  .data,
   strata = NULL,
   table_vars = NULL,
   na_include = NULL,
@@ -16,7 +16,7 @@ short_ff(
 )
 }
 \arguments{
-\item{dataset}{A data frame containing the variables of interest.}
+\item{.data}{A data frame containing the variables of interest.}
 
 \item{strata}{The dependent variable for hypothesis testing.}
 

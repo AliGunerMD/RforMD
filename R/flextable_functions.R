@@ -34,7 +34,7 @@ col_table_header_bg <- ag_colors_standard("grays")[2]
 #' This function generates a styled flextable with specified font family and font size.
 #' The flextable is configured with default font settings, the 'theme_booktabs', and additional styling
 #' to make the first row bold in the header.
-#' @param data A data frame or a tibble to be displayed in the flextable.
+#' @param .data A data frame or a tibble to be displayed in the flextable.
 #' @param flex_font_family Character, font family for the text in the flextable.
 #' @param flex_font_size Numeric, font size for the text in the flextable.
 #' @param color_header Logical. if TRUE, which is default value, header will be in blue background.
@@ -61,7 +61,7 @@ col_table_header_bg <- ag_colors_standard("grays")[2]
 
 
 
-ag_flex <- function(data, flex_font_family = "Arial", flex_font_size = 11, color_header = TRUE) {
+ag_flex <- function(.data, flex_font_family = "Arial", flex_font_size = 10, color_header = TRUE) {
 
         col_table_header <- ag_colors_standard("blues")[4]
         col_footer <- ag_colors_standard("grays")[6]
@@ -77,7 +77,7 @@ ag_flex <- function(data, flex_font_family = "Arial", flex_font_size = 11, color
                 )
 
 
-        ag_flextable <- data %>%
+        ag_flextable <- .data %>%
                 flextable::flextable() %>%
                 flextable::theme_booktabs() %>%
                 flextable::set_table_properties(
