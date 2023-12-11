@@ -215,6 +215,7 @@ ag_ff_glimpse <- function(.data, strata = NULL, table_vars = NULL, type = NULL, 
 #' @importFrom finalfit summary_factorlist
 #' @import dplyr
 #'
+#' @keywords internal
 #' @examples
 #' \dontrun{
 #' # Example usage of short_ff function
@@ -315,11 +316,11 @@ short_ff <- function(.data, strata = NULL, table_vars = NULL,
 #' @return A summary factor list containing row or column-based summary statistics.
 #'
 #' @author Ali Guner
-#'
+#' @keywords internal
 #' @examples
 #' \dontrun{
 #' # Example usage of ff_row_col_sums function
-#' row_col_result <- ff_row_col_sums(my_data, strata = "Response", table_vars = c("Var1", "Var2"), row_col_sums = "row_based")
+#' row_col_result <- ff_row_col_sums(my_data, strata, table_vars, row_col_sums = "row_based")
 #'}
 #' @seealso \code{\link{short_ff}}
 
@@ -771,7 +772,7 @@ ag_ff_columns <- function(.data, levels = FALSE) {
           dplyr::mutate(
                   dplyr::across(tidyselect::all_of(selected_column_names), ~ stringr::str_replace_all(., " to ", " - ")),
                   dplyr::across(tidyselect::all_of(selected_column_names), ~ stringr::str_replace_all(., "\\.0", "")),
-                  dplyr::across(tidyselect::all_of(selected_column_names), ~ dplyr::if_else(levels == "Mean (SD)", stringr::str_replace_all(., " \\(", " ± "), .)),
+                  dplyr::across(tidyselect::all_of(selected_column_names), ~ dplyr::if_else(levels == "Mean (SD)", stringr::str_replace_all(., " \\(", " \u00B1 "), .)),
                   dplyr::across(tidyselect::all_of(selected_column_names), ~ dplyr::if_else(levels == "Mean (SD)", stringr::str_remove_all(., "\\)"), .))
     )
 
@@ -843,6 +844,7 @@ ag_ff_columns <- function(.data, levels = FALSE) {
 #' @importFrom readxl read_excel
 #' @importFrom tibble as_tibble
 #' @importFrom dplyr mutate
+#' @importFrom stats setNames
 #'
 #' @export
 

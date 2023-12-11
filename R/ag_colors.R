@@ -3,7 +3,7 @@
 #' @author Ali Guner
 #' @importFrom grDevices colorRampPalette
 #' @param ... Additional arguments to be passed
-
+#' @keywords internal
 #' @examples
 #' \dontrun{
 #' # Example usage
@@ -109,6 +109,7 @@ to_select_colors <- function(...) {
 #' @param reverse TRUE/FALSE
 #' @param ... Additional arguments to be passed
 #' @author Ali Guner
+#' @keywords internal
 #' @examples
 #' \dontrun{
 #' karadeniz("Vazil")
@@ -300,6 +301,7 @@ ag_colors_standard <- function(palette_name = NULL) {
 #' @author Ali Guner
 #'
 #' @keywords color palette generator
+#' @importFrom grDevices col2rgb hcl rgb
 #'
 #'
 #' @examples

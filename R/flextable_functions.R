@@ -60,16 +60,9 @@ col_table_header_bg <- ag_colors_standard("grays")[2]
 
 
 
-
 ag_flex <- function(.data, flex_font_family = "Arial", flex_font_size = 10, color_header = TRUE) {
 
-        col_table_header <- ag_colors_standard("blues")[4]
-        col_footer <- ag_colors_standard("grays")[6]
-        col_table_border <- ag_colors_standard("grays")[5]
         table_border <- officer::fp_border(color = col_table_border)
-        col_table_header_bg <- ag_colors_standard("grays")[2]
-
-
 
         flextable::set_flextable_defaults(
                 font.size = flex_font_size,
@@ -142,5 +135,5 @@ ag_flex_page_section <- function(orientation) {
 
 
 
-# new functon here.
+
 

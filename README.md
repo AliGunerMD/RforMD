@@ -79,7 +79,7 @@ ag_ff_glimpse(penguins, type = "cat")
 #### Categorical variables with strata
 
 ``` r
-ag_ff_glimpse(penguins, type = "cat", strata = "sex", missing = TRUE, flex_font_size = 9) 
+ag_ff_glimpse(penguins, type = "cat", strata = "sex", missing = TRUE) 
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
@@ -97,8 +97,9 @@ ag_shapiro(penguins, strata = strata, table_vars = table_vars_penguins)
 ```
 
 ``` r
-ag_shapiro_results(penguins, strata = strata, table_vars = table_vars_penguins) %>% 
-        ag_flex(flex_font_size = 9)
+ag_shapiro_results(penguins, strata = strata, table_vars = table_vars_penguins,
+                   scientific = TRUE) %>% 
+        ag_flex()
 ```
 
 <img src="man/figures/README-unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" />
@@ -115,7 +116,7 @@ ag_qq_plots(penguins, strata = strata, table_vars = table_vars_penguins)
 
 ``` r
 ag_ff_summary(penguins, strata = strata, table_vars = table_vars_penguins) %>% 
-        ag_flex(flex_font_size = 9)
+        ag_flex()
 ```
 
 <img src="man/figures/README-unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" />
@@ -125,7 +126,7 @@ ag_ff_summary(penguins, strata = strata, table_vars = table_vars_penguins) %>%
 ``` r
 ag_ff_summary(penguins, strata = strata, table_vars = table_vars_penguins) %>% 
         ag_ff_relocate(order = "TGP") %>% 
-        ag_flex(flex_font_size = 9)
+        ag_flex()
 #> Relocated columns:label -- levels -- Total -- Adelie -- Chinstrap -- Gentoo -- p
 ```
 
@@ -137,7 +138,7 @@ ag_ff_summary(penguins, strata = strata, table_vars = table_vars_penguins) %>%
 ag_ff_summary(penguins, strata = strata, table_vars = table_vars_penguins) %>% 
         ag_ff_relocate(order = "TGP") %>% 
         ag_ff_columns(levels = TRUE) %>% 
-        ag_flex(flex_font_size = 9)
+        ag_flex()
 #> Relocated columns:label -- levels -- Total -- Adelie -- Chinstrap -- Gentoo -- p
 #> Manual check may be needed for some levels.
 ```
@@ -161,7 +162,7 @@ ag_ff_summary(penguins, strata = strata, table_vars = table_vars_penguins) %>%
         ag_ff_relocate(order = "TGP") %>% 
         ag_ff_columns(levels = TRUE) %>% 
         ag_ff_labels(use_vector = TRUE, vector_name = penguins_names) %>% 
-        ag_flex(flex_font_size = 9)
+        ag_flex()
 #> Relocated columns:label -- levels -- Total -- Adelie -- Chinstrap -- Gentoo -- p
 #> Manual check may be needed for some levels.
 #> A vector for variable names was used to rename labels.

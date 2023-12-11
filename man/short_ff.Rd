@@ -52,3 +52,4 @@ short_result <- short_ff(my_data, strata = "Response", table_vars = c("Var1", "V
 \author{
 Ali Guner
 }
+\keyword{internal}

@@ -20,6 +20,8 @@ ag_shapiro_results(
 \item{table_vars}{A character vector of variable names to include in the analysis.}
 
 \item{asteriks}{if \code{TRUE}, test results will be reader-friendly. Default is \code{TRUE}.}
+
+\item{scientific}{will shapiro results be formetted in Scientific version? Default is FALSE.}
 }
 \value{
 A tibble with columns for the variable names and Shapiro-Wilk p-values.
@@ -28,9 +30,11 @@ A tibble with columns for the variable names and Shapiro-Wilk p-values.
 This function calculates Shapiro-Wilk p-values for normality testing of numeric variables in a .data.
 }
 \examples{
+\dontrun{
+
 table_vars_1 <- penguins \%>\%
 dplyr::select(-species) \%>\% names()
 
 ag_shapiro_results(penguins, "species", table_vars_1)
-
+}
 }
