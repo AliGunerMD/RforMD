@@ -27,5 +27,4 @@ Imports:
     viridisLite (>= 0.4.2),
     rlang(>= 1.1.2),
     glue(>= 1.6.2)
-Remotes: 
-  AliGunerMD/RforMD/dataset
+
