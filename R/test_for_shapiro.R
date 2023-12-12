@@ -1,10 +1,10 @@
 #' @title Calculate Shapiro-Wilk p-values
 #' @description
-#' This function calculates Shapiro-Wilk p-values for normality testing of numeric variables in a .data.
+#' This function calculates Shapiro-Wilk p-values for normality testing of numeric variables in a .dataset.
 #'
 #'
-#' @param .data The input .data.
-#' @param strata (Optional) A column name in the .data to stratify the analysis by. Default is \code{NULL}.
+#' @param .dataset The input .dataset.
+#' @param strata (Optional) A column name in the .dataset to stratify the analysis by. Default is \code{NULL}.
 #' @param table_vars A character vector of variable names to include in the analysis.
 #' @param asteriks if \code{TRUE}, test results will be reader-friendly. Default is \code{TRUE}.
 #' @param scientific will shapiro results be formetted in Scientific version? Default is FALSE.
@@ -26,24 +26,24 @@
 
 
 
-ag_shapiro_results <- function(.data, strata = NULL, table_vars = NULL, asteriks = TRUE, scientific = FALSE){
+ag_shapiro_results <- function(.dataset, strata = NULL, table_vars = NULL, asteriks = TRUE, scientific = FALSE){
 
         if(is.null(table_vars)){
 
-                message("No table_vars were defined. All numeric variables in .data will be evaluated")
-                if (is.null(strata) || !is.numeric(.data[[strata]])) {
-                        table_vars <- .data %>%
+                message("No table_vars were defined. All numeric variables in .dataset will be evaluated")
+                if (is.null(strata) || !is.numeric(.dataset[[strata]])) {
+                        table_vars <- .dataset %>%
                                 dplyr::select(where(is.numeric)) %>%
                                 names()
                 } else {
-                        table_vars <- .data %>%
+                        table_vars <- .dataset %>%
                                 dplyr::select(where(is.numeric), -{{ strata }}) %>%
                                 names()
                 }
         }
 
 
-        numeric_vars <- .data %>%
+        numeric_vars <- .dataset %>%
                 dplyr::select(tidyselect::all_of(table_vars)) %>%
                 dplyr::select(where(is.numeric)) %>% names()
 
@@ -53,7 +53,7 @@ ag_shapiro_results <- function(.data, strata = NULL, table_vars = NULL, asteriks
 
         if (is.null(strata)) {
 
-                shapiro_results <- .data %>%
+                shapiro_results <- .dataset %>%
                         dplyr::select(tidyselect::all_of(table_vars)) %>%
                         dplyr::summarise(across(where(is.numeric), ~ stats::shapiro.test(.)$p.value)) %>%
                         tidyr::pivot_longer(tidyselect::everything(),
@@ -62,9 +62,9 @@ ag_shapiro_results <- function(.data, strata = NULL, table_vars = NULL, asteriks
 
                 } else {
 
-                shapiro_results <- .data %>%
+                shapiro_results <- .dataset %>%
                         dplyr::select(tidyselect::all_of(table_vars), {{ strata }}) %>%
-                        dplyr::filter(!is.na(.data[[strata]])) %>%
+                        dplyr::filter(!is.na(.dataset[[strata]])) %>%
                         dplyr::summarise(across(where(is.numeric), ~ stats::shapiro.test(.)$p.value), .by = {{ strata }}) %>%
                         # I guess, after dplyr updates, group_by, ungroup behaviour was changed. I solved with .by argument.
                         tidyr::pivot_longer(cols = -c(1),
@@ -103,15 +103,15 @@ ag_shapiro_results <- function(.data, strata = NULL, table_vars = NULL, asteriks
 #' @title Perform Shapiro-Wilk Test for Normality
 #'
 #' @description
-#' This function conducts the Shapiro-Wilk test for normality on numeric variables in a .data,
-#' either for the entire .data or within specified strata. It returns the names or counts of
+#' This function conducts the Shapiro-Wilk test for normality on numeric variables in a .dataset,
+#' either for the entire .dataset or within specified strata. It returns the names or counts of
 #' variables that are found to be non-normally distributed based on a significance level of 0.05.
 #' Before this test, all variables which are desired to be tests, should be defined in explanatory vector.
 #'
-#' @param .data A data frame containing the variables of interest.
+#' @param .dataset A data frame containing the variables of interest.
 #' @param strata An optional grouping variable for stratified analysis. Default is NULL.
 #' @param table_vars A character vector of variable names to be tested for normality. Can be defined with names(select()) functions.
-#' If NULL, function will use all numeric variables in .data, except for strata if present (NOT RECOMMENDED,
+#' If NULL, function will use all numeric variables in .dataset, except for strata if present (NOT RECOMMENDED,
 #' it is better idea to define table_vars)
 #' @param names Logical. If TRUE, returns the names of non-normally distributed variables;
 #' if FALSE, returns the indices of these variables. Default is TRUE
@@ -133,8 +133,8 @@ ag_shapiro_results <- function(.data, strata = NULL, table_vars = NULL, asteriks
 
 #' dependent <- "Species"
 #'
-#' ag_shapiro(.data = iris, table_vars = table_vars)
-#' ag_shapiro(.data = iris, table_vars = table_vars, silence = TRUE, names = FALSE)
+#' ag_shapiro(.dataset = iris, table_vars = table_vars)
+#' ag_shapiro(.dataset = iris, table_vars = table_vars, silence = TRUE, names = FALSE)
 #' }
 #'
 #'
@@ -149,11 +149,11 @@ ag_shapiro_results <- function(.data, strata = NULL, table_vars = NULL, asteriks
 
 
 
-ag_shapiro <- function(.data, strata = NULL, table_vars = NULL, silence = FALSE, names = TRUE){
+ag_shapiro <- function(.dataset, strata = NULL, table_vars = NULL, silence = FALSE, names = TRUE){
 
-        # Check if .data is a data frame
-        if (!is.data.frame(.data)) {
-                stop("Input '.data' must be a data frame.")
+        # Check if .dataset is a data frame
+        if (!is.data.frame(.dataset)) {
+                stop("Input '.dataset' must be a data frame.")
         }
 
         # Check if strata is NULL or a vector
@@ -171,13 +171,13 @@ ag_shapiro <- function(.data, strata = NULL, table_vars = NULL, silence = FALSE,
                 }
 
 
-                message("No table_vars were defined. All numeric variables in .data will be evaluated")
-                if (is.null(strata) || !is.numeric(.data[[strata]])) {
-                        table_vars <- .data %>%
+                message("No table_vars were defined. All numeric variables in .dataset will be evaluated")
+                if (is.null(strata) || !is.numeric(.dataset[[strata]])) {
+                        table_vars <- .dataset %>%
                                 dplyr::select(where(is.numeric)) %>%
                                 names()
                 } else {
-                        table_vars <- .data %>%
+                        table_vars <- .dataset %>%
                                 dplyr::select(where(is.numeric), -{{ strata }}) %>%
                                 names()
                 }
@@ -190,7 +190,7 @@ ag_shapiro <- function(.data, strata = NULL, table_vars = NULL, silence = FALSE,
         }
 
 
-        checked_variables <- .data %>%
+        checked_variables <- .dataset %>%
                 dplyr::select(tidyselect::all_of(table_vars)) %>%
                 dplyr::select_if(where(is.numeric)) %>%
         names()
@@ -198,7 +198,7 @@ ag_shapiro <- function(.data, strata = NULL, table_vars = NULL, silence = FALSE,
 
         if (is.null(strata)) {
 
-                shapiro_results <- ag_shapiro_results(.data, strata = strata, table_vars, asteriks = FALSE) %>%
+                shapiro_results <- ag_shapiro_results(.dataset, strata = strata, table_vars, asteriks = FALSE) %>%
                         dplyr::filter(shapiro_results < 0.05) %>%
                         dplyr::distinct(variable) %>%
                         dplyr::pull(variable)
@@ -215,7 +215,7 @@ ag_shapiro <- function(.data, strata = NULL, table_vars = NULL, silence = FALSE,
 
 
 
-                shapiro_results <- ag_shapiro_results(.data, strata = strata, table_vars, asteriks = FALSE) %>%
+                shapiro_results <- ag_shapiro_results(.dataset, strata = strata, table_vars, asteriks = FALSE) %>%
                         dplyr::filter(shapiro_results < 0.05) %>%
                         dplyr::distinct(variable) %>%
                         dplyr::pull(variable)
@@ -254,7 +254,7 @@ ag_shapiro <- function(.data, strata = NULL, table_vars = NULL, silence = FALSE,
 #' distributed variables based on the Shapiro-Wilk test for normality. It utilizes the
 #' `ag_shapiro` function with specific parameters. Good to use as cont_nonpara argument in summary_factorlist().
 #'
-#' @param .data A data frame containing the variables of interest.
+#' @param .dataset A data frame containing the variables of interest.
 #' @param strata An optional grouping variable for stratified analysis. Default is NULL.
 #' @param table_vars A character vector of variable names to be tested for normality.
 #'
@@ -271,7 +271,7 @@ ag_shapiro <- function(.data, strata = NULL, table_vars = NULL, silence = FALSE,
 
 #' dependent <- "Species"
 #'
-#' ag_non_param_vars(.data = iris,
+#' ag_non_param_vars(.dataset = iris,
 #' strata = dependent,
 #' table_vars = table_vars
 #' )
@@ -284,10 +284,10 @@ ag_shapiro <- function(.data, strata = NULL, table_vars = NULL, silence = FALSE,
 #'
 
 
-ag_non_param_vars <- function(.data, strata = NULL, table_vars){
+ag_non_param_vars <- function(.dataset, strata = NULL, table_vars){
         # To use in ff functions (but may not be needed because the defaults are same)
 
-        non_param_vars <- ag_shapiro(.data = .data, strata = strata, table_vars = table_vars, names = FALSE, silence = TRUE)
+        non_param_vars <- ag_shapiro(.dataset = .dataset, strata = strata, table_vars = table_vars, names = FALSE, silence = TRUE)
 
         non_param_vars
 }

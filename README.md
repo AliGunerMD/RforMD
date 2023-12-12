@@ -272,7 +272,7 @@ summary_flextable %>%
 
 <img src="man/figures/README-unnamed-chunk-20-1.png" width="80%" style="display: block; margin: auto;" />
 
-### ag_flex_save()
+### ag_flex_save(orientation = “Landscape”)
 
 And saved as  
 (my_output_path, paste0(format(Sys.time(), “%Y%m%d\_%H%M”),“*” ,

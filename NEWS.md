@@ -1,4 +1,15 @@
 
+## version 0.1.8
+  - ag_flex_header
+  - ag_flex_center
+  - ag_flex_hline
+  - ag_flex_title
+  - ag_flex_footnote
+  - ag_flex_abbr
+  - ag_flex_save
+  
+  
+  
 
 ## version 0.1.7
 - README

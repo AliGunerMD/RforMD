@@ -21,7 +21,13 @@ reference:
   desc: Same idea with the finalfit helpers. Some useful shortcut for redo coding while using `{flextable}`
   contents:
   - ag_flex
-  - ag_flex_page_section
+  - ag_flex_header
+  - ag_flex_center
+  - ag_flex_hline
+  - ag_flex_title
+  - ag_flex_footnote
+  - ag_flex_abbr
+  - ag_flex_save
 - title: Folder/file templates
   desc: Some shortcuts to prepare default template folder/filestructure
   contents:

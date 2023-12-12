@@ -1,7 +1,7 @@
 Package: RforMD
 Type: Package
 Title: Helper functions to analysis data and to create tables/figures for a medical article
-Version: 0.1.7
+Version: 0.1.8
 Authors@R: 
     person("Ali", "Guner", , "draliguner@yahoo.com", role = c("aut", "cre"))
 Maintainer: The package maintainer <draliguner@yahoo.com>
@@ -31,5 +31,6 @@ Imports:
     readxl(>= 1.4.3),
     scales(>= 1.3.0),
     stringr(>= 1.5.1),
-    tibble(>= 3.2.1)
+    tibble(>= 3.2.1),
+    here(>= 1.0.1)
 

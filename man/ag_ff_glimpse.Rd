@@ -5,7 +5,7 @@
 \title{Enhanced ff_glimpse Function with FlexTable Output}
 \usage{
 ag_ff_glimpse(
-  .data,
+  .dataset,
   strata = NULL,
   table_vars = NULL,
   type = NULL,
@@ -15,7 +15,7 @@ ag_ff_glimpse(
 )
 }
 \arguments{
-\item{.data}{The input .data.}
+\item{.dataset}{The input .data.}
 
 \item{strata}{The variable used for stratification. Default is `NULL`.}
 

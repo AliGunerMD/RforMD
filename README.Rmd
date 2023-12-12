@@ -160,13 +160,15 @@ ag_ff_summary(penguins, strata = strata, table_vars = table_vars_penguins) %>%
 
 
 
-```{r, out.width='80%', fig.align='center'}
+
+```{r}
 summary_flextable <- ag_ff_summary(penguins, strata = strata, table_vars = table_vars_penguins) %>% 
         ag_ff_relocate(order = "TGP") %>% 
         ag_ff_columns(levels = TRUE) %>% 
         ag_ff_labels(use_vector = TRUE, vector_name = penguins_names) %>% 
         ag_flex()
 ```
+
 
 ### ag_flex_header()
 ```{r, out.width='80%', fig.align='center'}
@@ -245,7 +247,8 @@ summary_flextable %>%
 ```
 
 
-### ag_flex_save()
+### ag_flex_save(orientation = "Landscape")
 
 And saved as\
 (my_output_path, paste0(format(Sys.time(), "%Y%m%d_%H%M"),"_" , "Table_", n , ".docx")))
+

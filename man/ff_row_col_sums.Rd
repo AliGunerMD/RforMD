@@ -5,7 +5,7 @@
 \title{Generate Row-, Column-based or both-based Summary Statistics}
 \usage{
 ff_row_col_sums(
-  .data,
+  .dataset,
   strata = NULL,
   table_vars = NULL,
   na_include = NULL,
@@ -17,7 +17,7 @@ ff_row_col_sums(
 )
 }
 \arguments{
-\item{.data}{A data frame containing the variables of interest.}
+\item{.dataset}{A data frame containing the variables of interest.}
 
 \item{strata}{The dependent variable for hypothesis testing.}
 

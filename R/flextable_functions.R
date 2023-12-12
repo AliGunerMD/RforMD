@@ -1,29 +1,3 @@
-#' @title Define Colors for Table Styling
-#' @description
-#' This code chunk defines colors for different elements of a table, such as the table header, footer,
-#' border, background of the table header, and the overall table border.
-#'
-#' @author Ali Guner
-#'
-#' @return A set of color values for table styling.
-#'
-#' @examples
-#' \dontrun{
-#' # Assuming you want to use these colors in table styling
-#' iris %>%
-#' ag_flex() %>%
-#' flextable::bg(i = 1, j = NULL, bg = col_table_header, part = "header")
-#' }
-#'
-#'
-#' @importFrom officer fp_border
-
-col_table_header <- ag_colors_standard("blues")[4]
-col_footer <- ag_colors_standard("grays")[6]
-col_table_border <- ag_colors_standard("grays")[5]
-table_border <- officer::fp_border(color = col_table_border)
-col_table_header_bg <- ag_colors_standard("grays")[2]
-
 
 
 
@@ -95,137 +69,396 @@ ag_flex <- function(.data, flex_font_family = "Arial", flex_font_size = 10, colo
 
 
 
-
-#' @title Page section to save flextable as .docx
-#' @param orientation A character value specifying the page orientation. Use "landscape" for landscape orientation and "portrait" for portrait orientation.
-#' @return A page section object for use in a flextable document (while saving with pr_section ()).
+#' @title Generate and set header labels for an aggregated flextable and finalfit
+#'
+#' @description This function generates header labels for an aggregated flextable based on the provided dataset and strata variable,
+#' and sets the labels in the flextable object.
+#'
+#' @param flex_obj The flextable object for which the header labels are generated and set.
+#' @param .dataset The dataset for which the header labels are generated.
+#' @param strata The strata variable used for aggregation.
+#'
+#' @return The flextable object with the header labels set.
+#'
 #' @author Ali Guner
-#' @export
+#'
+#' @importFrom dplyr mutate group_by summarise ungroup
+#' @importFrom rlang sym
+#' @importFrom stringr str_to_title str_replace_all
+#' @importFrom flextable set_header_labels
 #'
 #' @examples
 #' \dontrun{
-#' # Assuming you want to create a landscape page section
-#' ag_flex_page_section("landscape")
-#'
-#' # Assuming you want to create a portrait page section
-#' ag_flex_page_section("portrait")
+#' ag_flex_header(flex_obj, dataset, "strata_variable")
 #' }
 #'
+#' @seealso \code{\link{ag_flex()}}
+#'
+#' @export
+
+
+
+
+
+
+
+
+ag_flex_header <- function(flex_obj, .dataset, strata){
+
+
+
+        if (!inherits(flex_obj, "flextable")) {
+                stop(sprintf("Function `%s` supports only flextable objects.", "ag_flex_header()"))
+        }
+
+
+
+        ag_flex_header_labels <- function(.dataset, strata){
+
+                overall_group = function(.dataset, strata){
+
+                        d1 = .dataset %>%
+                                dplyr::mutate(summary_level = "grouped")
+
+                        d2 = .dataset %>%
+                                dplyr::mutate(summary_level = "ungrouped") %>%
+                                dplyr::mutate(!!sym(strata) := "Total")
+
+                        d12 = rbind(d1, d2) %>%
+                                dplyr::group_by(summary_level, !!rlang::sym(strata))
+
+                        return(d12)
+                }
+
+                strata_headers <- overall_group(.dataset, strata) %>%
+                        dplyr::summarise(n = n()) %>%
+                        dplyr::ungroup() %>%
+                        dplyr::mutate(final = paste0(stringr::str_to_title(.data[[strata]]),"\n(n = ", n, ")"),
+                                      final = str_replace_all(final, "Total\n", "All\n")) %>%
+                        dplyr::select({{ strata }}, final)
+
+
+                base_headers <- c("label" = "Variable", "levels" = " ", "p" = "p value")
+
+                all_header <- c(base_headers, tibble::deframe(strata_headers))
+
+                all_header
+
+        }
+
+
+
+        flex_obj %>%
+                set_header_labels(i = max(xx$header$content$content$nrow),
+                                  values = ag_flex_header_labels(.dataset = .dataset, strata = strata))
+
+}
+
+
+
+
+#' @title Center align the content of a flextable
+#' @description
+#' This function center aligns the content of a flextable starting from the third column to the last column.
+#'
+#' @param flex_obj The flextable object for which the content alignment is applied.
+#'
+#' @return The flextable object with the content aligned to the center.
+#'
+#' @author Ali Guner
+#'
+#' @importFrom flextable align
+#'
+#' @examples
+#' \dontrun{
+#' ag_flex_center(flex_obj)
+#' }
+#'
+#' @seealso \code{\link{ag_flex()}}
+#'
+#' @export
+#'
+#'
+#'
+
+ag_flex_center <- function(flex_obj){
+
+        if (!inherits(flex_obj, "flextable")) {
+                stop(sprintf("Function `%s` supports only flextable objects.", "ag_flex_center()"))
+        }
+
+
+        flex_obj %>%
+                flextable::align(j = 3:ncol(flex_obj$body$dataset),
+                      part = "all",
+                      align = "center")
+
+}
+
+
+#' @title Add horizontal lines to a flextable
+#' @description
+#' This function adds horizontal lines to a flextable based on the non-empty label rows in the dataset.
+#'
+#' @param flex_obj The flextable object to which the horizontal lines are added.
+#'
+#' @return The flextable object with horizontal lines added.
+#'
+#' @author Ali Guner
+#'
+#' @importFrom dplyr filter distinct pull
+#' @importFrom flextable hline
+#'
+#' @examples
+#' \dontrun{
+#' ag_flex_hline(flex_obj)
+#' }
+#'
+#' @seealso \code{\link{ag_flex()}}
+#'
+#' @export
+
+
+
+
+ag_flex_hline <- function(flex_obj){
+
+        if (!inherits(flex_obj, "flextable")) {
+                stop(sprintf("Function `%s` supports only flextable objects.", "ag_flex_hline()"))
+        }
+
+
+        # Because I ll use non-empty label names (not p, because p can be NULL)
+        ag_flex_nonempty_label <- function(flex_obj){
+                nonempty_label_rows <- flex_obj$body$dataset %>%
+                        dplyr::filter(label != "") %>%
+                        dplyr::distinct(label) %>%
+                        dplyr::pull(label)
+
+                nonempty_label_rows
+        }
+
+
+        NE_label_rows <- which(flex_obj$body$dataset$label %in% ag_flex_nonempty_label(flex_obj))
+        NE_label_rows <- NE_label_rows[NE_label_rows != 1]
+        NE_label_rows <- NE_label_rows -1
+
+        flex_obj %>%
+                flextable::hline(i = NE_label_rows,
+                      part = "body",
+                      border = table_border)
+
+}
+
+
+
+
+#' @title Add a title to a flextable
+#' @description
+#' This function adds a title to a flextable object.
+#'
+#' @param flex_obj The flextable object to which the title is added.
+#' @param n The table number.
+#' @param title The title text.
+#'
+#' @return The flextable object with the title added.
+#'
+#' @author Ali Guner
+#'
+#' @importFrom flextable add_header_lines bg color
+#'
+#' @examples
+#' \dontrun{
+#' ag_flex_title(flex_obj, 1, "Table Title")
+#' }
+#'
+#' @seealso \code{\link{}}
+#'
+#' @export
+#'
+#'
+#'
+
+ag_flex_title <- function(flex_obj, n, title){
+        if (!inherits(flex_obj, "flextable")) {
+                stop(sprintf("Function `%s` supports only flextable objects.", "ag_flex_title()"))
+        }
+        title <- paste0("Table ", n, ". ", title)
+
+        flex_obj %>%
+                flextable::add_header_lines(values = title) %>%
+                flextable::bg(bg = col_table_header_bg, part = "header", i = 1)
+}
+
+
+
+#' @title Add a footnote to a flextable
+#' @description
+#' This function adds a footnote to a flextable object.
+#'
+#' @param flex_obj The flextable object to which the footnote is added.
+#' @param footnote The text of the footnote.
+#'
+#' @return The flextable object with the footnote added.
+#'
+#' @author Ali Guner
+#'
+#' @importFrom flextable flextable add_footer_lines color
+#'
+#' @examples
+#' \dontrun{
+#' ag_flex_footnote(flex_obj, "This is a footnote.")
+#' }
+#'
+#' @seealso \code{\link{}}
+#'
+#' @export
+#'
+#'
+#'
+
+ag_flex_footnote <- function(flex_obj, footnote = NULL){
+        if (!inherits(flex_obj, "flextable")) {
+                stop(sprintf("Function `%s` supports only flextable objects.", "ag_flex_footnote()"))
+        }
+
+        if(is.null(footnote)){
+                stop("Please provide a footnote.")
+        }
+
+        flex_obj %>%
+                flextable::add_footer_lines(values = footnote) %>%
+                flextable::color(part = "footer", color = col_footer)
+
+}
+
+
+#' @title Add abbreviations to a flextable
+#' @description
+#' This function adds abbreviations to a flextable object.
+#'
+#' @param flex_obj The flextable object to which the abbreviations are added.
+#' @param abbr The abbreviations. It can be a character vector or a named list.
+#' @param use_df A logical value indicating whether to use a data frame format for the abbreviations.
+#' @param prefix The prefix text to be displayed before the abbreviations.
+#'
+#' @return The flextable object with the abbreviations added.
+#'
+#' @author Ali Guner
+#'
+#' @importFrom flextable add_footer_lines color
+#'
+#' @examples
+#' \dontrun{
+#' abbr <- c("abbr1", "abbr2", "abbr3")
+#' ag_flex_abbr(flex_obj, abbr = abbr)
+#' }
+#'
+#' @seealso \code{\link{}}
+#'
+#' @export
+#'
+#'
+#'
+ag_flex_abbr <- function(flex_obj, abbr = NULL, use_df = TRUE, prefix = "Abbreviations: "){
+        if (!inherits(flex_obj, "flextable")) {
+                stop(sprintf("Function `%s` supports only flextable objects.", "ag_flex_abbr()"))
+        }
+
+        if(is.null(abbr)){
+                stop("Please provide an abbreviation.")
+        }
+
+
+        if(!use_df){
+                my_abrr <- abbr
+                warning("Check the format of abbreviations vector.\nIf a list is prepared, convert use_df = TRUE.")
+
+        } else {
+                my_abrr <- paste0(names(abbr), ", ", abbr, collapse = "; ")
+
+        }
+
+
+
+        flex_obj %>%
+                flextable::add_footer_lines(values = paste0(prefix, my_abrr, ".")) %>%
+                flextable::color(part = "footer", color = col_footer)
+
+}
+
+
+
+
+#' @title Save a flextable as a Word document
+#' @description
+#' This function saves a flextable object as a Word document.
+#'
+#' @param flex_obj The flextable object to be saved.
+#' @param n The table number or identifier. Default is "x".
+#' @param orientation The orientation of the page. Can be "Landscape" or "Portrait". Default is "Landscape".
+#' @param mypath The path where the Word document will be saved. Default is "_Outputs/_Tables" in the current working directory.
+#'
+#' @return The saved Word document.
+#'
+#' @author Ali Guner
+#'
+#' @importFrom flextable fix_border_issues save_as_docx
 #' @importFrom officer prop_section page_size page_mar
+#' @importFrom here here
+#'
+#' @examples
+#' \dontrun{
+#' ag_flex_save(flex_obj, n = "Table1", orientation = "Landscape", mypath = "path/to/save")
+#' }
+#'
+#' @seealso \code{\link{}}
+#'
+#' @export
 
-ag_flex_page_section <- function(orientation) {
-        if (orientation %in% c("landscape", "portrait")) {
 
-                width <- if (orientation == "portrait") 14 else NULL
-                return(
-                        officer::prop_section(
-                                page_size = officer::page_size(orient = orientation,
+
+
+ag_flex_save <- function(flex_obj, n = "x", orientation = "Landscape", mypath = "_Outputs/_Tables"){
+
+        if (!inherits(flex_obj, "flextable")) {
+                stop(sprintf("Function `%s` supports only flextable objects.", "ag_flex_save()"))
+        }
+
+        if (!orientation %in% c("Landscape", "Portrait")) {
+
+                stop("Invalid orientation. Use 'Landscape' or 'Portrait'.")
+
+        }
+
+        if(is.null(mypath)){
+                mypath <- ""
+        }
+
+
+        width <- if (orientation == "Portrait") 14 else NULL
+
+        pr_section <- officer::prop_section(
+                                page_size = officer::page_size(orient = tolower(orientation),
                                                                width = width),
                                 type = "nextPage",
                                 page_margins = officer::page_mar()
                         )
+
+
+        flex_obj %>%
+                flextable::fix_border_issues() %>%
+                flextable::save_as_docx(
+                        path =  here::here(mypath, paste0(format(Sys.time(), "%Y%m%d_%H%M"),"_" , "Table_", n , ".docx")),
+                                           pr_section = pr_section
                 )
-        } else {
-                stop("Invalid orientation. Use 'landscape' or 'portrait'.")
-        }
-}
 
-
-
-# stratas <- "Total" = glue::glue("All patients \n(n = ", nrow(breast_data), ")"),
-
-
-
-#
-#         pull(final) %>%
-#         paste(collapse = ", ")
-#
-#
-#
-# split(1:nrow(.)) %>%
-#         lapply(as.list)
-#
-# extracted_elements <- lapply(stratas, function(element) {
-#         element[[1]]
-# })
-#
-#
-# unlist(extracted_elements)
-tibble(!!enquo("species") := "Total", n = nrow(penguins))
-
-vbl <- enquo(variable)
-strata_headers <- penguins %>%
-        group_by( species ) %>%
-        summarise(n = n()) %>%
-        add_row(species = "Total",
-                n = nrow(.data)) %>%
-        mutate(final = paste0(species, "\n(n = ", n, ")")) %>%
-        select(species, final)
-
-
-overall_group = function(data, col_name){
-
-        d1 = data %>%
-                mutate(summary_level = "grouped")
-
-        d2 = data %>%
-                mutate(summary_level = "ungrouped") %>%
-                mutate(!!sym(col_name) := NA)
-
-        d12 = rbind(d1, d2) %>%
-                group_by(summary_level, !!sym(col_name))
-
-        return(d12)
 }
 
 
 
 
 
-ag_flex_header_labels <- function(data, strata){
-        overall_group = function(data, strata){
-
-                d1 = data %>%
-                        mutate(summary_level = "grouped")
-
-                d2 = data %>%
-                        mutate(summary_level = "ungrouped") %>%
-                        mutate(!!sym(strata) := "Total")
-
-                d12 = rbind(d1, d2) %>%
-                        group_by(summary_level, !!sym(strata))
-
-                return(d12)
-        }
-
-
-        strata_headers <- overall_group(data, strata) %>%
-                summarise(n = n()) %>%
-                ungroup() %>%
-                mutate(final = paste0(.data[[strata]],"\n(n = ", n, ")")) %>%
-                select({{ strata }}, final)
-
-base_headers <- c("label" = "Variable", "levels" = " ", "p" = "p value")
-
-all_header <- c(base_headers, deframe(strata_headers))
-all_header
-}
-
-ag_flex_header_labels(data = penguins, strata = "species")
-
-ag_ff_summary(
-            .data = penguins,
-            strata = "species",
-            table_vars = table_vars_1) %>%
-        ag_flex() %>%
-        set_header_labels(i = 1, values = ag_flex_header_labels(data = penguins, strata = "species"))
-
-
-summary_factorlist(
-        .data = penguins,
-        explanatory  = table_vars_1,
-        dependent = "species", add_col_totals = TRUE, total_col = TRUE) %>%
-        slice(1)
 
 
 
