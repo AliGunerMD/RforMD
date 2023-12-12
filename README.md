@@ -82,7 +82,7 @@ ag_ff_glimpse(penguins, type = "cat")
 ag_ff_glimpse(penguins, type = "cat", strata = "sex", missing = TRUE) 
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;" />
 
 ### ag_shapiro()
 
@@ -169,3 +169,111 @@ ag_ff_summary(penguins, strata = strata, table_vars = table_vars_penguins) %>%
 ```
 
 <img src="man/figures/README-unnamed-chunk-12-1.png" width="80%" style="display: block; margin: auto;" />
+
+``` r
+summary_flextable <- ag_ff_summary(penguins, strata = strata, table_vars = table_vars_penguins) %>% 
+        ag_ff_relocate(order = "TGP") %>% 
+        ag_ff_columns(levels = TRUE) %>% 
+        ag_ff_labels(use_vector = TRUE, vector_name = penguins_names) %>% 
+        ag_flex()
+#> Relocated columns:label -- levels -- Total -- Adelie -- Chinstrap -- Gentoo -- p
+#> Manual check may be needed for some levels.
+#> A vector for variable names was used to rename labels.
+```
+
+### ag_flex_header()
+
+``` r
+summary_flextable %>% 
+        ag_flex_header(.dataset = penguins, strata = "species")
+```
+
+<img src="man/figures/README-unnamed-chunk-14-1.png" width="80%" style="display: block; margin: auto;" />
+
+### ag_flex_center()
+
+``` r
+summary_flextable %>% 
+        ag_flex_header(.dataset = penguins, strata = "species") %>% 
+        ag_flex_center() 
+```
+
+<img src="man/figures/README-unnamed-chunk-15-1.png" width="80%" style="display: block; margin: auto;" />
+
+### ag_flex_title()
+
+``` r
+summary_flextable %>% 
+        ag_flex_header(.dataset = penguins, strata = "species") %>% 
+        ag_flex_center() %>% 
+        ag_flex_title(1, "Characteristics of Penguins dataset")
+```
+
+<img src="man/figures/README-unnamed-chunk-16-1.png" width="80%" style="display: block; margin: auto;" />
+
+### ag_flex_abbr()
+
+``` r
+
+abbr_vector <- c(
+        "mm" = "Milimeter",
+        "g" = "Gram"
+)
+
+summary_flextable %>% 
+        ag_flex_header(.dataset = penguins, strata = "species") %>% 
+        ag_flex_center() %>% 
+        ag_flex_title(1, "Characteristics of Penguins dataset") %>% 
+        ag_flex_abbr(abbr = abbr_vector) 
+```
+
+<img src="man/figures/README-unnamed-chunk-17-1.png" width="80%" style="display: block; margin: auto;" />
+
+### ag_flex_footnote()
+
+``` r
+my_random_foot <- "Palmerpenguins provided a great dataset for data exploration & visualization, as an alternative to iris."
+
+summary_flextable %>% 
+        ag_flex_header(.dataset = penguins, strata = "species") %>% 
+        ag_flex_center() %>% 
+        ag_flex_title(1, "Characteristics of Penguins dataset") %>% 
+        ag_flex_abbr(abbr = abbr_vector) %>% 
+        ag_flex_footnote(my_random_foot) 
+```
+
+<img src="man/figures/README-unnamed-chunk-18-1.png" width="80%" style="display: block; margin: auto;" />
+
+### ag_flex_hline()
+
+``` r
+summary_flextable %>% 
+        ag_flex_header(.dataset = penguins, strata = "species") %>% 
+        ag_flex_center() %>% 
+        ag_flex_title(1, "Characteristics of Penguins dataset") %>% 
+        ag_flex_abbr(abbr = abbr_vector) %>% 
+        ag_flex_footnote(my_random_foot) %>% 
+        ag_flex_hline()
+```
+
+<img src="man/figures/README-unnamed-chunk-19-1.png" width="80%" style="display: block; margin: auto;" />
+
+### Any flextable function can be added
+
+``` r
+summary_flextable %>% 
+        ag_flex_header(.dataset = penguins, strata = "species") %>% 
+        ag_flex_center() %>% 
+        ag_flex_title(1, "Characteristics of Penguins dataset") %>% 
+        ag_flex_abbr(abbr = abbr_vector) %>% 
+        ag_flex_footnote(my_random_foot) %>% 
+        flextable::fontsize(size = 7, part = "all")
+```
+
+<img src="man/figures/README-unnamed-chunk-20-1.png" width="80%" style="display: block; margin: auto;" />
+
+### ag_flex_save()
+
+And saved as  
+(my_output_path, paste0(format(Sys.time(), “%Y%m%d\_%H%M”),“*” ,
+”Table*”, n , “.docx”)))
