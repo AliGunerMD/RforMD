@@ -1,13 +1,13 @@
 #' @title Identify Factors with Low Expected Cell Frequencies (for Fisher test)
 #'
 #' @description
-#' This function performs a contingency table analysis on specified factor or character variables in a given .data,
+#' This function performs a contingency table analysis on specified factor or character variables in a given .dataset,
 #' with an option to identify variables exhibiting expected cell frequencies less than 5 in more than 20% of cells.
 #' It is designed to handle potential issues gracefully, providing informative warnings and excluding rows with
 #' missing values in the strata variable when necessary. The function can display observed and/or expected values
 #' tables based on user preferences.
 #'
-#' @param .data The .data containing the variables of interest.
+#' @param .dataset The .dataset containing the variables of interest.
 #' @param strata The stratifying factor variable for the analysis.
 #' @param table_vars A character vector of factor variable names to analyze.
 #' @param silence Logical, indicating whether to suppress warnings. Default is TRUE.
@@ -42,13 +42,13 @@
 #'
 #'
 
-ag_fisher <- function(.data, strata, table_vars, silence = TRUE, observed_tables = FALSE, expected_tables = FALSE) {
+ag_fisher <- function(.dataset, strata, table_vars, silence = TRUE, observed_tables = FALSE, expected_tables = FALSE) {
         library(dplyr)
 
 
-        # Check if .data argument is missing
-        if (missing(.data)) {
-                stop("Missing required argument: .data")
+        # Check if .dataset argument is missing
+        if (missing(.dataset)) {
+                stop("Missing required argument: .dataset")
         }
 
         # Check if strata argument is missing
@@ -61,9 +61,9 @@ ag_fisher <- function(.data, strata, table_vars, silence = TRUE, observed_tables
                 stop("Missing required argument: table_vars")
         }
 
-        # Check if .data is a data frame
-        if (!is.data.frame(.data)) {
-                stop("The '.data' argument should be a data frame.")
+        # Check if .dataset is a data frame
+        if (!is.data.frame(.dataset)) {
+                stop("The '.dataset' argument should be a data frame.")
         }
 
         # Check if strata is a vector with a single element
@@ -77,16 +77,16 @@ ag_fisher <- function(.data, strata, table_vars, silence = TRUE, observed_tables
         }
 
 
-        # Check if strata variable of .data is factor or character
-        if (!is.factor(.data[[strata]]) && !is.character(.data[[strata]])) {
-                stop("The 'strata' variable of the '.data' should be a factor or character.")
+        # Check if strata variable of .dataset is factor or character
+        if (!is.factor(.dataset[[strata]]) && !is.character(.dataset[[strata]])) {
+                stop("The 'strata' variable of the '.dataset' should be a factor or character.")
         }
 
 
 
 
         # Select factor variables
-        my_factors <- .data %>%
+        my_factors <- .dataset %>%
                 dplyr::select(all_of({{ strata }}), tidyselect::all_of(table_vars)) %>%
                 dplyr::select_if(function(var) is.factor(var) || is.character(var))
 

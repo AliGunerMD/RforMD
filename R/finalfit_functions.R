@@ -5,7 +5,7 @@
 #' This function provides an enhanced version of the ff_glimpse function from the `finalfit` package.
 #' It generates a summary table with additional information such as levels, missing values, quartiles, mean, standard deviation, and more. The output is in the form of a `flextable` object, which allows for easy customization and formatting.
 #'#'
-#' @param .data The input .data.
+#' @param .dataset The input .data.
 #' @param strata The variable used for stratification. Default is `NULL`.
 #' @param table_vars The variables to include in the summary table. Default is `NULL`, which includes all variables in the .data.
 #' @param type The type of variables to include in the summary table. Valid values are `NULL` (default), "cat" (categorical), or "cont" (continuous).
@@ -35,7 +35,7 @@
 
 
 
-ag_ff_glimpse <- function(.data, strata = NULL, table_vars = NULL, type = NULL, missing = FALSE, levels_cut = 10, ...) {
+ag_ff_glimpse <- function(.dataset, strata = NULL, table_vars = NULL, type = NULL, missing = FALSE, levels_cut = 10, ...) {
   # Check if type is valid
   valid_types <- c(NULL, "cat", "cont")
   if (!is.null(type) && !type %in% valid_types) {
@@ -76,7 +76,7 @@ ag_ff_glimpse <- function(.data, strata = NULL, table_vars = NULL, type = NULL, 
       "label" = "Label",
       "levels_count" = "Levels (Count)",
       "levels_percent" = "Levels (%)",
-      "n" = glue::glue("n = {nrow(.data)}")
+      "n" = glue::glue("n = {nrow(.dataset)}")
     ) %>%
     flextable::vline(j = c("var_type", "missing_percent")) %>%
     flextable::valign(part = "body", valign = "top") %>%
@@ -98,7 +98,7 @@ ag_ff_glimpse <- function(.data, strata = NULL, table_vars = NULL, type = NULL, 
       "median" = "Median",
       "min" = "Min",
       "max" = "Max",
-      "n" = glue::glue("n = {nrow(.data)}")
+      "n" = glue::glue("n = {nrow(.dataset)}")
     ) %>%
     flextable::vline(j = c("var_type", "missing_percent", "sd")) %>%
     flextable::align(j = -1, align = "center", part = "all")
@@ -107,11 +107,11 @@ ag_ff_glimpse <- function(.data, strata = NULL, table_vars = NULL, type = NULL, 
   if (is.null(table_vars)) {
     # message("No table_vars were defined. All variables in dataset will be evaluated.")
     if (is.null(strata)) {
-      table_vars <- .data %>%
+      table_vars <- .dataset %>%
         dplyr::select(tidyselect::everything()) %>%
         names()
     } else {
-      table_vars <- .data %>%
+      table_vars <- .dataset %>%
         dplyr::select(tidyselect::everything(), -{{ strata }}) %>%
         names()
     }
@@ -120,13 +120,13 @@ ag_ff_glimpse <- function(.data, strata = NULL, table_vars = NULL, type = NULL, 
 
   if (is.null(strata)) {
     if (is.null(type)) {
-      glimpse_table <- finalfit::ff_glimpse(.data, explanatory = table_vars, levels_cut = levels_cut)
+      glimpse_table <- finalfit::ff_glimpse(.dataset, explanatory = table_vars, levels_cut = levels_cut)
       message("This is messy. It is better to define a type as Continuous or Categorical.")
     } else if (type == "cont") {
-      glimpse_table <- finalfit::ff_glimpse(.data, explanatory = table_vars, levels_cut = levels_cut)$Continuous %>%
+      glimpse_table <- finalfit::ff_glimpse(.dataset, explanatory = table_vars, levels_cut = levels_cut)$Continuous %>%
         flex_cont()
     } else if (type == "cat") {
-      glimpse_table <- finalfit::ff_glimpse(.data, explanatory = table_vars, levels_cut = levels_cut)$Categorical %>%
+      glimpse_table <- finalfit::ff_glimpse(.dataset, explanatory = table_vars, levels_cut = levels_cut)$Categorical %>%
         dplyr::mutate(dplyr::across(levels:levels_percent, ~ stringr::str_replace_all(., ", ", "\n")),
           levels = stringr::str_remove_all(levels, '\\"')
         ) %>%
@@ -135,20 +135,20 @@ ag_ff_glimpse <- function(.data, strata = NULL, table_vars = NULL, type = NULL, 
 
     return(glimpse_table)
   } else {
-    splitted <- function(.data, strata) {
+    splitted <- function(.dataset, strata) {
       if (missing) {
-        .data[[strata]] <- as.character(.data[[strata]])
-        .data[[strata]][is.na(.data[[strata]])] <- "Missing*"
+        .dataset[[strata]] <- as.character(.dataset[[strata]])
+        .dataset[[strata]][is.na(.dataset[[strata]])] <- "Missing*"
       }
 
-      split_df <- split(.data, .data[[strata]])
+      split_df <- split(.dataset, .dataset[[strata]])
       split_df <- lapply(split_df, function(x) {
         x <- x[, -which(names(x) == strata)]
         x
       })
     }
 
-    my_split <- splitted(.data, strata)
+    my_split <- splitted(.dataset, strata)
 
     if (is.null(type)) {
       combined_df <- lapply(my_split, function(x) finalfit::ff_glimpse(x))
@@ -199,7 +199,7 @@ ag_ff_glimpse <- function(.data, strata = NULL, table_vars = NULL, type = NULL, 
 #'
 #' This function generates short summary statistics and conducts hypothesis testing, including chi-square tests and Fisher's exact tests if specified.
 #'
-#' @param .data A data frame containing the variables of interest.
+#' @param .dataset A data frame containing the variables of interest.
 #' @param strata The dependent variable for hypothesis testing.
 #' @param table_vars A vector of explanatory variables for analysis.
 #' @param na_include Logical. Should NA values be included in the analysis? Default is NULL.
@@ -225,12 +225,12 @@ ag_ff_glimpse <- function(.data, strata = NULL, table_vars = NULL, type = NULL, 
 #'
 
 
-short_ff <- function(.data, strata = NULL, table_vars = NULL,
+short_ff <- function(.dataset, strata = NULL, table_vars = NULL,
                      na_include = NULL, cont = NULL, cont_nonpara = NULL,
                      fisher_correction = fisher_correction,
                      ...) {
   if (is.null(strata)) {
-    init_ff <- summary_factorlist(.data,
+    init_ff <- summary_factorlist(.dataset,
       dependent = strata,
       explanatory = table_vars,
       na_include = na_include,
@@ -244,7 +244,7 @@ short_ff <- function(.data, strata = NULL, table_vars = NULL,
 
     return(init_ff)
   } else {
-    chisquare_ff <- summary_factorlist(.data,
+    chisquare_ff <- summary_factorlist(.dataset,
       dependent = strata,
       explanatory = table_vars,
       na_include = na_include,
@@ -258,12 +258,12 @@ short_ff <- function(.data, strata = NULL, table_vars = NULL,
 
 
     if (fisher_correction) {
-      explanatory_fisher <- ag_fisher(.data = .data, table_vars = table_vars, strata = strata)
+      explanatory_fisher <- ag_fisher(.dataset = .dataset, table_vars = table_vars, strata = strata)
 
       if (is.null(explanatory_fisher)) {
         return(chisquare_ff)
       } else {
-        fisher_ff <- summary_factorlist(.data,
+        fisher_ff <- summary_factorlist(.dataset,
           dependent = strata,
           explanatory = table_vars,
           na_include = na_include,
@@ -303,7 +303,7 @@ short_ff <- function(.data, strata = NULL, table_vars = NULL,
 #' @description
 #' This function generates row or column-based summary statistics based on the specified method.
 #'
-#' @param .data A data frame containing the variables of interest.
+#' @param .dataset A data frame containing the variables of interest.
 #' @param strata The dependent variable for hypothesis testing.
 #' @param table_vars A vector of explanatory variables for analysis.
 #' @param na_include Logical. Should NA values be included in the analysis? Default is NULL.
@@ -325,7 +325,7 @@ short_ff <- function(.data, strata = NULL, table_vars = NULL,
 #' @seealso \code{\link{short_ff}}
 
 
-ff_row_col_sums <- function(.data,
+ff_row_col_sums <- function(.dataset,
                             strata = NULL,
                             table_vars = NULL,
                             na_include = NULL,
@@ -340,7 +340,7 @@ ff_row_col_sums <- function(.data,
     column <- TRUE
   }
 
-  return(short_ff(.data,
+  return(short_ff(.dataset,
     strata = strata,
     table_vars = table_vars,
     na_include = na_include,
@@ -375,7 +375,7 @@ ff_row_col_sums <- function(.data,
 #' This approach is good for summary tables.
 #'
 #'
-#' @param .data A data frame containing the variables of interest.
+#' @param .dataset A data frame containing the variables of interest.
 #' @param strata The dependent variable (outcome) in the analysis, should be a factor.
 #' @param table_vars A character vector specifying the explanatory variables (predictors) for the analysis.
 #'                  These can be factors, characters, or numerics.
@@ -413,7 +413,7 @@ ff_row_col_sums <- function(.data,
 #' names()
 #'
 #' ag_ff_summary(
-#' .data = penguins,
+#' .dataset = penguins,
 #' table_vars = table_vars_1,
 #' strata = "species"
 #' )
@@ -423,7 +423,7 @@ ff_row_col_sums <- function(.data,
 
 
 
-ag_ff_summary <- function(.data, strata = NULL, table_vars,
+ag_ff_summary <- function(.dataset, strata = NULL, table_vars,
                           row_col_sums = "row_col_based",
                           all_cont = "shapiro",
                           manual_nonparams = NULL,
@@ -434,8 +434,8 @@ ag_ff_summary <- function(.data, strata = NULL, table_vars,
 
 
   # Checks
-  if (!is.data.frame(.data)) stop("Your dataset is not a dataframe.")
-  if (any(class(.data) %in% c("tbl_df", "tbl"))) .data <- data.frame(.data)
+  if (!is.data.frame(.dataset)) stop("Your dataset is not a dataframe.")
+  if (any(class(.dataset) %in% c("tbl_df", "tbl"))) .dataset <- data.frame(.dataset)
   if (is.null(table_vars)) stop("table_vars is empty")
 
 
@@ -444,7 +444,7 @@ ag_ff_summary <- function(.data, strata = NULL, table_vars,
 
   # Check data types of table_vars
   valid_vars <- sapply(table_vars, function(var) {
-          if (is.factor(.data[[var]]) || is.character(.data[[var]]) || is.numeric(.data[[var]])) {
+          if (is.factor(.dataset[[var]]) || is.character(.dataset[[var]]) || is.numeric(.dataset[[var]])) {
                   return(var)
           }
   })
@@ -460,15 +460,15 @@ ag_ff_summary <- function(.data, strata = NULL, table_vars,
 
 
   if (!is.null(strata)) {
-          if (!is.factor(.data[[strata]]) && !is.character(.data[[strata]])) stop("The strata variable should be a factor/character. Please check the data type.")
+          if (!is.factor(.dataset[[strata]]) && !is.character(.dataset[[strata]])) stop("The strata variable should be a factor/character. Please check the data type.")
 
 
           # Handle missing values in the strata
-          missing_strata <- sum(is.na(.data[[strata]]))
+          missing_strata <- sum(is.na(.dataset[[strata]]))
 
           if (missing_strata > 0) {
                   warning(paste0("Important! There are ", missing_strata, " missing values in ", strata, ". Rows with missing values in ", strata, " will be removed from the analysis."))
-                  .data <- .data[!is.na(.data[[strata]]), ]
+                  .dataset <- .dataset[!is.na(.dataset[[strata]]), ]
           }
 
   }
@@ -521,7 +521,7 @@ ag_ff_summary <- function(.data, strata = NULL, table_vars,
 
     if (!is.null(manual_nonparams)) message("manual_nonparams argument is useless, if all_cont is not 'manual'")
 
-          numeric_vars <- .data %>%
+          numeric_vars <- .dataset %>%
                   dplyr::select(tidyselect::all_of(table_vars)) %>%
                   dplyr::select(where(is.numeric)) %>% names()
 
@@ -530,7 +530,7 @@ ag_ff_summary <- function(.data, strata = NULL, table_vars,
     if(length(numeric_vars) == 0){
             cont_nonpara <- NULL
     } else {
-            cont_nonpara <- ag_shapiro(.data, strata = strata, table_vars = table_vars, silence = TRUE, names = FALSE)
+            cont_nonpara <- ag_shapiro(.dataset, strata = strata, table_vars = table_vars, silence = TRUE, names = FALSE)
     }
 
   } else if (all_cont == "manual") {
@@ -548,7 +548,7 @@ ag_ff_summary <- function(.data, strata = NULL, table_vars,
 
 
   if (row_col_sums == "row_based") {
-    row_col_sums_df <- ff_row_col_sums(.data,
+    row_col_sums_df <- ff_row_col_sums(.dataset,
       strata = strata,
       table_vars = table_vars, na_include = na_include, cont = cont, cont_nonpara = cont_nonpara,
       fisher_correction = fisher_correction,
@@ -557,7 +557,7 @@ ag_ff_summary <- function(.data, strata = NULL, table_vars,
       suppressMessages()
 
   } else if (row_col_sums == "col_based") {
-    row_col_sums_df <- ff_row_col_sums(.data,
+    row_col_sums_df <- ff_row_col_sums(.dataset,
       strata = strata,
       table_vars = table_vars, na_include = na_include, cont = cont, cont_nonpara = cont_nonpara,
       fisher_correction = fisher_correction,
@@ -567,14 +567,14 @@ ag_ff_summary <- function(.data, strata = NULL, table_vars,
 
   } else if (row_col_sums == "row_col_based") {
     row_col_sums_df_comb <- cbind(
-      ff_row_col_sums(.data,
+      ff_row_col_sums(.dataset,
         strata = strata,
         table_vars = table_vars, na_include = na_include, cont = cont, cont_nonpara = cont_nonpara,
         fisher_correction = fisher_correction, row_col_sums = "row_based", ...
       ) %>%
         suppressMessages() %>%
         select(-Total),
-      ff_row_col_sums(.data,
+      ff_row_col_sums(.dataset,
         strata = strata,
         table_vars = table_vars, na_include = na_include, cont = cont, cont_nonpara = cont_nonpara,
         fisher_correction = fisher_correction, row_col_sums = "col_based", ...
@@ -614,7 +614,7 @@ ag_ff_summary <- function(.data, strata = NULL, table_vars,
 #' considering different strata analysis options. It is primarily designed to
 #' work with datasets generated by the \code{ag_ff_summary} function.
 #'
-#' @param .data The input (ag_ff_summary table) to be modified.
+#' @param .ff_table The input (ag_ff_summary table) to be modified.
 #' @param order   Optional. The order to relocate the columns. Default is "GTP".
 #'                Possible values are: "G" (Groups), "GP" (Groups and P-value),
 #'                "GT" (Groups and Total), "GTP" (Groups, Total, and P-value),

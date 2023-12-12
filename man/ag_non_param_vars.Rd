@@ -4,10 +4,10 @@
 \alias{ag_non_param_vars}
 \title{Extract indices for Non-Normally Distributed Variables}
 \usage{
-ag_non_param_vars(.data, strata = NULL, table_vars)
+ag_non_param_vars(.dataset, strata = NULL, table_vars)
 }
 \arguments{
-\item{.data}{A data frame containing the variables of interest.}
+\item{.dataset}{A data frame containing the variables of interest.}
 
 \item{strata}{An optional grouping variable for stratified analysis. Default is NULL.}
 
@@ -30,7 +30,7 @@ dplyr::select(-Species) \%>\%
 names()
 dependent <- "Species"
 
-ag_non_param_vars(.data = iris,
+ag_non_param_vars(.dataset = iris,
 strata = dependent,
 table_vars = table_vars
 )

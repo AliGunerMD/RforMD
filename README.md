@@ -169,3 +169,14 @@ ag_ff_summary(penguins, strata = strata, table_vars = table_vars_penguins) %>%
 ```
 
 <img src="man/figures/README-unnamed-chunk-12-1.png" width="80%" style="display: block; margin: auto;" />
+
+``` r
+summary_flextable <- ag_ff_summary(penguins, strata = strata, table_vars = table_vars_penguins) %>% 
+        ag_ff_relocate(order = "TGP") %>% 
+        ag_ff_columns(levels = TRUE) %>% 
+        ag_ff_labels(use_vector = TRUE, vector_name = penguins_names) %>% 
+        ag_flex()
+#> Relocated columns:label -- levels -- Total -- Adelie -- Chinstrap -- Gentoo -- p
+#> Manual check may be needed for some levels.
+#> A vector for variable names was used to rename labels.
+```
