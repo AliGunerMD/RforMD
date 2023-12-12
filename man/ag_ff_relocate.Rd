@@ -4,10 +4,10 @@
 \alias{ag_ff_relocate}
 \title{Relocate columns of ag_ff_summary table}
 \usage{
-ag_ff_relocate(.data, order = NULL)
+ag_ff_relocate(.ff_table, order = NULL)
 }
 \arguments{
-\item{.data}{The input (ag_ff_summary table) to be modified.}
+\item{.ff_table}{The input (ag_ff_summary table) to be modified.}
 
 \item{order}{Optional. The order to relocate the columns. Default is "GTP".
 Possible values are: "G" (Groups), "GP" (Groups and P-value),

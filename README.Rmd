@@ -157,3 +157,13 @@ ag_ff_summary(penguins, strata = strata, table_vars = table_vars_penguins) %>%
 
 ```
 
+
+
+
+```{r}
+summary_flextable <- ag_ff_summary(penguins, strata = strata, table_vars = table_vars_penguins) %>% 
+        ag_ff_relocate(order = "TGP") %>% 
+        ag_ff_columns(levels = TRUE) %>% 
+        ag_ff_labels(use_vector = TRUE, vector_name = penguins_names) %>% 
+        ag_flex()
+```
