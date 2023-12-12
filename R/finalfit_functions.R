@@ -645,25 +645,25 @@ ag_ff_summary <- function(.data, strata = NULL, table_vars,
 
 
 
-ag_ff_relocate <- function(.data, order = NULL) {
+ag_ff_relocate <- function(.ff_table, order = NULL) {
 
 
         valid_orders <- c("G", "GP", "GT", "GTP", "TGP", "T")
-        ncol <- ncol(.data)
+        ncol <- ncol(.ff_table)
 
-        original_columns <- colnames(.data)
+        original_columns <- colnames(.ff_table)
         strata_names <- original_columns[!original_columns %in% c("label", "levels", "Total", "p")]
 
 
         # Check if this is a ag_ff_summary output.
         if(!all(c("label", "levels") %in% original_columns)){
-                stop("the .data may not be a ag_ff_summary table.")
+                stop("the input argument may not be a ag_ff_summary table.")
         }
 
 
         # Check ncol to understand the strata is present or not.
         if(ncol == 3){ # If the ncol is 3, definitely no strata analysis.
-                relocated_data <- .data
+                relocated_data <- .ff_table
 
                 if(is.null(order)){
                         message("Without strata, no need to relocate.")
@@ -696,17 +696,17 @@ ag_ff_relocate <- function(.data, order = NULL) {
 
 
                 switch(order,
-                       "G"   = relocated_data <- .data %>%
+                       "G"   = relocated_data <- .ff_table %>%
                                dplyr::select(label, levels, tidyselect::any_of(strata_names)),
-                       "GT"  = relocated_data <- .data %>%
+                       "GT"  = relocated_data <- .ff_table %>%
                                dplyr::select(label, levels, tidyselect::any_of(strata_names), Total),
-                       "GP"  = relocated_data <- .data %>%
+                       "GP"  = relocated_data <- .ff_table %>%
                                dplyr::select(label, levels, tidyselect::any_of(strata_names), p),
-                       "GTP" = relocated_data <- .data %>%
+                       "GTP" = relocated_data <- .ff_table %>%
                                dplyr::select(label, levels, tidyselect::any_of(strata_names), Total, p),
-                       "TGP" = relocated_data <- .data %>%
+                       "TGP" = relocated_data <- .ff_table %>%
                                dplyr::select(label, levels, Total, tidyselect::any_of(strata_names), p),
-                       "T"   = relocated_data <- .data %>%
+                       "T"   = relocated_data <- .ff_table %>%
                                dplyr::select(label, levels, Total)
                 )
 

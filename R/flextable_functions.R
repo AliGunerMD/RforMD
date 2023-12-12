@@ -132,8 +132,100 @@ ag_flex_page_section <- function(orientation) {
 
 
 
+# stratas <- "Total" = glue::glue("All patients \n(n = ", nrow(breast_data), ")"),
 
 
+
+#
+#         pull(final) %>%
+#         paste(collapse = ", ")
+#
+#
+#
+# split(1:nrow(.)) %>%
+#         lapply(as.list)
+#
+# extracted_elements <- lapply(stratas, function(element) {
+#         element[[1]]
+# })
+#
+#
+# unlist(extracted_elements)
+tibble(!!enquo("species") := "Total", n = nrow(penguins))
+
+vbl <- enquo(variable)
+strata_headers <- penguins %>%
+        group_by( species ) %>%
+        summarise(n = n()) %>%
+        add_row(species = "Total",
+                n = nrow(.data)) %>%
+        mutate(final = paste0(species, "\n(n = ", n, ")")) %>%
+        select(species, final)
+
+
+overall_group = function(data, col_name){
+
+        d1 = data %>%
+                mutate(summary_level = "grouped")
+
+        d2 = data %>%
+                mutate(summary_level = "ungrouped") %>%
+                mutate(!!sym(col_name) := NA)
+
+        d12 = rbind(d1, d2) %>%
+                group_by(summary_level, !!sym(col_name))
+
+        return(d12)
+}
+
+
+
+
+
+ag_flex_header_labels <- function(data, strata){
+        overall_group = function(data, strata){
+
+                d1 = data %>%
+                        mutate(summary_level = "grouped")
+
+                d2 = data %>%
+                        mutate(summary_level = "ungrouped") %>%
+                        mutate(!!sym(strata) := "Total")
+
+                d12 = rbind(d1, d2) %>%
+                        group_by(summary_level, !!sym(strata))
+
+                return(d12)
+        }
+
+
+        strata_headers <- overall_group(data, strata) %>%
+                summarise(n = n()) %>%
+                ungroup() %>%
+                mutate(final = paste0(.data[[strata]],"\n(n = ", n, ")")) %>%
+                select({{ strata }}, final)
+
+base_headers <- c("label" = "Variable", "levels" = " ", "p" = "p value")
+
+all_header <- c(base_headers, deframe(strata_headers))
+all_header
+}
+
+ag_flex_header_labels(data = penguins, strata = "species")
+
+ag_ff_summary(
+            .data = penguins,
+            strata = "species",
+            table_vars = table_vars_1) %>%
+        ag_flex() %>%
+        set_header_labels(i = 1, values = ag_flex_header_labels(data = penguins, strata = "species"))
+
+
+summary_factorlist(
+        .data = penguins,
+        explanatory  = table_vars_1,
+        dependent = "species", add_col_totals = TRUE, total_col = TRUE) %>%
+        slice(1)
 
 
 
