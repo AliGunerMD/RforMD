@@ -52,7 +52,25 @@
     <loc>https://aligunermd.github.io/RforMD/reference/ag_flex.html</loc>
   </url>
   <url>
-    <loc>https://aligunermd.github.io/RforMD/reference/ag_flex_page_section.html</loc>
+    <loc>https://aligunermd.github.io/RforMD/reference/ag_flex_abbr.html</loc>
+  </url>
+  <url>
+    <loc>https://aligunermd.github.io/RforMD/reference/ag_flex_center.html</loc>
+  </url>
+  <url>
+    <loc>https://aligunermd.github.io/RforMD/reference/ag_flex_footnote.html</loc>
+  </url>
+  <url>
+    <loc>https://aligunermd.github.io/RforMD/reference/ag_flex_header.html</loc>
+  </url>
+  <url>
+    <loc>https://aligunermd.github.io/RforMD/reference/ag_flex_hline.html</loc>
+  </url>
+  <url>
+    <loc>https://aligunermd.github.io/RforMD/reference/ag_flex_save.html</loc>
+  </url>
+  <url>
+    <loc>https://aligunermd.github.io/RforMD/reference/ag_flex_title.html</loc>
   </url>
   <url>
     <loc>https://aligunermd.github.io/RforMD/reference/ag_generate_template_quarto.html</loc>
