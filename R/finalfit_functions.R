@@ -289,6 +289,7 @@ short_ff <- function(.dataset, strata = NULL, table_vars = NULL,
           dplyr::mutate(p = ifelse(is.na(p_fisher), p, p_fisher)) %>%
           dplyr::select(-p_fisher)
 
+        message(paste("Fisher test was used for:", paste(exp_fisher, collapse = ", ")))
         return(combined_ff)
       }
     } else {

@@ -163,7 +163,12 @@ ag_create_excel <- function(dataset = analysis_dataset, excel_path = "_Data/Vari
 
         # Create a data frame with 'original' and 'corrected' column names
         df <- data.frame(original = column_names) %>%
-                tibble::add_column(corrected = " ")
+                dplyr::mutate(corrected_title = stringr::str_to_sentence(stringr::str_replace_all(original, "_", " ")),
+                               corrected_lower = stringr::str_to_lower(stringr::str_replace_all(original, "_", " "))) %>%
+                tibble::add_column(manual = " ") %>%
+                tibble::add_column(units = " ")
+                # mutate(combine = paste0(corrected, " (", units ," )")) %>% # should be done inside the project ag_ff_labels
+
 
         dir_path <- dirname(excel_path)
 
