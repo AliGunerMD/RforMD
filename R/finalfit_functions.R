@@ -289,7 +289,8 @@ short_ff <- function(.dataset, strata = NULL, table_vars = NULL,
           dplyr::mutate(p = ifelse(is.na(p_fisher), p, p_fisher)) %>%
           dplyr::select(-p_fisher)
 
-        message(paste("Fisher test was used for:", paste(explanatory_fisher, collapse = ", ")))
+        # message(paste0("Fisher test was used for: ", paste(explanatory_fisher, collapse = ", ")))
+        # message(paste("Fisher test was used for::", toString(names(explanatory_fisher))))
         return(combined_ff)
       }
     } else {
@@ -298,6 +299,16 @@ short_ff <- function(.dataset, strata = NULL, table_vars = NULL,
     }
   }
 }
+
+
+
+
+# penguins2 <- penguins %>%
+#         mutate(species = if_else(island == "Torgersen" | island == "Biscoe", "Adelie", species))
+#
+# ag_fisher(penguins2, strata = "species", table_vars = c("sex", "island"))
+# ag_fisher()
+
 
 
 
@@ -596,6 +607,10 @@ ag_ff_summary <- function(.dataset, strata = NULL, table_vars,
     stop("Invalid value for row_col_sums. Use 'row_based', 'col_based', or 'row_col_based'.")
   }
 
+  explanatory_fisher_vars <- ag_fisher(.dataset = .dataset, table_vars = table_vars, strata = strata)
+  if(!is.null(explanatory_fisher_vars) && fisher_correction){
+          message(paste0("Fisher test was used for: ", paste(explanatory_fisher_vars, collapse = ", ")))
+  }
 
   if (is.null(strata)) {
     return(row_col_sums_df %>% select(-all))
