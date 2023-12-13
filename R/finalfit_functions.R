@@ -150,8 +150,10 @@ ag_ff_glimpse <- function(.dataset, strata = NULL, table_vars = NULL, type = NUL
 
     my_split <- splitted(.dataset, strata)
 
+    table_vars <- setdiff(table_vars, strata)
+
     if (is.null(type)) {
-      combined_df <- lapply(my_split, function(x) finalfit::ff_glimpse(x))
+      combined_df <- lapply(my_split, function(x) finalfit::ff_glimpse(x, explanatory = table_vars, levels_cut = levels_cut))
       message("This is messy. It is better to define a type as Continuous or Categorical.")
     } else {
       if (type == "cont") {
@@ -183,6 +185,7 @@ ag_ff_glimpse <- function(.dataset, strata = NULL, table_vars = NULL, type = NUL
     return(combined_df)
   }
 }
+
 
 
 
