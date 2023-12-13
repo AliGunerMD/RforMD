@@ -137,11 +137,11 @@ ag_ff_glimpse <- function(.dataset, strata = NULL, table_vars = NULL, type = NUL
   } else {
     splitted <- function(.dataset, strata) {
       if (missing) {
-        .data[[strata]] <- as.character(.data[[strata]])
-        .data[[strata]][is.na(.data[[strata]])] <- "Missing*"
+        .dataset[[strata]] <- as.character(.dataset[[strata]])
+        .dataset[[strata]][is.na(.dataset[[strata]])] <- "Missing*"
       }
 
-      split_df <- split(.dataset, .data[[strata]])
+      split_df <- split(.dataset, .dataset[[strata]])
       split_df <- lapply(split_df, function(x) {
         x <- x[, -which(names(x) == strata)]
         x
