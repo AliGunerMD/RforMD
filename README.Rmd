@@ -242,6 +242,7 @@ summary_flextable %>%
         ag_flex_title(1, "Characteristics of Penguins dataset") %>% 
         ag_flex_abbr(abbr = abbr_vector) %>% 
         ag_flex_footnote(my_random_foot) %>% 
+        ag_flex_hline() %>%  
         flextable::fontsize(size = 7, part = "all")
 
 ```
