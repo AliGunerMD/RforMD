@@ -96,6 +96,7 @@ This approach is good for summary tables.</p>
 <span>  manual_nonparams <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fisher_correction <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  na_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  inverse_YN <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  summary_factorlist_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -143,6 +144,10 @@ Default is <code>TRUE</code>.</p></dd>
 <dt>na_include</dt>
 <dd><p>Logical, indicating whether missing values should be included in the analysis.
 Default is <code>TRUE</code>.</p></dd>
+
+
+<dt>inverse_YN</dt>
+<dd><p>Relevel factors if the levels are Yes/No.  Default is <code>TRUE</code>.</p></dd>
 
 
 <dt>summary_factorlist_args</dt>
