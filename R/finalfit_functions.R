@@ -501,8 +501,9 @@ ag_ff_summary <- function(.dataset, strata = NULL, table_vars,
           #         suppressWarnings() %>%
           #         suppressMessages()
 
+          # This one looked more safe, gave up the previous YN_vars version
           .dataset <- .dataset %>%
-                  dplyr::mutate(dplyr::across(tidyselect::everything(), ~ ifelse(tolower(.) == "yes", paste0("\\.", .), .)))
+                  dplyr::mutate(dplyr::across(where(is.factor), ~ dplyr::if_else(tolower(.) == "yes", paste0(".", .), .)))
   }
 
 
