@@ -303,14 +303,6 @@ short_ff <- function(.dataset, strata = NULL, table_vars = NULL,
 
 
 
-# penguins2 <- penguins %>%
-#         mutate(species = if_else(island == "Torgersen" | island == "Biscoe", "Adelie", species))
-#
-# ag_fisher(penguins2, strata = "species", table_vars = c("sex", "island"))
-# ag_fisher()
-
-
-
 
 
 #' @title Generate Row-, Column-based or both-based Summary Statistics
@@ -834,7 +826,7 @@ ag_ff_columns <- function(.data, levels = FALSE) {
 #' @param use_excel Logical value indicating whether to use an Excel file for renaming labels. Default is \code{FALSE}.
 #' @param excel_path The path to the Excel file containing old and new label names. Required if \code{use_excel = TRUE}.
 #' @param excel_old_names The name of the column in the Excel file containing the old label names. Default is \code{"original"}.
-#' @param excel_new_names The name of the column in the Excel file containing the new label names. Default is \code{"corrected"}.
+#' @param excel_new_names The name of the column in the Excel file containing the new label names. Required if \code{use_excel = TRUE}.
 #'
 #' @return The ag_ff_summary table with renamed labels.
 #'
@@ -872,7 +864,7 @@ ag_ff_columns <- function(.data, levels = FALSE) {
 # Function to rename labels in a dataset
 ag_ff_labels <- function(.data,
                          use_vector = TRUE, vector_name = NULL,
-                         use_excel = FALSE, excel_path = "_Data/Variables.xlsx", excel_old_names = "original", excel_new_names = "corrected") {
+                         use_excel = FALSE, excel_path = "_Data/Variables.xlsx", excel_old_names = "original", excel_new_names = NULL, add_units = FALSE) {
 
         # Get the original column names of the dataset
         original_columns <- colnames(.data)
@@ -918,14 +910,32 @@ ag_ff_labels <- function(.data,
 
         # Rename labels using an Excel file
         if (use_excel) {
+
+                if(is.null(excel_new_names)){
+                        stop("excel_new_names argument can not be NULL if use_excel is true. Provide the desired column name of the excel file.")
+                }
+
                 # Read the Excel file and clean the column names
                 Variables <- readxl::read_excel(here::here(excel_path))
                         # janitor::clean_names()
 
-                # Check if excel_old_names and excel_new_names are present in the Excel file
-                missing_names <- setdiff(c(excel_old_names, excel_new_names), colnames(Variables))
-                if (length(missing_names) > 0) {
-                        stop(paste("The following column names are not present in excel file:", paste(missing_names, collapse = ", ")))
+                if(!excel_old_names %in% colnames(Variables)){
+                        stop(paste("The following column names are not present in excel file:", excel_old_names))
+                }
+
+                if(!excel_new_names %in% colnames(Variables)){
+                        stop(paste("The following column names are not present in excel file:", excel_new_names))
+                }
+
+                # # Check if excel_old_names and excel_new_names are present in the Excel file
+                # missing_names <- setdiff(c(excel_old_names, excel_new_names), colnames(Variables))
+                # if (length(missing_names) > 0) {
+                #         stop(paste("The following column names are not present in excel file:", paste(missing_names, collapse = ", ")))
+                # }
+
+                if(add_units){
+                        Variables <- Variables %>%
+                                mutate(excel_new_names = paste0(excel_new_names, " (", units ," )"))
                 }
 
                 # Rename labels using mutate and recode functions with columns from the Excel file
@@ -937,6 +947,119 @@ ag_ff_labels <- function(.data,
 
         # Return the dataset with renamed labels
         return(labeled_dataset)
+}
+
+
+
+
+#' @title Relabel a column using label mappings
+#' @description This function relabels a specified column in a dataset by replacing its values with corresponding labels from a provided vector of label mappings.
+#'
+#' @param .data The input dataset.
+#' @param label_column The name of the column to be relabeled.
+#' @param vector_name A named vector containing the label mappings.
+#'
+#' @return A modified dataset with the specified column relabeled.
+#' @author Ali Guner
+#' @importFrom dplyr mutate recode
+#'
+#' @examples
+#' \dontrun{
+#' new_labels <- c(
+#'         "island" = "Island",
+#'         "flipper_length_mm" = "Flipper length (mm)",
+#'         "bill_depth_mm" = "Bill depth (mm)")
+#'
+#' ag_ff_summary(penguins, strata = strata, table_vars = table_vars_penguins) %>%
+#'         ag_relabel_vector("label", new_labels)
+#' }
+#'
+#' @export
+
+
+
+ag_relabel_vector <- function(.data,
+                              label_column,
+                              vector_name) {
+  # Check if arguments are provided
+  if (is.null(label_column) || is.null(vector_name)) {
+    stop("label_column and vector_name arguments should be provided.")
+  }
+
+  # Get the vector for renaming labels
+  label_names <- data.frame(
+    label = names(vector_name),
+    name = vector_name,
+    stringsAsFactors = FALSE
+  ) %>%
+    as.data.frame()
+
+  # Rename labels using mutate and recode functions
+  labeled_dataset <- .data %>%
+    dplyr::mutate({{ label_column }} := dplyr::recode(.data[[label_column]], !!!setNames(label_names$name, label_names$label)))
+
+
+  return(labeled_dataset)
+}
+
+
+#' @title Relabel a column in a dataset using an Excel file as a source of label mappings
+#' @description
+#' This function relabels a specified column in a dataset by replacing its values with
+#' corresponding labels from an Excel file. The Excel file should contain two columns:
+#' one with the original labels and another with the new labels.
+#'
+#' @param .data The input dataset.
+#' @param label_column The name of the column to be relabeled. Default is "label".
+#' @param excel_path The path to the Excel file.
+#' @param sheet_name The name of the sheet in the Excel file containing the label mappings. Default is "Sheet 1".
+#' @param excel_old_names The name of the column in the Excel file containing the original labels.
+#' @param excel_new_names The name of the column in the Excel file containing the new labels.
+#' @param add_units Logical. If TRUE, adds units information to the new labels based on the "units" column in the Excel file. Default is FALSE.
+#'
+#' @return A modified dataset with the specified column relabeled.
+#'
+#' @importFrom readxl read_excel
+#' @importFrom dplyr mutate recode
+#'
+#' @examples
+#' \dontrun{
+#' relabeled_data <- ag_relabel_excel(.data = data, excel_path = "path/to/excel.xlsx",
+#'                                    excel_old_names = "original_labels",
+#'                                    excel_new_names = "new_labels",
+#'                                    add_units = TRUE)
+#' }
+#'
+#' @export
+
+ag_relabel_excel <- function(.data,
+                             label_column = "label",
+                             excel_path,
+                             sheet_name = "Sheet 1",
+                             excel_old_names,
+                             excel_new_names,
+                             add_units = FALSE) {
+
+  # Check if column names are provided
+  if (is.null(excel_path) || is.null(excel_old_names) || is.null(excel_new_names)) {
+    stop("Path name and column names should be provided.")
+  }
+
+
+  # Read the Excel file and clean the column names
+  Variables <- readxl::read_excel(here::here(excel_path), sheet = sheet_name)
+
+  if (add_units) {
+    Variables <- Variables %>%
+      dplyr::mutate({{ excel_new_names }} := ifelse(is.na(units), .data[[excel_new_names]],
+        paste0(.data[[excel_new_names]], " (", units, ")")
+      ))
+  }
+  relabeled_dataset <- .data %>%
+    dplyr::mutate({{ label_column }} := dplyr::recode(.data[[label_column]], !!!setNames(Variables[[excel_new_names]], Variables[[excel_old_names]])))
+
+  return(relabeled_dataset)
+
 }
 
 

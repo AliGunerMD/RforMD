@@ -29,11 +29,13 @@ reference:
   - ag_flex_abbr
   - ag_flex_save
 - title: Folder/file templates
-  desc: Some shortcuts to prepare default template folder/filestructure
+  desc: Some shortcuts to prepare/modify default template folder/filestructure
   contents:
   - ag_create_project_folders
   - ag_generate_template_quarto
   - ag_create_excel
+  - ag_relabel_excel
+  - ag_relabel_vector
 - title: Biostats stuffs
   desc: For some quick looks in data
   contents:

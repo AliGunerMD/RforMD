@@ -11,7 +11,8 @@ ag_ff_labels(
   use_excel = FALSE,
   excel_path = "_Data/Variables.xlsx",
   excel_old_names = "original",
-  excel_new_names = "corrected"
+  excel_new_names = NULL,
+  add_units = FALSE
 )
 }
 \arguments{
@@ -27,7 +28,7 @@ ag_ff_labels(
 
 \item{excel_old_names}{The name of the column in the Excel file containing the old label names. Default is \code{"original"}.}
 
-\item{excel_new_names}{The name of the column in the Excel file containing the new label names. Default is \code{"corrected"}.}
+\item{excel_new_names}{The name of the column in the Excel file containing the new label names. Required if \code{use_excel = TRUE}.}
 }
 \value{
 The ag_ff_summary table with renamed labels.

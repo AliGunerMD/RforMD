@@ -1,4 +1,6 @@
 
+
+  
 ## version 0.1.8
   - ag_flex_header
   - ag_flex_center
@@ -8,6 +10,8 @@
   - ag_flex_abbr
   - ag_flex_save
   
+  - ag_relabel_vector
+  - ag_relabel_excel
   
   
 
