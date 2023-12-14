@@ -504,7 +504,8 @@ ag_ff_summary <- function(.dataset, strata = NULL, table_vars,
           # This one looked more safe, gave up the previous YN_vars version
           .dataset <- .dataset %>%
                   dplyr::mutate(dplyr::across(where(is.factor) & which(names(.) != strata),
-                                ~ dplyr::if_else(tolower(.) == "yes", paste0(".", .), .)))
+                                ~ dplyr::if_else(tolower(.) == "yes", paste0(".", .), .))) %>%
+                  dplyr::mutate_at(strata, as.character)
   }
 
 
