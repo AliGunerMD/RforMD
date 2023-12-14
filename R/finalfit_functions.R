@@ -502,9 +502,9 @@ ag_ff_summary <- function(.dataset, strata = NULL, table_vars,
           #         suppressMessages()
 
           # This one looked more safe, gave up the previous YN_vars version
-          .dataset <- .dataset %>%
-                  dplyr::mutate(dplyr::across(where(is.factor) & which(names(.) != strata),
-                                ~ dplyr::if_else(tolower(.) == "yes", factor(paste0(".", .)), .)))
+          .dataset <- transform(.dataset,
+                                across(names(.dataset)[sapply(.dataset, is.factor) & names(.dataset) != "strata"],
+                                       function(x) ifelse(tolower(x) == "yes", paste0(".", x), x)))
   }
 
 
