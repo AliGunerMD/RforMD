@@ -281,7 +281,7 @@ ag_qq_plots <- function(dataset, strata = NULL, table_vars = NULL, n_row = 5) {
 
 
 
-                title <- paste0("QQ plot (", i, " of ", num_plots ," plots) for ", length(selected_vars), "/", length(numeric_variables) ," numeric variables (Index: ", start_index, "-", end_index, ")")
+                title <- paste0("QQ plots (", i, " of ", num_plots ," plots) for ", length(selected_vars), "/", length(numeric_variables) ," numeric variables (Index: ", start_index, "-", end_index, ")")
 
 
                 # Add the caption to the plot

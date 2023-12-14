@@ -354,7 +354,7 @@ ag_flex_footnote <- function(flex_obj, footnote = NULL){
 #' ag_flex_abbr(flex_obj, abbr = abbr)
 #' }
 #'
-#' @seealso \code{\link{}}
+#' @seealso \code{\link{flextable::add_footer_lines()}}
 #'
 #' @export
 #'
@@ -409,10 +409,10 @@ ag_flex_abbr <- function(flex_obj, abbr = NULL, use_df = TRUE, prefix = "Abbrevi
 #'
 #' @examples
 #' \dontrun{
-#' ag_flex_save(flex_obj, n = "Table1", orientation = "Landscape", mypath = "path/to/save")
+#' ag_flex_save(flex_obj, n = "1", orientation = "Landscape", mypath = "path/to/save")
 #' }
 #'
-#' @seealso \code{\link{}}
+#' @seealso \code{\link{flextable::save_as_docx()}}
 #'
 #' @export
 

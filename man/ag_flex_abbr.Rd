@@ -29,7 +29,7 @@ ag_flex_abbr(flex_obj, abbr = abbr)
 
 }
 \seealso{
-\code{\link{}}
+\code{\link{flextable::add_footer_lines()}}
 }
 \author{
 Ali Guner

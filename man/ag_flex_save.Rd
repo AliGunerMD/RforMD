@@ -28,12 +28,12 @@ This function saves a flextable object as a Word document.
 }
 \examples{
 \dontrun{
-ag_flex_save(flex_obj, n = "Table1", orientation = "Landscape", mypath = "path/to/save")
+ag_flex_save(flex_obj, n = "1", orientation = "Landscape", mypath = "path/to/save")
 }
 
 }
 \seealso{
-\code{\link{}}
+\code{\link{flextable::save_as_docx()}}
 }
 \author{
 Ali Guner
