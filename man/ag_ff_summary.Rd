@@ -45,7 +45,7 @@ Default is \code{TRUE}.}
 \item{na_include}{Logical, indicating whether missing values should be included in the analysis.
 Default is \code{TRUE}.}
 
-\item{inverse_YN}{Relevel factors if the levels are Yes/No.  Default is \code{TRUE}.}
+\item{inverse_YN}{To relevel Yes/yes factor levels.  Default is \code{TRUE}.}
 
 \item{summary_factorlist_args}{A list containing additional arguments to be passed to \code{ag_ff_summary}.
 All comes from the finalfit::summaryfactorlist function.

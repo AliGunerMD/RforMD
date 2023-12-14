@@ -388,7 +388,7 @@ ff_row_col_sums <- function(.dataset,
 #'                  These can be factors, characters, or numerics.
 #' @param na_include Logical, indicating whether missing values should be included in the analysis.
 #'                  Default is \code{TRUE}.
-#' @param inverse_YN Relevel factors if the levels are Yes/No.  Default is \code{TRUE}.
+#' @param inverse_YN To relevel Yes/yes factor levels.  Default is \code{TRUE}.
 #' @param row_col_sums A character string specifying the type of summary statistics to be generated.
 #'                    Options include "row_based" for row-based summaries, "col_based" for column-based summaries,
 #'                    and "row_col_based" for both row and column-based summaries. Default is "row_col_based".
@@ -487,16 +487,22 @@ ag_ff_summary <- function(.dataset, strata = NULL, table_vars,
   }
 
 
-  if(inverse_YN){
-          YN_vars <- .dataset %>%
-                  dplyr::select_if(~any(stringr::str_detect(., stringr::regex("^(?i)(Yes|No)$")))) %>%
-                  names()
 
+  if(inverse_YN){
+          # Changes all yes into .yes, later can be removed with another function.
+
+          # YN_vars <- .dataset %>%
+          #         dplyr::select_if(~any(stringr::str_detect(., stringr::regex("^(?i)(Yes|No)$")))) %>%
+          #         names()
+          #
+          #
+          # .dataset <- .dataset %>%
+          #         dplyr::mutate(dplyr::across(tidyselect::all_of(YN_vars), ~ forcats::fct_relevel(., "yes", "Yes", "no", "No"))) %>%
+          #         suppressWarnings() %>%
+          #         suppressMessages()
 
           .dataset <- .dataset %>%
-                  dplyr::mutate(dplyr::across(tidyselect::all_of(YN_vars), ~ forcats::fct_relevel(., "yes", "Yes", "no", "No"))) %>%
-                  suppressWarnings() %>%
-                  suppressMessages()
+                  dplyr::mutate(dplyr::across(tidyselect::everything(), ~ ifelse(tolower(.) == "yes", paste0("\\.", .), .)))
   }
 
 
