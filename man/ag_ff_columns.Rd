@@ -4,12 +4,14 @@
 \alias{ag_ff_columns}
 \title{Adjusts columns for variables in ag_ff_summary table}
 \usage{
-ag_ff_columns(.data, levels = FALSE)
+ag_ff_columns(.data, levels = FALSE, remove_no = FALSE)
 }
 \arguments{
 \item{.data}{The input ag_ff_summary table.}
 
 \item{levels}{Clean levels, default is FALSE.}
+
+\item{remove_no}{Will remove the rows which levels is no, and will delete yes. Default is FALSE.}
 }
 \value{
 The modified ag_ff_summary table with adjusted column values.

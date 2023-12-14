@@ -762,6 +762,7 @@ ag_ff_relocate <- function(.ff_table, order = NULL) {
 #' Also clean levels when levels argument is TRUE.
 #' @param .data The input ag_ff_summary table.
 #' @param levels Clean levels, default is FALSE.
+#' @param remove_no Will remove the rows which levels is no, and will delete yes. Default is FALSE.
 #' @return The modified ag_ff_summary table with adjusted column values.
 #'
 #' @author Ali Guner
@@ -793,7 +794,7 @@ ag_ff_relocate <- function(.ff_table, order = NULL) {
 #'
 
 
-ag_ff_columns <- function(.data, levels = FALSE) {
+ag_ff_columns <- function(.data, levels = FALSE, remove_no = FALSE) {
 
   original_columns <- colnames(.data)
 
@@ -813,7 +814,18 @@ ag_ff_columns <- function(.data, levels = FALSE) {
     )
 
 
+  if(remove_no){
+          columned_data <- columned_data %>%
+                  dplyr::filter(!(levels %in% c("No", "NO", "no", "nO") & label == "")) %>%
+                  dplyr::mutate(levels = dplyr::if_else(stringr::str_detect(tolower(levels), "yes"), " ", levels ))
+
+  }
+
+
+
   if(levels){
+
+
 
 
           abbreviations <- columned_data$levels[stringr::str_detect(columned_data$levels, "^[A-Z]{2,}(\\.[A-Z]+)*$")]
