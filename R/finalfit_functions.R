@@ -411,6 +411,7 @@ ff_row_col_sums <- function(.dataset,
 #' @author Ali Guner
 #'
 #' @importFrom dplyr relocate
+#' @importFrom forcats fct_rev
 #' @examples
 #' \dontrun{
 #' # Example usage of ag_ff_summary function
@@ -491,22 +492,20 @@ ag_ff_summary <- function(.dataset, strata = NULL, table_vars,
   if(inverse_YN){
           # Changes all yes into .yes, later can be removed with another function.
 
-          # YN_vars <- .dataset %>%
-          #         dplyr::select_if(~any(stringr::str_detect(., stringr::regex("^(?i)(Yes|No)$")))) %>%
-          #         names()
-          #
-          #
+          YN_vars <- .dataset %>%
+                  dplyr::select_if(~any(stringr::str_detect(., stringr::regex("^(?i)(Yes|No)$")))) %>%
+                  names()
+
+
+          .dataset <- .dataset %>%
+                  dplyr::mutate(dplyr::across(tidyselect::all_of(YN_vars), ~ forcats::fct_rev(.))) %>%
+                  suppressWarnings() %>%
+                  suppressMessages()
+
+          # # This one looked more safe, gave up the previous YN_vars version
           # .dataset <- .dataset %>%
-          #         dplyr::mutate(dplyr::across(tidyselect::all_of(YN_vars), ~ forcats::fct_relevel(., "yes", "Yes", "no", "No"))) %>%
-          #         suppressWarnings() %>%
-          #         suppressMessages()
-
-          # This one looked more safe, gave up the previous YN_vars version
-          factor_cols <- sapply(.dataset, is.factor) & names(.dataset) != "strata"
-
-          for (col in names(.dataset)[factor_cols]) {
-                  .dataset[[col]] <- ifelse(tolower(.dataset[[col]]) == "yes", paste0(".", .dataset[[col]]), .dataset[[col]])
-          }
+          #         dplyr::mutate(dplyr::across(where(is.factor) & which(names(.) != strata),
+          #                       ~ dplyr::if_else(tolower(.) == "yes", paste0(".", .), .)))
   }
 
 
