@@ -34,7 +34,7 @@
 
 
 
-ag_flex <- function(.data, flex_font_family = "Arial", flex_font_size = 10, color_header = TRUE) {
+ag_flex <- function(.data, flex_font_family = "Arial", flex_font_size = 11, color_header = TRUE) {
 
         table_border <- officer::fp_border(color = col_table_border)
 
@@ -67,92 +67,146 @@ ag_flex <- function(.data, flex_font_family = "Arial", flex_font_size = 10, colo
 
 }
 
-
-
-#' @title Generate and set header labels for an aggregated flextable and finalfit
+#' @title Add Custom Headers (with n) to a flextable Object
+#' @description
+#' This function adds custom headers to a flextable object based on specified
+#' dataset, strata variable, and custom levels.
 #'
-#' @description This function generates header labels for an aggregated flextable based on the provided dataset and strata variable,
-#' and sets the labels in the flextable object.
+#' @param flex_obj A flextable object to which headers will be added.
+#' @param .dataset The dataset used for generating the headers.
+#' @param strata The name of the variable used for grouping or stratifying the data.
+#' @param custom Logical value indicating whether to use custom levels or not.
+#' @param custom_levels A named vector specifying custom levels for the strata variable.
 #'
-#' @param flex_obj The flextable object for which the header labels are generated and set.
-#' @param .dataset The dataset for which the header labels are generated.
-#' @param strata The strata variable used for aggregation.
-#'
-#' @return The flextable object with the header labels set.
-#'
+#' @return A flextable object with custom headers added.
 #' @author Ali Guner
-#'
-#' @importFrom dplyr mutate group_by summarise ungroup
+#' @importFrom dplyr mutate summarise group_by select
 #' @importFrom rlang sym
 #' @importFrom stringr str_to_title str_replace_all
+#' @importFrom tibble deframe
 #' @importFrom flextable set_header_labels
 #'
 #' @examples
 #' \dontrun{
-#' ag_flex_header(flex_obj, dataset, "strata_variable")
+#'
+#' custom_levels <- c("Gentoo" = "MyGentoo",
+#' "Adelie" = "MyAdelie")
+#'
+#' ag_ff_summary(penguins, "species", penguins %>% select(-species) %>% names()) %>%
+#'         ag_flex() %>%
+#'         ag_flex_header_labels(penguins, strata = "species", custom = TRUE, custom_levels = custom_levels)
+#'
 #' }
-#'
-#' @seealso \code{\link{ag_flex()}}
-#'
 #' @export
 
 
+ag_flex_header_labels <- function(flex_obj, .dataset, strata, custom = FALSE, custom_levels) {
+  if (!inherits(flex_obj, "flextable")) {
+    stop(sprintf("Function `%s` supports only flextable objects.", "ag_flex_header()"))
+  }
+
+  if (!custom) {
+    message("Because custom = FALSE, original stratas will be used.")
+  }
+
+  if (custom && missing(custom_levels)) {
+    stop("The names of strata variable should be provided as a vector, if custom = TRUE.")
+  }
+
+
+  overall_group <- function(.dataset, strata) {
+    d1 <- .dataset %>%
+      dplyr::mutate(summary_level = "grouped")
+    d2 <- .dataset %>%
+      dplyr::mutate(summary_level = "ungrouped") %>%
+      dplyr::mutate(!!sym(strata) := "Total")
+    d12 <- rbind(d1, d2)
+    return(d12)
+  }
 
 
 
 
+  ag_calc_header_labels <- function(.dataset, strata, custom, custom_levels) {
+    if (custom) {
+      strata_headers <- overall_group(.dataset, strata) %>%
+        dplyr::mutate(new_var = .data[[strata]]) %>%
+        dplyr::mutate(new_var = dplyr::recode(new_var, !!!custom_levels)) %>%
+        dplyr::group_by(summary_level, new_var, !!rlang::sym(strata)) %>%
+        dplyr::summarise(n = n(), .groups = "drop") %>%
+        dplyr::mutate(
+          final = paste0(new_var, "\n(n = ", n, ")"),
+          final = stringr::str_replace_all(final, "Total\n", "All\n")
+        ) %>%
+        dplyr::select({{ strata }}, final)
+    } else {
+      strata_headers <- overall_group(.dataset, strata) %>%
+        dplyr::group_by(summary_level, !!rlang::sym(strata)) %>%
+        dplyr::summarise(n = n(), .groups = "drop") %>%
+        dplyr::mutate(
+          final = paste0(stringr::str_to_title(.data[[strata]]), "\n(n = ", n, ")"),
+          final = stringr::str_replace_all(final, "Total\n", "All\n")
+        ) %>%
+        dplyr::select({{ strata }}, final)
+    }
 
 
-ag_flex_header <- function(flex_obj, .dataset, strata){
-
-
-
-        if (!inherits(flex_obj, "flextable")) {
-                stop(sprintf("Function `%s` supports only flextable objects.", "ag_flex_header()"))
-        }
-
-
-
-        ag_flex_header_labels <- function(.dataset, strata){
-
-                overall_group = function(.dataset, strata){
-
-                        d1 = .dataset %>%
-                                dplyr::mutate(summary_level = "grouped")
-
-                        d2 = .dataset %>%
-                                dplyr::mutate(summary_level = "ungrouped") %>%
-                                dplyr::mutate(!!sym(strata) := "Total")
-
-                        d12 = rbind(d1, d2) %>%
-                                dplyr::group_by(summary_level, !!rlang::sym(strata))
-
-                        return(d12)
-                }
-
-                strata_headers <- overall_group(.dataset, strata) %>%
-                        dplyr::summarise(n = n()) %>%
-                        dplyr::ungroup() %>%
-                        dplyr::mutate(final = paste0(stringr::str_to_title(.data[[strata]]),"\n(n = ", n, ")"),
-                                      final = str_replace_all(final, "Total\n", "All\n")) %>%
-                        dplyr::select({{ strata }}, final)
-
-
-                base_headers <- c("label" = "Variable", "levels" = " ", "p" = "p value")
-
-                all_header <- c(base_headers, tibble::deframe(strata_headers))
-
-                all_header
-
-        }
+    return(strata_headers)
+  }
 
 
 
-        flex_obj %>%
-                set_header_labels(i = max(xx$header$content$content$nrow),
-                                  values = ag_flex_header_labels(.dataset = .dataset, strata = strata))
+  ag_calc_header_labels_nostrata <- function(.dataset, custom, custom_levels) {
+    if (custom) {
+      strata_headers <- .dataset %>%
+        dplyr::summarise(n = n()) %>%
+        dplyr::mutate(
+          Total = "Total",
+          new_var = recode(Total, !!!custom_levels)
+        ) %>%
+        dplyr::mutate(final = paste0(new_var, "\n(n = ", n, ")")) %>%
+        dplyr::select(Total, final)
+    } else {
+      strata_headers <- .dataset %>%
+        dplyr::summarise(n = n()) %>%
+        dplyr::mutate(Total = "Total") %>%
+        dplyr::mutate(final = paste0(Total, "\n(n = ", n, ")")) %>%
+        dplyr::select(Total, final)
+    }
 
+
+    return(strata_headers)
+  }
+
+
+
+  if (missing(strata)) {
+    strata <- NULL
+  }
+
+  if (is.null(strata)) {
+    strata_headers <- ag_calc_header_labels_nostrata(.dataset, custom = custom, custom_levels = custom_levels)
+  } else {
+    strata_headers <- ag_calc_header_labels(.dataset, strata = strata, custom = custom, custom_levels = custom_levels)
+  }
+
+
+  base_headers <- c(
+    "label" = "Variable",
+    "levels" = " ",
+    "p" = "p value"
+  )
+
+  all_header <- c(base_headers, tibble::deframe(strata_headers))
+
+
+  flex_obj %>%
+    flextable::set_header_labels(
+      i = max(flex_obj$header$content$content$nrow),
+      values = all_header
+    )
 }
+
 
 
 
@@ -173,7 +227,7 @@ ag_flex_header <- function(flex_obj, .dataset, strata){
 #' \dontrun{
 #' ag_flex_center(flex_obj)
 #' }
-#'
+#
 #' @seealso \code{\link{ag_flex()}}
 #'
 #' @export
@@ -409,7 +463,7 @@ ag_flex_abbr <- function(flex_obj, abbr = NULL, use_df = TRUE, prefix = "Abbrevi
 #'
 #' @examples
 #' \dontrun{
-#' ag_flex_save(flex_obj, n = "1", orientation = "Landscape", mypath = "path/to/save")
+#' ag_flex_save(flex_obj, n = 1, orientation = "Landscape", mypath = "path/to/save")
 #' }
 #'
 #' @seealso \code{\link{flextable::save_as_docx()}}

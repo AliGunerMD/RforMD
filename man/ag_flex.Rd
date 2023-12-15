@@ -7,7 +7,7 @@
 ag_flex(
   .data,
   flex_font_family = "Arial",
-  flex_font_size = 10,
+  flex_font_size = 11,
   color_header = TRUE
 )
 }

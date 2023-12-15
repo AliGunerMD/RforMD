@@ -28,7 +28,7 @@ This function saves a flextable object as a Word document.
 }
 \examples{
 \dontrun{
-ag_flex_save(flex_obj, n = "1", orientation = "Landscape", mypath = "path/to/save")
+ag_flex_save(flex_obj, n = 1, orientation = "Landscape", mypath = "path/to/save")
 }
 
 }

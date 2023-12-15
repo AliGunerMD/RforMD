@@ -13,6 +13,8 @@
   - ag_relabel_vector
   - ag_relabel_excel
   
+  - ag_flex_header_labels 
+  
   
 
 ## version 0.1.7

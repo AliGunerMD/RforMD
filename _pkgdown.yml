@@ -21,7 +21,7 @@ reference:
   desc: Same idea with the finalfit helpers. Some useful shortcut for redo coding while using `{flextable}`
   contents:
   - ag_flex
-  - ag_flex_header
+  - ag_flex_header_labels
   - ag_flex_center
   - ag_flex_hline
   - ag_flex_title

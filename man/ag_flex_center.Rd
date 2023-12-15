@@ -19,7 +19,6 @@ This function center aligns the content of a flextable starting from the third c
 \dontrun{
 ag_flex_center(flex_obj)
 }
-
 }
 \seealso{
 \code{\link{ag_flex()}}

@@ -13,7 +13,7 @@ ag_ff_summary(
   manual_nonparams = NULL,
   fisher_correction = TRUE,
   na_include = FALSE,
-  inverse_YN = TRUE,
+  inverse_YN = FALSE,
   summary_factorlist_args = list(),
   ...
 )
@@ -45,7 +45,7 @@ Default is \code{TRUE}.}
 \item{na_include}{Logical, indicating whether missing values should be included in the analysis.
 Default is \code{TRUE}.}
 
-\item{inverse_YN}{To relevel Yes/yes factor levels.  Default is \code{TRUE}.}
+\item{inverse_YN}{To relevel Yes/No factor levels for further row removal. Default is \code{TRUE}.}
 
 \item{summary_factorlist_args}{A list containing additional arguments to be passed to \code{ag_ff_summary}.
 All comes from the finalfit::summaryfactorlist function.

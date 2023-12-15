@@ -388,7 +388,7 @@ ff_row_col_sums <- function(.dataset,
 #'                  These can be factors, characters, or numerics.
 #' @param na_include Logical, indicating whether missing values should be included in the analysis.
 #'                  Default is \code{TRUE}.
-#' @param inverse_YN To relevel Yes/yes factor levels.  Default is \code{TRUE}.
+#' @param inverse_YN To relevel Yes/No factor levels for further row removal. Default is \code{TRUE}.
 #' @param row_col_sums A character string specifying the type of summary statistics to be generated.
 #'                    Options include "row_based" for row-based summaries, "col_based" for column-based summaries,
 #'                    and "row_col_based" for both row and column-based summaries. Default is "row_col_based".
@@ -438,7 +438,7 @@ ag_ff_summary <- function(.dataset, strata = NULL, table_vars,
                           manual_nonparams = NULL,
                           fisher_correction = TRUE,
                           na_include = FALSE,
-                          inverse_YN = TRUE,
+                          inverse_YN = FALSE,
                           summary_factorlist_args = list(),
                           ...) {
 
@@ -972,9 +972,15 @@ ag_ff_labels <- function(.data,
                 #         stop(paste("The following column names are not present in excel file:", paste(missing_names, collapse = ", ")))
                 # }
 
-                if(add_units){
-                        Variables <- Variables %>%
-                                mutate(excel_new_names = paste0(excel_new_names, " (", units ," )"))
+
+                if (add_units) {
+                        if("units" %in% colnames(Variables)){
+
+                                Variables <- Variables %>%
+                                        mutate(!!sym(excel_new_names) := ifelse(is.na(units) | units == "", !!sym(excel_new_names), paste0(!!sym(excel_new_names), " (", units, ")")))
+                        } else {
+                                stop("The name of the units column should be 'units' in excel file.")
+                        }
                 }
 
                 # Rename labels using mutate and recode functions with columns from the Excel file
