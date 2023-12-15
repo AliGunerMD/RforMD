@@ -170,7 +170,7 @@ summary_flextable <- ag_ff_summary(penguins, strata = strata, table_vars = table
 ```
 
 
-### ag_flex_header()
+### ag_flex_header_labels()
 ```{r, out.width='80%', fig.align='center'}
 summary_flextable %>% 
         ag_flex_header_labels(.dataset = penguins, strata = "species")

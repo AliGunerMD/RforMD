@@ -181,7 +181,7 @@ summary_flextable <- ag_ff_summary(penguins, strata = strata, table_vars = table
 #> A vector for variable names was used to rename labels.
 ```
 
-### ag_flex_header()
+### ag_flex_header_labels()
 
 ``` r
 summary_flextable %>% 
