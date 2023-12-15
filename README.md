@@ -185,7 +185,8 @@ summary_flextable <- ag_ff_summary(penguins, strata = strata, table_vars = table
 
 ``` r
 summary_flextable %>% 
-        ag_flex_header(.dataset = penguins, strata = "species")
+        ag_flex_header_labels(.dataset = penguins, strata = "species")
+#> Because custom = FALSE, original stratas will be used.
 ```
 
 <img src="man/figures/README-unnamed-chunk-14-1.png" width="80%" style="display: block; margin: auto;" />
@@ -194,8 +195,9 @@ summary_flextable %>%
 
 ``` r
 summary_flextable %>% 
-        ag_flex_header(.dataset = penguins, strata = "species") %>% 
+        ag_flex_header_labels(.dataset = penguins, strata = "species") %>% 
         ag_flex_center() 
+#> Because custom = FALSE, original stratas will be used.
 ```
 
 <img src="man/figures/README-unnamed-chunk-15-1.png" width="80%" style="display: block; margin: auto;" />
@@ -204,9 +206,10 @@ summary_flextable %>%
 
 ``` r
 summary_flextable %>% 
-        ag_flex_header(.dataset = penguins, strata = "species") %>% 
+        ag_flex_header_labels(.dataset = penguins, strata = "species") %>% 
         ag_flex_center() %>% 
         ag_flex_title(1, "Characteristics of Penguins dataset")
+#> Because custom = FALSE, original stratas will be used.
 ```
 
 <img src="man/figures/README-unnamed-chunk-16-1.png" width="80%" style="display: block; margin: auto;" />
@@ -221,10 +224,11 @@ abbr_vector <- c(
 )
 
 summary_flextable %>% 
-        ag_flex_header(.dataset = penguins, strata = "species") %>% 
+        ag_flex_header_labels(.dataset = penguins, strata = "species") %>% 
         ag_flex_center() %>% 
         ag_flex_title(1, "Characteristics of Penguins dataset") %>% 
         ag_flex_abbr(abbr = abbr_vector) 
+#> Because custom = FALSE, original stratas will be used.
 ```
 
 <img src="man/figures/README-unnamed-chunk-17-1.png" width="80%" style="display: block; margin: auto;" />
@@ -235,11 +239,12 @@ summary_flextable %>%
 my_random_foot <- "Palmerpenguins provided a great dataset for data exploration & visualization, as an alternative to iris."
 
 summary_flextable %>% 
-        ag_flex_header(.dataset = penguins, strata = "species") %>% 
+        ag_flex_header_labels(.dataset = penguins, strata = "species") %>% 
         ag_flex_center() %>% 
         ag_flex_title(1, "Characteristics of Penguins dataset") %>% 
         ag_flex_abbr(abbr = abbr_vector) %>% 
         ag_flex_footnote(my_random_foot) 
+#> Because custom = FALSE, original stratas will be used.
 ```
 
 <img src="man/figures/README-unnamed-chunk-18-1.png" width="80%" style="display: block; margin: auto;" />
@@ -248,12 +253,13 @@ summary_flextable %>%
 
 ``` r
 summary_flextable %>% 
-        ag_flex_header(.dataset = penguins, strata = "species") %>% 
+        ag_flex_header_labels(.dataset = penguins, strata = "species") %>% 
         ag_flex_center() %>% 
         ag_flex_title(1, "Characteristics of Penguins dataset") %>% 
         ag_flex_abbr(abbr = abbr_vector) %>% 
         ag_flex_footnote(my_random_foot) %>% 
         ag_flex_hline()
+#> Because custom = FALSE, original stratas will be used.
 ```
 
 <img src="man/figures/README-unnamed-chunk-19-1.png" width="80%" style="display: block; margin: auto;" />
@@ -262,13 +268,14 @@ summary_flextable %>%
 
 ``` r
 summary_flextable %>% 
-        ag_flex_header(.dataset = penguins, strata = "species") %>% 
+        ag_flex_header_labels(.dataset = penguins, strata = "species") %>% 
         ag_flex_center() %>% 
         ag_flex_title(1, "Characteristics of Penguins dataset") %>% 
         ag_flex_abbr(abbr = abbr_vector) %>% 
         ag_flex_footnote(my_random_foot) %>% 
         ag_flex_hline() %>%  
         flextable::fontsize(size = 7, part = "all")
+#> Because custom = FALSE, original stratas will be used.
 ```
 
 <img src="man/figures/README-unnamed-chunk-20-1.png" width="80%" style="display: block; margin: auto;" />

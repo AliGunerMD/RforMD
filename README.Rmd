@@ -173,13 +173,13 @@ summary_flextable <- ag_ff_summary(penguins, strata = strata, table_vars = table
 ### ag_flex_header()
 ```{r, out.width='80%', fig.align='center'}
 summary_flextable %>% 
-        ag_flex_header(.dataset = penguins, strata = "species")
+        ag_flex_header_labels(.dataset = penguins, strata = "species")
 ```
 
 ### ag_flex_center()
 ```{r, out.width='80%', fig.align='center'}
 summary_flextable %>% 
-        ag_flex_header(.dataset = penguins, strata = "species") %>% 
+        ag_flex_header_labels(.dataset = penguins, strata = "species") %>% 
         ag_flex_center() 
 
 ```
@@ -187,7 +187,7 @@ summary_flextable %>%
 ### ag_flex_title()
 ```{r, out.width='80%', fig.align='center'}
 summary_flextable %>% 
-        ag_flex_header(.dataset = penguins, strata = "species") %>% 
+        ag_flex_header_labels(.dataset = penguins, strata = "species") %>% 
         ag_flex_center() %>% 
         ag_flex_title(1, "Characteristics of Penguins dataset")
         
@@ -202,7 +202,7 @@ abbr_vector <- c(
 )
 
 summary_flextable %>% 
-        ag_flex_header(.dataset = penguins, strata = "species") %>% 
+        ag_flex_header_labels(.dataset = penguins, strata = "species") %>% 
         ag_flex_center() %>% 
         ag_flex_title(1, "Characteristics of Penguins dataset") %>% 
         ag_flex_abbr(abbr = abbr_vector) 
@@ -214,7 +214,7 @@ summary_flextable %>%
 my_random_foot <- "Palmerpenguins provided a great dataset for data exploration & visualization, as an alternative to iris."
 
 summary_flextable %>% 
-        ag_flex_header(.dataset = penguins, strata = "species") %>% 
+        ag_flex_header_labels(.dataset = penguins, strata = "species") %>% 
         ag_flex_center() %>% 
         ag_flex_title(1, "Characteristics of Penguins dataset") %>% 
         ag_flex_abbr(abbr = abbr_vector) %>% 
@@ -225,7 +225,7 @@ summary_flextable %>%
 ### ag_flex_hline()
 ```{r, out.width='80%', fig.align='center'}
 summary_flextable %>% 
-        ag_flex_header(.dataset = penguins, strata = "species") %>% 
+        ag_flex_header_labels(.dataset = penguins, strata = "species") %>% 
         ag_flex_center() %>% 
         ag_flex_title(1, "Characteristics of Penguins dataset") %>% 
         ag_flex_abbr(abbr = abbr_vector) %>% 
@@ -237,7 +237,7 @@ summary_flextable %>%
 ### Any flextable function can be added
 ```{r, out.width='80%', fig.align='center'}
 summary_flextable %>% 
-        ag_flex_header(.dataset = penguins, strata = "species") %>% 
+        ag_flex_header_labels(.dataset = penguins, strata = "species") %>% 
         ag_flex_center() %>% 
         ag_flex_title(1, "Characteristics of Penguins dataset") %>% 
         ag_flex_abbr(abbr = abbr_vector) %>% 
