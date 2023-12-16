@@ -634,7 +634,6 @@ ag_ff_summary <- function(.dataset, strata = NULL, table_vars,
   if (is.null(strata)) {
           row_col_sums_df <- row_col_sums_df %>% select(-all)
   }
-  class(row_col_sums_df) <- c("data.frame", "data.frame.ff")
     return(row_col_sums_df)
   }
 
@@ -687,11 +686,11 @@ ag_ff_summary <- function(.dataset, strata = NULL, table_vars,
 ag_ff_relocate <- function(.ff_table, order = NULL) {
 
 
-        if (!inherits(.ff_table, "data.frame.ff")) {
-                stop(sprintf("Function `%s` supports only finalfit objects.", "ag_ff_relocate()"))
-        }
-
-
+        # if (!inherits(.ff_table, "data.frame.ff")) {
+        #         stop(sprintf("Function `%s` supports only finalfit objects.", "ag_ff_relocate()"))
+        # }
+        #
+        #
 
 
         valid_orders <- c("G", "GP", "GT", "GTP", "TGP", "T")
@@ -759,8 +758,6 @@ ag_ff_relocate <- function(.ff_table, order = NULL) {
 
                 message("Relocated columns:", paste(colnames(relocated_data), collapse = " -- "), "\n")
         }
-        class(relocated_data) <- c("data.frame", "data.frame.ff")
-
         return(relocated_data)
 }
 
@@ -807,11 +804,6 @@ ag_ff_relocate <- function(.ff_table, order = NULL) {
 
 
 ag_ff_columns <- function(.data, levels = FALSE, remove_no = FALSE) {
-
-
-        if (!inherits(.data, "data.frame.ff")) {
-                stop(sprintf("Function `%s` supports only finalfit objects.", "ag_ff_columns()"))
-        }
 
   original_columns <- colnames(.data)
 
@@ -862,7 +854,7 @@ ag_ff_columns <- function(.data, levels = FALSE, remove_no = FALSE) {
           message("Manual check may be needed for some levels.")
 
   }
-class(columned_data) <- c("data.frame", "data.frame.ff")
+
   return(columned_data)
 }
 
@@ -919,11 +911,6 @@ class(columned_data) <- c("data.frame", "data.frame.ff")
 ag_ff_labels <- function(.data,
                          use_vector = TRUE, vector_name = NULL,
                          use_excel = FALSE, excel_path = "_Data/Variables.xlsx", excel_old_names = "original", excel_new_names = NULL, add_units = FALSE) {
-
-
-        if (!inherits(.data, "data.frame.ff")) {
-                stop(sprintf("Function `%s` supports only finalfit objects.", "ag_ff_labels()"))
-        }
 
         # Get the original column names of the dataset
         original_columns <- colnames(.data)
@@ -1011,7 +998,6 @@ ag_ff_labels <- function(.data,
         }
 
         # Return the dataset with renamed labels
-        class(labeled_dataset) <-  c("data.frame", "data.frame.ff")
         return(labeled_dataset)
 }
 
