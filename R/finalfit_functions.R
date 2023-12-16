@@ -640,6 +640,132 @@ ag_ff_summary <- function(.dataset, strata = NULL, table_vars,
 
 
 
+#' @title Pull Summary Value from ag_ff_summary Output (to use as inline text)
+#' @description
+#' This function is used to pull a summary value from the output of the \code{ag_ff_summary} function.
+#'
+#' @param dataset The dataset to extract the summary value from.
+#' @param label_value The value of the label variable to filter on.
+#' @param levels_value The value of the levels variable to filter on (default is \code{NULL}).
+#' @param target_value The name of the variable to extract the summary value from.
+#' @param label_col The name of the label column in the dataset (default is "label").
+#' @param levels_col The name of the levels column in the dataset (default is "levels").
+#' @param ff_column Logical indicating whether to use fast factor columns (default is \code{TRUE}).
+#' @param ff_column_levels Logical indicating whether to include levels in fast factor columns (default is \code{FALSE}).
+#' @param use_percentage Logical indicating whether to format the value as a percentage (default is \code{TRUE}).
+#' @param use_bracket Logical indicating whether to replace parentheses with square brackets (default is \code{FALSE}).
+#'
+#' @return The summary value matching the label and levels conditions.
+#' @author Ali Guner
+#'
+#' @examples
+#' \dontrun{
+#' summary_penguins <- ag_ff_summary(palmerpenguins::penguins, strata = "species", table_vars = palmerpenguins::penguins %>% select(-species) %>% names())
+#' ag_ff_pull_summary(summary_penguins, label_value = "island", levels_value = "Biscoe",  target_value = "Adelie")
+#' }
+#'
+#' @import dplyr
+#' @importFrom tidyr fill
+#' @export
+
+
+
+
+
+ag_ff_pull_summary <- function(dataset, label_value, levels_value = NULL, target_value,
+                               label_col = "label", levels_col = "levels",
+                               ff_column = TRUE, ff_column_levels = FALSE,
+                               use_percentage = TRUE,
+                               use_bracket = FALSE) {
+
+
+        original_columns <- colnames(dataset)
+
+        # Check if this is a ag_ff_summary output.
+        if (!all(c("label", "levels") %in% original_columns)) {
+                stop("the dataset may not be a ag_ff_summary table.")
+        }
+
+        if(ff_column){
+                if(!ff_column_levels){
+
+                        dataset <- dataset %>%
+                                ag_ff_columns(levels = FALSE)
+                } else {
+
+                        dataset <- dataset %>%
+                                ag_ff_columns(levels = TRUE)
+                        stop("It is not recommend to use ff_column = TRUE and ff_column_levels = TRUE together, because will delete many levels.")
+                }
+
+        } else {
+                if(!ff_column_levels){
+                        message("ff_column_levels argument will not be used when ff_column = FALSE")
+                }
+        }
+
+        non_numeric_vars <- dataset %>%
+                dplyr::filter(!.data[[levels_col]] %in% c("Mean (SD)", "Median (IQR)")) %>%
+                dplyr::filter(.data[[label_col]] != "") %>%
+                dplyr::distinct(.data[[label_col]]) %>%
+                dplyr::pull(.data[[label_col]])
+
+
+        # Check if the input is a data.frame
+        if (!is.data.frame(dataset)) {
+                stop("Input must be a data.frame")
+        }
+
+        # Check if the column names exist in the data.frame
+        if (!(label_col %in% colnames(dataset)) || !(target_value %in% colnames(dataset))) {
+                stop("One or more column names not found in the data.frame")
+        }
+
+
+        dataset <- dataset %>%
+                dplyr::mutate(label = if_else::if_else(label == "", NA_character_, label)) %>%
+                tidyr::fill(label, .direction = "down")
+
+        if(label_value %in% non_numeric_vars && is.null(levels_value)){
+                stop("levels_value should be provided for non-numeric label variables.")
+        }
+
+
+
+        if(!label_value %in% non_numeric_vars){
+
+                if(!is.null(levels_value)){
+                        levels_value <- NULL
+                        message("For numeric label variables, levels_value was converted into NULL, because has no value.")
+                }
+
+        }
+
+
+        if (is.null(levels_value)) {
+                # Extract the cell value based on label condition only
+                value <- dataset[[target_value]][dataset[[label_col]] == label_value]
+        } else {
+                # Extract the cell value based on label and levels conditions
+                value <- dataset[[target_value]][dataset[[label_col]] == label_value & dataset[[levels_col]] == levels_value]
+        }
+
+
+
+        if(use_percentage){
+
+                value <- ifelse(label_value %in% non_numeric_vars, gsub("\\((.*?)\\)", "(\\1%)", value), value)
+
+        }
+
+        if(use_bracket){
+                value <- gsub("\\(", "[", value)
+                value <- gsub("\\)", "]", value)
+        }
+
+        return(value)
+}
+
 
 
 
@@ -910,7 +1036,8 @@ ag_ff_columns <- function(.data, levels = FALSE, remove_no = FALSE) {
 # Function to rename labels in a dataset
 ag_ff_labels <- function(.data,
                          use_vector = TRUE, vector_name = NULL,
-                         use_excel = FALSE, excel_path = "_Data/Variables.xlsx", excel_old_names = "original", excel_new_names = NULL, add_units = FALSE) {
+                         use_excel = FALSE, excel_path = "_Data/Variables.xlsx", excel_old_names = "original",
+                         excel_new_names = NULL, add_units = FALSE) {
 
         # Get the original column names of the dataset
         original_columns <- colnames(.data)
@@ -986,7 +1113,7 @@ ag_ff_labels <- function(.data,
                                 Variables <- Variables %>%
                                         mutate(!!sym(excel_new_names) := ifelse(is.na(units) | units == "", !!sym(excel_new_names), paste0(!!sym(excel_new_names), " (", units, ")")))
                         } else {
-                                stop("The name of the units column should be 'units' in excel file.")
+                                message("The name of the units column should be 'units' in excel file.")
                         }
                 }
 

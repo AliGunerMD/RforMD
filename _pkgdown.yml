@@ -17,6 +17,7 @@ reference:
   - ag_ff_relocate
   - ag_ff_columns
   - ag_ff_labels
+  - ag_ff_pull_summary
 - title: Flextable helpers
   desc: Same idea with the finalfit helpers. Some useful shortcut for redo coding while using `{flextable}`
   contents:
