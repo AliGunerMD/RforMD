@@ -59,12 +59,21 @@ ag_density_plots <- function(dataset, strata = NULL, table_vars = NULL) {
   n_empty_strata <- nrow(dataset) - nrow(noempty)
 
 
-  long_noempty <- noempty %>%
+  long <- noempty %>%
     tidyr::pivot_longer(all_of(numeric_variables),
       names_to = "variable",
       values_to = "values"
-    ) %>%
-    dplyr::filter(!is.na(values))
+    )
+
+
+  annotations <- long %>%
+          dplyr::summarise(missing = sum(is.na(values)), .by = "variable")
+
+
+
+  long_noempty <- long %>%
+          dplyr::filter(!is.na(values))
+
 
 
 
@@ -97,6 +106,9 @@ ag_density_plots <- function(dataset, strata = NULL, table_vars = NULL) {
         y = y_lab,
         caption = caption_lab
       ) +
+      geom_text(data = annotations, aes(label = paste0("NA: ", missing), x = Inf, y = Inf),
+                hjust = 1, vjust = 1, nudge_x = -0.5, nudge_y = -0.5,  color = "#737373") +
+
       RforMD::scale_color_karadeniz() +
       RforMD::scale_fill_karadeniz() +
       ggplot2::theme(
@@ -119,6 +131,8 @@ ag_density_plots <- function(dataset, strata = NULL, table_vars = NULL) {
         y = y_lab,
         caption = caption_lab
       ) +
+        geom_text(data = annotations, aes(label = paste0("NA: ", missing), x = Inf, y = Inf),
+                  hjust = 1, vjust = 1, nudge_x = -0.5, nudge_y = -0.5,  color = "#737373") +
       ggplot2::theme_light() +
       ggplot2::theme(
         strip.text.x = element_text(color = "black", face = "bold"),
