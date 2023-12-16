@@ -15,6 +15,8 @@ col_table_border <- "#969696"                   # ag_colors_standard("grays")[5]
 col_table_header_bg <- "#F0F0F0"                # ag_colors_standard("grays")[2]
 table_border <- officer::fp_border(color = col_table_border)
 
+ts_blue <- "#75B7E5"
+ts_burgundy <- "#5A0E27"
 
 myref_symbols <- c("\U2020", "\U2021", "\U00A7", "\U00A5")
 

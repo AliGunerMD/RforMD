@@ -43,6 +43,7 @@ reference:
   - ag_shapiro_results
   - ag_fisher
   - ag_qq_plots
+  - ag_density_plots
 - title: Color management
   desc: To manage color choices
   contents:

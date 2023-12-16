@@ -63,7 +63,7 @@ ag_qq_plot_single <- function(dataset, strata = NULL, table_vars = NULL) {
                 strata_levels <- NULL
         }
 
-ag_shapiro_results
+# ag_shapiro_results
 
 
                 n_empty_strata <- nrow(dataset) - nrow(noempty)
@@ -149,7 +149,7 @@ ag_shapiro_results
                         ggplot2::labs(title = title_lab,
                              x = x_lab,
                              y = y_lab,
-                             caption = caption_lab)+
+                             caption = caption_lab) +
                         ggplot2::theme_light() +
                         ggplot2::theme(strip.text.x = element_text(color = "black", face = "bold"),
                               strip.text.y = element_text(color = "black"),

@@ -15,6 +15,8 @@
   
   - ag_flex_header_labels 
   
+  - ag_density_plots
+  
   
 
 ## version 0.1.7
