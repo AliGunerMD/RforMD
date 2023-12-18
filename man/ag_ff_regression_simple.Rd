@@ -2,7 +2,7 @@
 % Please edit documentation in R/finalfit_functions.R
 \name{ag_ff_regression_simple}
 \alias{ag_ff_regression_simple}
-\title{Uni- and multivariable Regression analysis using finalfit::finalfit package}
+\title{Uni- and multivariable regression analysis using finalfit::finalfit package}
 \usage{
 ag_ff_regression_simple(
   dataset,
@@ -34,7 +34,8 @@ This function performs uni- and multivariable regression tests using the finalfi
 dependent_var <- "Surv(time_to_survival, death_alive_numeric)"
 
 
-ag_ff_regression_simple(analysis_dataset, dependent_var, regression_vars, test_var, must_vars)
+ag_ff_regression_simple(analysis_dataset, dependent_var,
+regression_vars, test_var, must_vars)
 }
 }
 \author{

@@ -63,6 +63,20 @@ ag_flex <- function(.data, flex_font_family = "Arial", flex_font_size = 11, colo
 
         }
 
+        message("CHECKLIST
+                - Title
+                - Abbreviations
+                - Footnote
+                - Center
+                - h-line
+                - Header labels
+                - Ref symbols
+
+                - add_header_row
+                - set_header_labels
+                - fix_border_issues
+                - SAVE
+                ")
                 return(ag_flextable)
 
 }
@@ -92,9 +106,11 @@ ag_flex <- function(.data, flex_font_family = "Arial", flex_font_size = 11, colo
 #' custom_levels <- c("Gentoo" = "MyGentoo",
 #' "Adelie" = "MyAdelie")
 #'
-#' ag_ff_summary(penguins, "species", penguins %>% select(-species) %>% names()) %>%
+#' ag_ff_summary(penguins, "species", penguins %>%
+#' select(-species) %>% names()) %>%
 #'         ag_flex() %>%
-#'         ag_flex_header_labels(penguins, strata = "species", custom = TRUE, custom_levels = custom_levels)
+#'         ag_flex_header_labels(penguins, strata = "species",
+#'         custom = TRUE, custom_levels = custom_levels)
 #'
 #' }
 #' @export
@@ -102,7 +118,7 @@ ag_flex <- function(.data, flex_font_family = "Arial", flex_font_size = 11, colo
 
 ag_flex_header_labels <- function(flex_obj, .dataset, strata, custom = FALSE, custom_levels) {
   if (!inherits(flex_obj, "flextable")) {
-    stop(sprintf("Function `%s` supports only flextable objects.", "ag_flex_header()"))
+          message(sprintf("Function `%s` supports only flextable objects.", "ag_flex_header()"))
   }
 
   if (!custom) {
@@ -238,7 +254,7 @@ ag_flex_header_labels <- function(flex_obj, .dataset, strata, custom = FALSE, cu
 ag_flex_center <- function(flex_obj){
 
         if (!inherits(flex_obj, "flextable")) {
-                stop(sprintf("Function `%s` supports only flextable objects.", "ag_flex_center()"))
+                message(sprintf("Function `%s` supports only flextable objects.", "ag_flex_center()"))
         }
 
 
@@ -278,7 +294,7 @@ ag_flex_center <- function(flex_obj){
 ag_flex_hline <- function(flex_obj){
 
         if (!inherits(flex_obj, "flextable")) {
-                stop(sprintf("Function `%s` supports only flextable objects.", "ag_flex_hline()"))
+                message(sprintf("Function `%s` supports only flextable objects.", "ag_flex_hline()"))
         }
 
 
@@ -326,7 +342,7 @@ ag_flex_hline <- function(flex_obj){
 #' ag_flex_title(flex_obj, 1, "Table Title")
 #' }
 #'
-#' @seealso \code{\link{}}
+#' @seealso \code{\link{ag_flex()}}
 #'
 #' @export
 #'
@@ -335,7 +351,7 @@ ag_flex_hline <- function(flex_obj){
 
 ag_flex_title <- function(flex_obj, n, title){
         if (!inherits(flex_obj, "flextable")) {
-                stop(sprintf("Function `%s` supports only flextable objects.", "ag_flex_title()"))
+                message(sprintf("Function `%s` supports only flextable objects.", "ag_flex_title()"))
         }
         title <- paste0("Table ", n, ". ", title)
 
@@ -364,7 +380,7 @@ ag_flex_title <- function(flex_obj, n, title){
 #' ag_flex_footnote(flex_obj, "This is a footnote.")
 #' }
 #'
-#' @seealso \code{\link{}}
+#' @seealso \code{\link{ag_flex()}}
 #'
 #' @export
 #'
@@ -373,7 +389,7 @@ ag_flex_title <- function(flex_obj, n, title){
 
 ag_flex_footnote <- function(flex_obj, footnote = NULL){
         if (!inherits(flex_obj, "flextable")) {
-                stop(sprintf("Function `%s` supports only flextable objects.", "ag_flex_footnote()"))
+                message(sprintf("Function `%s` supports only flextable objects.", "ag_flex_footnote()"))
         }
 
         if(is.null(footnote)){
@@ -416,7 +432,7 @@ ag_flex_footnote <- function(flex_obj, footnote = NULL){
 #'
 ag_flex_abbr <- function(flex_obj, abbr = NULL, use_df = TRUE, prefix = "Abbreviations: "){
         if (!inherits(flex_obj, "flextable")) {
-                stop(sprintf("Function `%s` supports only flextable objects.", "ag_flex_abbr()"))
+                message(sprintf("Function `%s` supports only flextable objects.", "ag_flex_abbr()"))
         }
 
         if(is.null(abbr)){
@@ -476,7 +492,7 @@ ag_flex_abbr <- function(flex_obj, abbr = NULL, use_df = TRUE, prefix = "Abbrevi
 ag_flex_save <- function(flex_obj, n = "x", orientation = "Landscape", mypath = "_Outputs/_Tables"){
 
         if (!inherits(flex_obj, "flextable")) {
-                stop(sprintf("Function `%s` supports only flextable objects.", "ag_flex_save()"))
+                message(sprintf("Function `%s` supports only flextable objects.", "ag_flex_save()"))
         }
 
         if (!orientation %in% c("Landscape", "Portrait")) {

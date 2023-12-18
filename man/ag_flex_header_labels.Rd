@@ -36,9 +36,11 @@ dataset, strata variable, and custom levels.
 custom_levels <- c("Gentoo" = "MyGentoo",
 "Adelie" = "MyAdelie")
 
-ag_ff_summary(penguins, "species", penguins \%>\% select(-species) \%>\% names()) \%>\%
+ag_ff_summary(penguins, "species", penguins \%>\%
+select(-species) \%>\% names()) \%>\%
         ag_flex() \%>\%
-        ag_flex_header_labels(penguins, strata = "species", custom = TRUE, custom_levels = custom_levels)
+        ag_flex_header_labels(penguins, strata = "species",
+        custom = TRUE, custom_levels = custom_levels)
 
 }
 }

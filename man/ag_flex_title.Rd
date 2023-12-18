@@ -26,7 +26,7 @@ ag_flex_title(flex_obj, 1, "Table Title")
 
 }
 \seealso{
-\code{\link{}}
+\code{\link{ag_flex()}}
 }
 \author{
 Ali Guner

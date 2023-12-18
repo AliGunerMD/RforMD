@@ -24,7 +24,7 @@ ag_flex_footnote(flex_obj, "This is a footnote.")
 
 }
 \seealso{
-\code{\link{}}
+\code{\link{ag_flex()}}
 }
 \author{
 Ali Guner

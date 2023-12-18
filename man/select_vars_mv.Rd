@@ -41,7 +41,8 @@ dependent_var <- "Surv(time_to_survival, death_alive_numeric)"
 
 must_vars_mv <- c("sarcopenia_v02_simple")
 
-selected_vars <- select_vars_mv(analysis_dataset, dependent_var, regression_vars, test_var, p_mv = 0.1, must_vars_mv)
+selected_vars <- select_vars_mv(analysis_dataset, dependent_var,
+regression_vars, test_var, p_mv = 0.1, must_vars_mv)
 selected_vars
 }
 }

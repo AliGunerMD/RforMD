@@ -660,7 +660,8 @@ ag_ff_summary <- function(.dataset, strata = NULL, table_vars,
 #'
 #' @examples
 #' \dontrun{
-#' summary_penguins <- ag_ff_summary(palmerpenguins::penguins, strata = "species", table_vars = palmerpenguins::penguins %>% select(-species) %>% names())
+#' summary_penguins <- ag_ff_summary(palmerpenguins::penguins, strata = "species",
+#' table_vars = palmerpenguins::penguins %>% select(-species) %>% names())
 #' ag_ff_pull_summary(summary_penguins, label_value = "island", levels_value = "Biscoe",  target_value = "Adelie")
 #' }
 #'
@@ -723,7 +724,7 @@ ag_ff_pull_summary <- function(dataset, label_value, levels_value = NULL, target
 
 
         dataset <- dataset %>%
-                dplyr::mutate(label = if_else::if_else(label == "", NA_character_, label)) %>%
+                dplyr::mutate(label = dplyr::if_else(label == "", NA_character_, label)) %>%
                 tidyr::fill(label, .direction = "down")
 
         if(label_value %in% non_numeric_vars && is.null(levels_value)){
@@ -1044,7 +1045,7 @@ ag_ff_labels <- function(.data,
 
         # Check if this is an ag_ff_summary output.
         if (!all(c("label", "levels") %in% original_columns)) {
-                stop("the .data may not be an ag_ff_summary table.")
+                message("the .data may not be an ag_ff_summary table.")
         }
 
         # Check if at least one of the renaming methods is selected
@@ -1249,7 +1250,7 @@ ag_relabel_excel <- function(.data,
 
 
 
-#' @title  Uni- and multivariable Regression analysis using finalfit::finalfit package
+#' @title  Uni- and multivariable regression analysis using finalfit::finalfit package
 #'
 #' @description This function performs uni- and multivariable regression tests using the finalfit package. It prepares the dataset, specifies the dependent variable, regression variables, and test variable.
 #'
@@ -1269,7 +1270,8 @@ ag_relabel_excel <- function(.data,
 #' dependent_var <- "Surv(time_to_survival, death_alive_numeric)"
 #'
 #'
-#' ag_ff_regression_simple(analysis_dataset, dependent_var, regression_vars, test_var, must_vars)
+#' ag_ff_regression_simple(analysis_dataset, dependent_var,
+#' regression_vars, test_var, must_vars)
 #' }
 #' @export
 
@@ -1315,7 +1317,8 @@ ag_ff_regression_simple <- function(dataset, dependent_var, regression_vars = NU
 #'
 #' must_vars_mv <- c("sarcopenia_v02_simple")
 #'
-#' selected_vars <- select_vars_mv(analysis_dataset, dependent_var, regression_vars, test_var, p_mv = 0.1, must_vars_mv)
+#' selected_vars <- select_vars_mv(analysis_dataset, dependent_var,
+#' regression_vars, test_var, p_mv = 0.1, must_vars_mv)
 #' selected_vars
 #' }
 #' @keywords internal
