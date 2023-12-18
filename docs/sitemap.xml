@@ -43,7 +43,16 @@
     <loc>https://aligunermd.github.io/RforMD/reference/ag_ff_labels.html</loc>
   </url>
   <url>
+    <loc>https://aligunermd.github.io/RforMD/reference/ag_ff_pull_regression.html</loc>
+  </url>
+  <url>
     <loc>https://aligunermd.github.io/RforMD/reference/ag_ff_pull_summary.html</loc>
+  </url>
+  <url>
+    <loc>https://aligunermd.github.io/RforMD/reference/ag_ff_regression.html</loc>
+  </url>
+  <url>
+    <loc>https://aligunermd.github.io/RforMD/reference/ag_ff_regression_simple.html</loc>
   </url>
   <url>
     <loc>https://aligunermd.github.io/RforMD/reference/ag_ff_relocate.html</loc>
@@ -131,6 +140,9 @@
   </url>
   <url>
     <loc>https://aligunermd.github.io/RforMD/reference/scale_fill_karadeniz.html</loc>
+  </url>
+  <url>
+    <loc>https://aligunermd.github.io/RforMD/reference/select_vars_mv.html</loc>
   </url>
   <url>
     <loc>https://aligunermd.github.io/RforMD/reference/short_ff.html</loc>

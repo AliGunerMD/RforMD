@@ -404,7 +404,7 @@ ag_flex_footnote <- function(flex_obj, footnote = NULL){
 #'
 #' @examples
 #' \dontrun{
-#' abbr <- c("abbr1", "abbr2", "abbr3")
+#'
 #' ag_flex_abbr(flex_obj, abbr = abbr)
 #' }
 #'
@@ -436,7 +436,7 @@ ag_flex_abbr <- function(flex_obj, abbr = NULL, use_df = TRUE, prefix = "Abbrevi
 
 
         flex_obj %>%
-                flextable::add_footer_lines(values = paste0(prefix, my_abrr, ".")) %>%
+                flextable::add_footer_lines(values = paste0(prefix, my_abrr)) %>%
                 flextable::color(part = "footer", color = col_footer)
 
 }
@@ -508,11 +508,5 @@ ag_flex_save <- function(flex_obj, n = "x", orientation = "Landscape", mypath = 
                 )
 
 }
-
-
-
-
-
-
 
 

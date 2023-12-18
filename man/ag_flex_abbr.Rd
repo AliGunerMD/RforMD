@@ -23,7 +23,7 @@ This function adds abbreviations to a flextable object.
 }
 \examples{
 \dontrun{
-abbr <- c("abbr1", "abbr2", "abbr3")
+
 ag_flex_abbr(flex_obj, abbr = abbr)
 }
 

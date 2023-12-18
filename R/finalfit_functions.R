@@ -683,7 +683,7 @@ ag_ff_pull_summary <- function(dataset, label_value, levels_value = NULL, target
 
         # Check if this is a ag_ff_summary output.
         if (!all(c("label", "levels") %in% original_columns)) {
-                stop("the dataset may not be a ag_ff_summary table.")
+                message("the dataset may not be a ag_ff_summary table.")
         }
 
         if(ff_column){
@@ -1241,4 +1241,251 @@ ag_relabel_excel <- function(.data,
 
 }
 
+
+
+
+
+
+
+
+
+#' @title  Uni- and multivariable Regression analysis using finalfit::finalfit package
+#'
+#' @description This function performs uni- and multivariable regression tests using the finalfit package. It prepares the dataset, specifies the dependent variable, regression variables, and test variable.
+#'
+#' @param dataset The analysis dataset.
+#' @param dependent_var The dependent variable. For logistic regression, it should be a binary variable ("event"). For survival analysis, it should be a survival object (e.g., "Surv(time_to_event, event_)").
+#' @param regression_vars A vector of variable names to include as regression variables.
+#' @param test_var A vector of variable names to include as a test variable (can be inside regression_vars).
+#' @param ... Additional arguments to be passed to the finalfit function.
+#'
+#' @return Returns the output of regression tests: label, levels, data summary, UV (OR or HR), MV (OR or HR)
+#' @author Ali Guner
+#'
+#' @importFrom finalfit finalfit
+#' @examples
+#' \dontrun{
+
+#' dependent_var <- "Surv(time_to_survival, death_alive_numeric)"
+#'
+#'
+#' ag_ff_regression_simple(analysis_dataset, dependent_var, regression_vars, test_var, must_vars)
+#' }
+#' @export
+
+ag_ff_regression_simple <- function(dataset, dependent_var, regression_vars = NULL, test_var = NULL, ...){
+
+        regression_init <- dataset %>%
+                finalfit::finalfit(dependent = dependent_var,
+                                   explanatory = unique(c(regression_vars, test_var)),
+                                   add_dependent_label = FALSE,
+                                   ...)
+
+        return(regression_init)
+
+}
+
+
+
+#' @title Select significant variables from univariable analysis to use in multivariable analysis
+#' @description
+#' This function selects significant variables from a multivariable analysis based on a defined p-value threshold. It uses the `ag_ff_regression_simple` function to perform the initial analysis and then filters the variables based on the specified criteria.
+#'
+#' @param dataset The analysis dataset.
+#' @param dependent_var The dependent variable. For logistic regression, it should be a binary variable. For survival analysis, it should be a survival object (e.g., "Surv(time_to_event, event_indicator)").
+#' @param regression_vars A vector of variable names to include as regression variables.
+#' @param test_var A vector of variable names to include as a test variable.
+#' @param p_mv The p-value threshold for variable selection. Variables with p-values less than this threshold will be considered significant.
+#' @param must_vars_mv A vector of variable names that must be included regardless of their p-values.
+#' @param ... Additional arguments to be passed to the `ag_ff_regression_simple` function.
+#'
+#' @return Returns a vector of selected variables that are significant based on the defined p-value threshold and the must-include variables.
+#' @import dplyr
+#' @importFrom tidyr fill
+#' @importFrom tibble as_tibble
+#' @importFrom tidyselect contains
+#' @importFrom finalfit finalfit
+#' @importFrom stringr str_length str_remove_all
+#' @importFrom magrittr %>%
+#' @importFrom readr parse_number
+#'
+#' @examples
+#' \dontrun{
+#' dependent_var <- "Surv(time_to_survival, death_alive_numeric)"
+#'
+#' must_vars_mv <- c("sarcopenia_v02_simple")
+#'
+#' selected_vars <- select_vars_mv(analysis_dataset, dependent_var, regression_vars, test_var, p_mv = 0.1, must_vars_mv)
+#' selected_vars
+#' }
+#' @keywords internal
+
+
+
+select_vars_mv <- function(dataset, dependent_var, regression_vars = NULL, test_var = NULL,
+                           p_mv = 0.1,
+                           must_vars_mv = NULL,
+                           ...){
+
+        regression_init <- ag_ff_regression_simple(dataset, dependent_var, regression_vars, test_var, ...)
+
+        selected_vars <- regression_init %>%
+                dplyr::select(label, row_p =  tidyselect::contains("univariable")) %>%
+                tibble::as_tibble() %>%
+                dplyr::mutate(label = dplyr::if_else(stringr::str_length(label) == 0, NA_character_, label)) %>%
+                tidyr::fill(label, .direction = "down") %>%
+                dplyr::filter(row_p != "-") %>%
+                dplyr::mutate(corrected_row_p = readr::parse_number(stringr::str_remove_all(row_p, "^[^p]*"))) %>%
+                dplyr::filter(corrected_row_p < p_mv | label %in% must_vars_mv) %>%
+                dplyr::distinct(label) %>%
+                dplyr::pull(label)
+
+        return(selected_vars)
+
+}
+
+
+
+
+
+#' @title Perform regression analysis (including reduced MV) using finalfit::finalfit
+#' @description
+#' This function performs the regression analysis on the specified dataset using the provided variables. It selects significant multivariable variables using the `select_vars_mv` function and then generates the finalfit output using the `finalfit::finalfit` function.
+#'
+#' @param dataset The analysis dataset.
+#' @param dependent_var The dependent variable. For logistic regression, it should be a binary variable. For survival analysis, it should be a survival object (e.g., "Surv(time_to_event, event_indicator)").
+#' @param regression_vars A vector of variable names to include as regression variables.
+#' @param test_var A vector of variable names to include as a test variable.
+#' @param p_mv The p-value threshold for variable selection. Variables with p-values less than this threshold will be considered significant.
+#' @param must_vars_mv A vector of variable names that must be included regardless of their p-values.
+#' @param keep_models Logical value indicating whether to keep the intermediate models generated during the analysis.
+#' @param ... Additional arguments to be passed to the `finalfit::finalfit` function.
+#'
+#' @return Returns the finalfit analysis output.
+#'
+#' @author Ali Guner
+#' @importFrom finalfit finalfit
+#' @importFrom magrittr %>%
+#'
+#' @examples
+#' \dontrun{
+#' dependent_var <- "Surv(time_to_survival, death_alive_numeric)"
+#'
+#' regression_output <- ag_ff_regression(analysis_dataset, dependent_var, regression_vars, test_var, p_mv = 0.1, must_vars_mv)
+#' regression_output
+#' }
+#' @export
+
+
+
+
+ag_ff_regression <- function(dataset, dependent_var, regression_vars = NULL, test_var = NULL, p_mv = 0.1, must_vars_mv = NULL, keep_models = FALSE, ...){
+
+        # ag_ff_regression_simple <- ag_ff_regression_simple(analysis_dataset, dependent_var, regression_vars, test_var, ...)
+        selected_vars_mv <- select_vars_mv(dataset, dependent_var, regression_vars, test_var, p_mv = p_mv, must_vars_mv = must_vars_mv)
+
+        regression_final <- dataset %>%
+                finalfit::finalfit(dependent = dependent_var,
+                                   explanatory = unique(c(regression_vars, test_var)),
+                                   explanatory_multi = selected_vars_mv,
+                                   keep_models = keep_models,
+                                   add_dependent_label = FALSE,
+                                   ...)
+
+        return(regression_final)
+
+}
+
+
+
+
+
+#' @title Extracts a value from an ag_ff_regression table
+#' @description
+#' This function extracts a value from an ag_ff_regression table based on specified criteria.
+#'
+#' @param dataset The input data frame or table.
+#' @param label_value The value of the label column to filter.
+#' @param levels_value The value of the levels column to filter.
+#' @param target_value The column name of the target value to extract.
+#' @param label_col The column name for the label column (default is "label").
+#' @param levels_col The column name for the levels column (default is "levels").
+#' @param format The desired output format of the extracted value. Options are NULL (default), "bracket", or "parenthesis".
+#' @return The extracted value based on the specified criteria and format.
+#'
+#' @author Ali Guner
+#' @importFrom dplyr if_else
+#' @importFrom tidyr fill
+#' @importFrom magrittr %>%
+#'
+#' @examples
+#' \dontrun{
+#' ag_ff_pull_regression(dataset, "label_value", "levels_value", "target_value")
+#' }
+
+#' @export
+
+
+
+
+
+ag_ff_pull_regression <- function(dataset, label_value, levels_value, target_value,
+                               label_col = "label", levels_col = "levels",
+                               format = NULL) {
+
+
+        original_columns <- colnames(dataset)
+
+        # Check if this is a ag_ff_summary output.
+        if (!all(c("label", "levels") %in% original_columns)) {
+                message("the dataset may not be a ag_ff_regression table.")
+        }
+
+#
+#         if(ff_column){
+#               dataset <- dataset %>%
+#                                 ag_ff_columns(levels = FALSE)
+#
+#         }
+
+
+        # Check if the input is a data.frame
+        if (!is.data.frame(dataset)) {
+                stop("Input must be a data.frame")
+        }
+
+        # Check if the column names exist in the data.frame
+        if (!(label_col %in% colnames(dataset)) || !(levels_col %in% colnames(dataset)) || !(target_value %in% colnames(dataset))) {
+                stop("One or more column names not found in the data.frame")
+        }
+
+
+        if (is.null(label_value) || is.null(levels_value)) {
+                stop("label_value and levels_value should be provided.")
+        }
+
+
+        dataset <- dataset %>%
+                dplyr::mutate(label = dplyr::if_else(label == "", NA_character_, label)) %>%
+                tidyr::fill(label, .direction = "down")
+
+
+     value <- dataset[[target_value]][dataset[[label_col]] == label_value & dataset[[levels_col]] == levels_value]
+
+
+     if(is.null(format)){
+
+             value <- value
+
+     } else if (format == "bracket"){
+             value <- gsub("^(\\d+\\.\\d+) \\((\\d+\\.\\d+-\\d+\\.\\d+), p(.+?)\\)$", "(\\1 [\\2], p\\3)", value)
+     } else if (format == "paranthesis"){
+             value <-    gsub("^(\\d+\\.\\d+) \\((\\d+\\.\\d+-\\d+\\.\\d+), p(.+?)\\)$", "(\\1, \\2, p\\3)", value)
+     } else {
+             "Incorrect format type. Should be NULL, bracket or parenthesis"
+     }
+
+        return(value)
+
+}
 

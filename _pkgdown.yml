@@ -18,6 +18,9 @@ reference:
   - ag_ff_columns
   - ag_ff_labels
   - ag_ff_pull_summary
+  - ag_ff_regression_simple
+  - ag_ff_regression
+  - ag_ff_pull_regression
 - title: Flextable helpers
   desc: Same idea with the finalfit helpers. Some useful shortcut for redo coding while using `{flextable}`
   contents:

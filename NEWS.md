@@ -17,7 +17,10 @@
   
   - ag_density_plots
   - ag_ff_pull_summary
-  
+    
+  - ag_ff_regression_init
+  - ag_ff_regression
+  - ag_ff_pull_regression
   
 
 ## version 0.1.7

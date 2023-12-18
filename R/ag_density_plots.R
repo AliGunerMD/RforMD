@@ -109,8 +109,8 @@ ag_density_plots <- function(dataset, strata = NULL, table_vars = NULL) {
       geom_text(data = annotations, aes(label = paste0("NA: ", missing), x = Inf, y = Inf),
                 hjust = 1, vjust = 1, nudge_x = -0.5, nudge_y = -0.5,  color = "#737373") +
 
-      RforMD::scale_color_karadeniz() +
-      RforMD::scale_fill_karadeniz() +
+      scale_color_karadeniz() +
+      scale_fill_karadeniz() +
       ggplot2::theme(
         strip.text.x = element_text(color = "black", face = "bold"),
         strip.text.y = element_text(color = "black"),
