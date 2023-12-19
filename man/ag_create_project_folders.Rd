@@ -8,17 +8,17 @@ ag_create_project_folders()
 }
 \description{
 This function automates the creation of essential folder structures for a new R project.
-It sets up main directories such as "_Codes," "_Outputs," and "_Data," along with subdirectories,
+It sets up main directories such as "Codes," "Outputs," and "Data," along with subdirectories,
 subfolders, and necessary files for organizing the project efficiently.
 The function performs the following steps:
 
-1. Creates main folders: "_Codes," "_Outputs," and "_Data."
-2. Sets up subfolders within "_Codes," including "_Functions."
-3. Creates a README file within "_Codes" named "00 README.md" for project documentation.
-4. Sets up subfolders within "_Outputs," including "_Figures" and "_Tables."
-5. Sets up subfolders within "_Data," including "_Raw" and "_Processed."
+1. Creates main folders: "Codes," "Outputs," and "Data."
+2. Sets up subfolders within "Codes," including "Functions."
+3. Creates a README file within "Codes" named "00 README.md" for project documentation.
+4. Sets up subfolders within "Outputs," including "Figures" and "Tables."
+5. Sets up subfolders within "Data," including "Raw" and "Processed."
 6. Checks for and deletes a single .qmd file in the main directory with user confirmation.
-7. Inserts a new .qmd template file using ag_generate_template_quarto() and moves it to the "_Codes" folder as "01 initial.qmd."
+7. Inserts a new .qmd template file using ag_generate_template_quarto() and moves it to the "Codes" folder as "01 initial.qmd."
 #'
 This function is designed to be used right after creating a new R project via "New Project" or any other project creation method.
 }

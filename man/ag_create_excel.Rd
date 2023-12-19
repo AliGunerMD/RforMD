@@ -4,15 +4,12 @@
 \alias{ag_create_excel}
 \title{Create an Excel File for Variables Name}
 \usage{
-ag_create_excel(
-  dataset = analysis_dataset,
-  excel_path = "_Data/Variables.xlsx"
-)
+ag_create_excel(dataset = analysisDataset, excel_path = "Data/Variables.xlsx")
 }
 \arguments{
-\item{dataset}{The dataset to extract column names from. Default is 'analysis_dataset'.}
+\item{dataset}{The dataset to extract column names from. Default is 'analysisDataset'.}
 
-\item{excel_path}{The path and filename for the Excel file. Default is "_Data/Variables.xlsx".}
+\item{excel_path}{The path and filename for the Excel file. Default is "Data/Variables.xlsx".}
 }
 \value{
 Saves a .xlsx file into the path.

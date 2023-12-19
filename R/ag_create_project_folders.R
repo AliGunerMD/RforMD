@@ -2,17 +2,17 @@
 #'
 #' @description
 #' This function automates the creation of essential folder structures for a new R project.
-#' It sets up main directories such as "_Codes," "_Outputs," and "_Data," along with subdirectories,
+#' It sets up main directories such as "Codes," "Outputs," and "Data," along with subdirectories,
 #' subfolders, and necessary files for organizing the project efficiently.
 #' The function performs the following steps:
 #'
-#' 1. Creates main folders: "_Codes," "_Outputs," and "_Data."
-#' 2. Sets up subfolders within "_Codes," including "_Functions."
-#' 3. Creates a README file within "_Codes" named "00 README.md" for project documentation.
-#' 4. Sets up subfolders within "_Outputs," including "_Figures" and "_Tables."
-#' 5. Sets up subfolders within "_Data," including "_Raw" and "_Processed."
+#' 1. Creates main folders: "Codes," "Outputs," and "Data."
+#' 2. Sets up subfolders within "Codes," including "Functions."
+#' 3. Creates a README file within "Codes" named "00 README.md" for project documentation.
+#' 4. Sets up subfolders within "Outputs," including "Figures" and "Tables."
+#' 5. Sets up subfolders within "Data," including "Raw" and "Processed."
 #' 6. Checks for and deletes a single .qmd file in the main directory with user confirmation.
-#' 7. Inserts a new .qmd template file using ag_generate_template_quarto() and moves it to the "_Codes" folder as "01 initial.qmd."
+#' 7. Inserts a new .qmd template file using ag_generate_template_quarto() and moves it to the "Codes" folder as "01 initial.qmd."
 #' #'
 #' This function is designed to be used right after creating a new R project via "New Project" or any other project creation method.
 #'
@@ -33,9 +33,9 @@
 
 ag_create_project_folders <- function() {
         # Define folder names
-        main_folder_names <- c("_Codes", "_Outputs", "_Data")
-        output_subfolder_names <- c("_Figures", "_Tables")
-        data_subfolder_names <- c("_Raw", "_Processed")
+        main_folder_names <- c("Codes", "Outputs", "Data")
+        output_subfolder_names <- c("Figures", "Tables")
+        data_subfolder_names <- c("Raw", "Processed")
 
         # Check and create main folders
         for (folder in main_folder_names) {
@@ -46,9 +46,9 @@ ag_create_project_folders <- function() {
                 }
         }
 
-        # Check and create subfolders within "_Codes"
-        codes_folder <- file.path("_Codes")
-        functions_subfolder <- file.path(codes_folder, "_Functions")
+        # Check and create subfolders within "Codes"
+        codes_folder <- file.path("Codes")
+        functions_subfolder <- file.path(codes_folder, "Functions")
         readme_file <- file.path(codes_folder, "00 README.md")
 
         if (!dir.exists(functions_subfolder)) {
@@ -56,8 +56,8 @@ ag_create_project_folders <- function() {
                 cat(sprintf("Created subfolder: %s\n", functions_subfolder))
         }
 
-        # Check and create subfolders within "_Outputs"
-        outputs_folder <- file.path("_Outputs")
+        # Check and create subfolders within "Outputs"
+        outputs_folder <- file.path("Outputs")
         for (subfolder in output_subfolder_names) {
                 subfolder_path <- file.path(outputs_folder, subfolder)
                 if (!dir.exists(subfolder_path)) {
@@ -66,8 +66,8 @@ ag_create_project_folders <- function() {
                 }
         }
 
-        # Check and create subfolders within "_Data"
-        data_folder <- file.path("_Data")
+        # Check and create subfolders within "Data"
+        data_folder <- file.path("Data")
         for (subfolder in data_subfolder_names) {
                 subfolder_path <- file.path(data_folder, subfolder)
                 if (!dir.exists(subfolder_path)) {
@@ -106,7 +106,7 @@ ag_create_project_folders <- function() {
         # Insert a new .qmd template
         new_qmd_template <- ag_generate_template_quarto()
 
-        # Move the newly created file to the "_Codes" folder
+        # Move the newly created file to the "Codes" folder
         if (!is.null(new_qmd_template)) {
                 new_qmd_file <- file.path(codes_folder, "01 initial.qmd")
 
@@ -136,8 +136,8 @@ ag_create_project_folders <- function() {
 #' @title Create an Excel File for Variables Name
 #' @description This function creates an Excel file with column names of the main dataset.
 #'
-#' @param dataset The dataset to extract column names from. Default is 'analysis_dataset'.
-#' @param excel_path The path and filename for the Excel file. Default is "_Data/Variables.xlsx".
+#' @param dataset The dataset to extract column names from. Default is 'analysisDataset'.
+#' @param excel_path The path and filename for the Excel file. Default is "Data/Variables.xlsx".
 #'
 #' @return Saves a .xlsx file into the path.
 #'
@@ -156,8 +156,8 @@ ag_create_project_folders <- function() {
 
 
 # Function to create an Excel file with column names and descriptions
-# Default dataset is 'analysis_dataset', default Excel path is "_Data/Variables.xlsx"
-ag_create_excel <- function(dataset = analysis_dataset, excel_path = "_Data/Variables.xlsx") {
+# Default dataset is 'analysisDataset', default Excel path is "Data/Variables.xlsx"
+ag_create_excel <- function(dataset = analysisDataset, excel_path = "Data/Variables.xlsx") {
 
         column_names <- colnames(dataset)
 

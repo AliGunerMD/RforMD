@@ -9,7 +9,7 @@ ag_ff_labels(
   use_vector = TRUE,
   vector_name = NULL,
   use_excel = FALSE,
-  excel_path = "_Data/Variables.xlsx",
+  excel_path = "Data/Variables.xlsx",
   excel_old_names = "original",
   excel_new_names = NULL,
   add_units = FALSE

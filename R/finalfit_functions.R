@@ -662,7 +662,8 @@ ag_ff_summary <- function(.dataset, strata = NULL, table_vars,
 #' \dontrun{
 #' summary_penguins <- ag_ff_summary(palmerpenguins::penguins, strata = "species",
 #' table_vars = palmerpenguins::penguins %>% select(-species) %>% names())
-#' ag_ff_pull_summary(summary_penguins, label_value = "island", levels_value = "Biscoe",  target_value = "Adelie")
+#' ag_ff_pull_summary(summary_penguins, label_value = "island",
+#' levels_value = "Biscoe",  target_value = "Adelie")
 #' }
 #'
 #' @import dplyr
@@ -1037,7 +1038,7 @@ ag_ff_columns <- function(.data, levels = FALSE, remove_no = FALSE) {
 # Function to rename labels in a dataset
 ag_ff_labels <- function(.data,
                          use_vector = TRUE, vector_name = NULL,
-                         use_excel = FALSE, excel_path = "_Data/Variables.xlsx", excel_old_names = "original",
+                         use_excel = FALSE, excel_path = "Data/Variables.xlsx", excel_old_names = "original",
                          excel_new_names = NULL, add_units = FALSE) {
 
         # Get the original column names of the dataset
@@ -1374,7 +1375,8 @@ select_vars_mv <- function(dataset, dependent_var, regression_vars = NULL, test_
 #' \dontrun{
 #' dependent_var <- "Surv(time_to_survival, death_alive_numeric)"
 #'
-#' regression_output <- ag_ff_regression(analysis_dataset, dependent_var, regression_vars, test_var, p_mv = 0.1, must_vars_mv)
+#' regression_output <- ag_ff_regression(analysis_dataset, dependent_var, regression_vars,
+#' test_var, p_mv = 0.1, must_vars_mv)
 #' regression_output
 #' }
 #' @export

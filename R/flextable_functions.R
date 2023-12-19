@@ -467,7 +467,7 @@ ag_flex_abbr <- function(flex_obj, abbr = NULL, use_df = TRUE, prefix = "Abbrevi
 #' @param flex_obj The flextable object to be saved.
 #' @param n The table number or identifier. Default is "x".
 #' @param orientation The orientation of the page. Can be "Landscape" or "Portrait". Default is "Landscape".
-#' @param mypath The path where the Word document will be saved. Default is "_Outputs/_Tables" in the current working directory.
+#' @param mypath The path where the Word document will be saved. Default is "Outputs/Tables" in the current working directory.
 #'
 #' @return The saved Word document.
 #'
@@ -489,7 +489,7 @@ ag_flex_abbr <- function(flex_obj, abbr = NULL, use_df = TRUE, prefix = "Abbrevi
 
 
 
-ag_flex_save <- function(flex_obj, n = "x", orientation = "Landscape", mypath = "_Outputs/_Tables"){
+ag_flex_save <- function(flex_obj, n = "x", orientation = "Landscape", mypath = "Outputs/Tables"){
 
         if (!inherits(flex_obj, "flextable")) {
                 message(sprintf("Function `%s` supports only flextable objects.", "ag_flex_save()"))

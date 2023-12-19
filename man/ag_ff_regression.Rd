@@ -42,7 +42,8 @@ This function performs the regression analysis on the specified dataset using th
 \dontrun{
 dependent_var <- "Surv(time_to_survival, death_alive_numeric)"
 
-regression_output <- ag_ff_regression(analysis_dataset, dependent_var, regression_vars, test_var, p_mv = 0.1, must_vars_mv)
+regression_output <- ag_ff_regression(analysis_dataset, dependent_var, regression_vars,
+test_var, p_mv = 0.1, must_vars_mv)
 regression_output
 }
 }

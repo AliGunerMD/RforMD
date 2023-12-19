@@ -48,7 +48,8 @@ This function is used to pull a summary value from the output of the \code{ag_ff
 \dontrun{
 summary_penguins <- ag_ff_summary(palmerpenguins::penguins, strata = "species",
 table_vars = palmerpenguins::penguins \%>\% select(-species) \%>\% names())
-ag_ff_pull_summary(summary_penguins, label_value = "island", levels_value = "Biscoe",  target_value = "Adelie")
+ag_ff_pull_summary(summary_penguins, label_value = "island",
+levels_value = "Biscoe",  target_value = "Adelie")
 }
 
 }

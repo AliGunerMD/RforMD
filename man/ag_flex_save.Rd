@@ -8,7 +8,7 @@ ag_flex_save(
   flex_obj,
   n = "x",
   orientation = "Landscape",
-  mypath = "_Outputs/_Tables"
+  mypath = "Outputs/Tables"
 )
 }
 \arguments{
@@ -18,7 +18,7 @@ ag_flex_save(
 
 \item{orientation}{The orientation of the page. Can be "Landscape" or "Portrait". Default is "Landscape".}
 
-\item{mypath}{The path where the Word document will be saved. Default is "_Outputs/_Tables" in the current working directory.}
+\item{mypath}{The path where the Word document will be saved. Default is "Outputs/Tables" in the current working directory.}
 }
 \value{
 The saved Word document.
