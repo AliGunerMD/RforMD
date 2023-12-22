@@ -626,10 +626,16 @@ ag_ff_summary <- function(.dataset, strata = NULL, table_vars,
     stop("Invalid value for row_col_sums. Use 'row_based', 'col_based', or 'row_col_based'.")
   }
 
-  explanatory_fisher_vars <- ag_fisher(.dataset = .dataset, table_vars = table_vars, strata = strata)
-  if(!is.null(explanatory_fisher_vars) && fisher_correction){
-          message(paste0("Fisher test was used for: ", paste(explanatory_fisher_vars, collapse = ", ")))
+  if(!is.null(strata)){
+          explanatory_fisher_vars <- ag_fisher(.dataset = .dataset, table_vars = table_vars, strata = strata)
+          if(!is.null(explanatory_fisher_vars) && fisher_correction){
+                  message(paste0("Fisher test was used for: ", paste(explanatory_fisher_vars, collapse = ", ")))
+          }
   }
+
+
+
+
 
   if (is.null(strata)) {
           row_col_sums_df <- row_col_sums_df %>% select(-all)
@@ -1461,12 +1467,12 @@ ag_ff_pull_regression <- function(dataset, label_value, levels_value, target_val
 
         # Check if the column names exist in the data.frame
         if (!(label_col %in% colnames(dataset)) || !(levels_col %in% colnames(dataset)) || !(target_value %in% colnames(dataset))) {
-                stop("One or more column names not found in the data.frame")
+                message("One or more column names not found in the data.frame")
         }
 
 
         if (is.null(label_value) || is.null(levels_value)) {
-                stop("label_value and levels_value should be provided.")
+                message("label_value and levels_value should be provided.")
         }
 
 
@@ -1474,8 +1480,12 @@ ag_ff_pull_regression <- function(dataset, label_value, levels_value, target_val
                 dplyr::mutate(label = dplyr::if_else(label == "", NA_character_, label)) %>%
                 tidyr::fill(label, .direction = "down")
 
+        if(is.null(levels_value)){
 
-     value <- dataset[[target_value]][dataset[[label_col]] == label_value & dataset[[levels_col]] == levels_value]
+                value <- dataset[[target_value]][dataset[[label_col]] == label_value]
+        } else {
+                value <- dataset[[target_value]][dataset[[label_col]] == label_value & dataset[[levels_col]] == levels_value]
+                }
 
 
      if(is.null(format)){
@@ -1484,7 +1494,11 @@ ag_ff_pull_regression <- function(dataset, label_value, levels_value, target_val
 
      } else if (format == "bracket"){
              value <- gsub("^(\\d+\\.\\d+) \\((\\d+\\.\\d+-\\d+\\.\\d+), p(.+?)\\)$", "(\\1 [\\2], p\\3)", value)
-     } else if (format == "paranthesis"){
+
+     } else if (format == "full bracket"){
+             value <- gsub("^(\\d+\\.\\d+) \\((\\d+\\.\\d+-\\d+\\.\\d+), p(.+?)\\)$", "[\\1 \\2, p\\3]", value)
+
+             } else if (format == "paranthesis"){
              value <-    gsub("^(\\d+\\.\\d+) \\((\\d+\\.\\d+-\\d+\\.\\d+), p(.+?)\\)$", "(\\1, \\2, p\\3)", value)
      } else {
              "Incorrect format type. Should be NULL, bracket or parenthesis"
