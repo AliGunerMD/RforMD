@@ -2,7 +2,7 @@ pandoc: 3.1.1
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles: {}
-last_built: 2023-12-19T19:17Z
+last_built: 2023-12-24T15:02Z
 urls:
   reference: https://aligunermd.github.io/RforMD/reference
   article: https://aligunermd.github.io/RforMD/articles

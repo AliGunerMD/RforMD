@@ -8,7 +8,7 @@ ag_ff_pull_summary(
   dataset,
   label_value,
   levels_value = NULL,
-  target_value,
+  target,
   label_col = "label",
   levels_col = "levels",
   ff_column = TRUE,
@@ -24,7 +24,7 @@ ag_ff_pull_summary(
 
 \item{levels_value}{The value of the levels variable to filter on (default is \code{NULL}).}
 
-\item{target_value}{The name of the variable to extract the summary value from.}
+\item{target}{The name of the variable to extract the summary value from.}
 
 \item{label_col}{The name of the label column in the dataset (default is "label").}
 
@@ -49,7 +49,7 @@ This function is used to pull a summary value from the output of the \code{ag_ff
 summary_penguins <- ag_ff_summary(palmerpenguins::penguins, strata = "species",
 table_vars = palmerpenguins::penguins \%>\% select(-species) \%>\% names())
 ag_ff_pull_summary(summary_penguins, label_value = "island",
-levels_value = "Biscoe",  target_value = "Adelie")
+levels_value = "Biscoe",  target = "Adelie")
 }
 
 }

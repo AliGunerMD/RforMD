@@ -653,7 +653,7 @@ ag_ff_summary <- function(.dataset, strata = NULL, table_vars,
 #' @param dataset The dataset to extract the summary value from.
 #' @param label_value The value of the label variable to filter on.
 #' @param levels_value The value of the levels variable to filter on (default is \code{NULL}).
-#' @param target_value The name of the variable to extract the summary value from.
+#' @param target The name of the variable to extract the summary value from.
 #' @param label_col The name of the label column in the dataset (default is "label").
 #' @param levels_col The name of the levels column in the dataset (default is "levels").
 #' @param ff_column Logical indicating whether to use fast factor columns (default is \code{TRUE}).
@@ -669,7 +669,7 @@ ag_ff_summary <- function(.dataset, strata = NULL, table_vars,
 #' summary_penguins <- ag_ff_summary(palmerpenguins::penguins, strata = "species",
 #' table_vars = palmerpenguins::penguins %>% select(-species) %>% names())
 #' ag_ff_pull_summary(summary_penguins, label_value = "island",
-#' levels_value = "Biscoe",  target_value = "Adelie")
+#' levels_value = "Biscoe",  target = "Adelie")
 #' }
 #'
 #' @import dplyr
@@ -680,7 +680,7 @@ ag_ff_summary <- function(.dataset, strata = NULL, table_vars,
 
 
 
-ag_ff_pull_summary <- function(dataset, label_value, levels_value = NULL, target_value,
+ag_ff_pull_summary <- function(dataset, label_value, levels_value = NULL, target,
                                label_col = "label", levels_col = "levels",
                                ff_column = TRUE, ff_column_levels = FALSE,
                                use_percentage = TRUE,
@@ -725,7 +725,7 @@ ag_ff_pull_summary <- function(dataset, label_value, levels_value = NULL, target
         }
 
         # Check if the column names exist in the data.frame
-        if (!(label_col %in% colnames(dataset)) || !(target_value %in% colnames(dataset))) {
+        if (!(label_col %in% colnames(dataset)) || !(target %in% colnames(dataset))) {
                 stop("One or more column names not found in the data.frame")
         }
 
@@ -752,10 +752,10 @@ ag_ff_pull_summary <- function(dataset, label_value, levels_value = NULL, target
 
         if (is.null(levels_value)) {
                 # Extract the cell value based on label condition only
-                value <- dataset[[target_value]][dataset[[label_col]] == label_value]
+                value <- dataset[[target]][dataset[[label_col]] == label_value]
         } else {
                 # Extract the cell value based on label and levels conditions
-                value <- dataset[[target_value]][dataset[[label_col]] == label_value & dataset[[levels_col]] == levels_value]
+                value <- dataset[[target]][dataset[[label_col]] == label_value & dataset[[levels_col]] == levels_value]
         }
 
 
@@ -1418,7 +1418,7 @@ ag_ff_regression <- function(dataset, dependent_var, regression_vars = NULL, tes
 #' @param dataset The input data frame or table.
 #' @param label_value The value of the label column to filter.
 #' @param levels_value The value of the levels column to filter.
-#' @param target_value The column name of the target value to extract.
+#' @param target The column name of the target value to extract.
 #' @param label_col The column name for the label column (default is "label").
 #' @param levels_col The column name for the levels column (default is "levels").
 #' @param format The desired output format of the extracted value. Options are NULL (default), "bracket", or "parenthesis".
@@ -1431,7 +1431,7 @@ ag_ff_regression <- function(dataset, dependent_var, regression_vars = NULL, tes
 #'
 #' @examples
 #' \dontrun{
-#' ag_ff_pull_regression(dataset, "label_value", "levels_value", "target_value")
+#' ag_ff_pull_regression(dataset, "label_value", "levels_value", "target")
 #' }
 
 #' @export
@@ -1440,7 +1440,7 @@ ag_ff_regression <- function(dataset, dependent_var, regression_vars = NULL, tes
 
 
 
-ag_ff_pull_regression <- function(dataset, label_value, levels_value, target_value,
+ag_ff_pull_regression <- function(dataset, label_value, levels_value, target,
                                label_col = "label", levels_col = "levels",
                                format = NULL) {
 
@@ -1466,7 +1466,7 @@ ag_ff_pull_regression <- function(dataset, label_value, levels_value, target_val
         }
 
         # Check if the column names exist in the data.frame
-        if (!(label_col %in% colnames(dataset)) || !(levels_col %in% colnames(dataset)) || !(target_value %in% colnames(dataset))) {
+        if (!(label_col %in% colnames(dataset)) || !(levels_col %in% colnames(dataset)) || !(target %in% colnames(dataset))) {
                 message("One or more column names not found in the data.frame")
         }
 
@@ -1482,9 +1482,9 @@ ag_ff_pull_regression <- function(dataset, label_value, levels_value, target_val
 
         if(is.null(levels_value)){
 
-                value <- dataset[[target_value]][dataset[[label_col]] == label_value]
+                value <- dataset[[target]][dataset[[label_col]] == label_value]
         } else {
-                value <- dataset[[target_value]][dataset[[label_col]] == label_value & dataset[[levels_col]] == levels_value]
+                value <- dataset[[target]][dataset[[label_col]] == label_value & dataset[[levels_col]] == levels_value]
                 }
 
 
@@ -1493,13 +1493,13 @@ ag_ff_pull_regression <- function(dataset, label_value, levels_value, target_val
              value <- value
 
      } else if (format == "bracket"){
-             value <- gsub("^(\\d+\\.\\d+) \\((\\d+\\.\\d+-\\d+\\.\\d+), p(.+?)\\)$", "(\\1 [\\2], p\\3)", value)
+                values <- gsub("^(\\d+\\.\\d+) \\((\\d+\\.\\d+-\\d+\\.\\d+), p(.+?)\\)$", "(\\1 [\\2], p\\3)", values)
 
-     } else if (format == "full bracket"){
-             value <- gsub("^(\\d+\\.\\d+) \\((\\d+\\.\\d+-\\d+\\.\\d+), p(.+?)\\)$", "[\\1 \\2, p\\3]", value)
+        } else if (format == "full bracket"){
+                values <- gsub("^(\\d+\\.\\d+) \\((\\d+\\.\\d+-\\d+\\.\\d+), p(.+?)\\)$", "[\\1, \\2, p\\3]", values)
 
-             } else if (format == "paranthesis"){
-             value <-    gsub("^(\\d+\\.\\d+) \\((\\d+\\.\\d+-\\d+\\.\\d+), p(.+?)\\)$", "(\\1, \\2, p\\3)", value)
+        } else if (format == "paranthesis"){
+                values <-    gsub("^(\\d+\\.\\d+) \\((\\d+\\.\\d+-\\d+\\.\\d+), p(.+?)\\)$", "(\\1, \\2, p\\3)", values)
      } else {
              "Incorrect format type. Should be NULL, bracket or parenthesis"
      }

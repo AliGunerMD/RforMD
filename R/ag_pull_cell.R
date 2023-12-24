@@ -1,11 +1,39 @@
+#' @title Pull Cell Values from a Dataset
+#' @description
+#' This function extracts cell values from a dataset based on specified conditions.
+#'
+#' @param dataset A data.frame object containing the dataset.
+#' @param col_1_name The name of the first column for condition matching.
+#' @param col_1 The value to match in the first column.
+#' @param col_2_name The name of the second column for condition matching.
+#' @param col_2 The value to match in the second column.
+#' @param col_3_name The name of the third column for condition matching.
+#' @param col_3 The value to match in the third column.
+#' @param target The name of the target column from which to extract values.
+#' @param format The format of the extracted values. Options are NULL (default), "bracket", "full bracket", or "paranthesis".
+#'
+#' @return A vector of extracted cell values from the target column.
+#'
+#' @author Ali Guner
+#'
+#' @examples
+#' \dontrun{
+#' penguins |> ag_pull_cell("species", "Adelie", "bill_length_mm", "39.1", target = "body_mass_g")
+#' }
+#'
+#' @export
+
+
+
+
 
 
 ag_pull_cell <- function(dataset,
                          col_1_name, col_1,
                          col_2_name, col_2,
                          col_3_name, col_3,
-                                 col_target,
-                               format = NULL) {
+                         target,
+                         format = NULL) {
 
 
 
@@ -14,15 +42,9 @@ ag_pull_cell <- function(dataset,
                 stop("Input must be a data.frame")
         }
 
-        # # Check if the column names exist in the data.frame
-        # if (!(col_1 %in% colnames(dataset)) || !(col_2 %in% colnames(dataset)) || !(col_3 %in% colnames(dataset)) || !(col_target %in% colnames(dataset))) {
-        #         stop("One or more column names not found in the data.frame")
-        # }
-        #
-        #
-        # if (is.null(label_name) || is.null(levels_name)) {
-        #         stop("label_name and levels_name should be provided.")
-        # }
+        if (is.null(target)) {
+                message("target should be provided.")
+        }
 
         if(!missing(col_1_name) && !missing(col_1) && !missing(col_2_name) && !missing(col_2) && !missing(col_3_name) && !missing(col_3)){
                 matched_rows <- dataset[[col_1_name]] == col_1 & dataset[[col_2_name]] == col_2 & dataset[[col_3_name]] == col_3
@@ -37,7 +59,7 @@ ag_pull_cell <- function(dataset,
 
 
 
-        values <- dataset[[col_target]][matched_rows & !is.na(dataset[[col_target]])]
+        values <- dataset[[target]][matched_rows & !is.na(dataset[[target]])]
         if(is.null(format)){
 
                 values <- values

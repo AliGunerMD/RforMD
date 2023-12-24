@@ -22,6 +22,7 @@
   - ag_ff_regression
   - ag_ff_pull_regression
   
+  - ag_pull_cell
 
 ## version 0.1.7
 - README

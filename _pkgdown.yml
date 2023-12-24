@@ -40,6 +40,7 @@ reference:
   - ag_create_excel
   - ag_relabel_excel
   - ag_relabel_vector
+  - ag_pull_cell
 - title: Biostats stuffs
   desc: For some quick looks in data
   contents:

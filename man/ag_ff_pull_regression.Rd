@@ -8,7 +8,7 @@ ag_ff_pull_regression(
   dataset,
   label_value,
   levels_value,
-  target_value,
+  target,
   label_col = "label",
   levels_col = "levels",
   format = NULL
@@ -21,7 +21,7 @@ ag_ff_pull_regression(
 
 \item{levels_value}{The value of the levels column to filter.}
 
-\item{target_value}{The column name of the target value to extract.}
+\item{target}{The column name of the target value to extract.}
 
 \item{label_col}{The column name for the label column (default is "label").}
 
@@ -37,7 +37,7 @@ This function extracts a value from an ag_ff_regression table based on specified
 }
 \examples{
 \dontrun{
-ag_ff_pull_regression(dataset, "label_value", "levels_value", "target_value")
+ag_ff_pull_regression(dataset, "label_value", "levels_value", "target")
 }
 }
 \author{
